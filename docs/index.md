@@ -75,7 +75,7 @@ $exampleVariable = 1000
 ...
 ```
 
-Properties are sub-items of a section, they are often used to assign values or to excecute functions within the scope of that section. They can be [Parameters](./parameters) or [Variables](./variables), more information about them can be found in their respective sections.
+Properties are sub-items of a section, they are often used to assign values or to excecute functions within the scope of that section. They can be Parameters or Variables, more information about them can be found in their respective sections.
 
 ## Comments
 
