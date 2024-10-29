@@ -53,6 +53,7 @@ export default defineConfig({
         text: 'Guides',
         items: [
           { text: 'Modding 101', link: '/guides/modding-101' },
+          { text: 'Hunting', link: '/guides/weapon-banana' },
           { text: 'Textures 101', link: '/guides/textures-101' },
           { text: 'Shaders 101', link: '/guides/shaders-101' },
           { text: 'XXMI Tools', link: '/guides/xxmi' },
@@ -66,19 +67,45 @@ export default defineConfig({
         text: 'INI Documentation',
         items: [
           { text: 'Introduction', link: '/docs' },
-          { text: 'CommandList', link: '/docs/command-list' },
-          { text: 'Constants', link: '/docs/constants' },
-          { text: 'CustomShader', link: '/docs/custom-shader' },
-          { text: 'Key', link: '/docs/key' },
-          { text: 'Modifiers', link: '/docs/modifiers' },
-          { text: 'Namespace', link: '/docs/namespace' },
-          { text: 'Operators', link: '/docs/operators' },
-          { text: 'Override', link: '/docs/override' },
-          { text: 'Present', link: '/docs/present' },
-          { text: 'Properties', link: '/docs/properties' },
-          { text: 'Resource', link: '/docs/resource' },
-          { text: 'Shader Override', link: '/docs/shader-override' },
-          { text: 'Troubeshoothing', link: '/docs/troubleshooting' },
+          { text: 'Glossary', link: '/docs/glossary' },
+          { text: '3dm Statics', link: '/docs/3dm-statics' },
+          {
+            text:"Basic concepts", 
+            items:[
+              { text: 'Override', link: '/docs/override' },
+              { text: 'Resource', link: '/docs/resource' },
+              { text: 'Flags', link: '/docs/flags' },
+              { text: 'Shader Override', link: '/docs/shader-override' },
+              { text: 'Texture Override', link: '/docs/texture-override' },
+            ]
+          },
+          {
+            text:"Logic", 
+            items:[
+              { text: 'Operators', link: '/docs/operators' }, //move pre and post here
+              { text: 'Constants', link: '/docs/constants' },
+              { text: 'Present', link: '/docs/present' },
+              { text: 'Key', link: '/docs/key' },
+              { text: 'CommandList', link: '/docs/command-list' },
+              { text: 'Draws Calls', link: '/docs/draw-calls' },
+              { text: 'Debugging INIs', link: '/docs/debugging' },
+            ]
+          },
+          {
+            text:"Advanced concepts",
+            items:[
+              { text: 'DirectX pipeline', link: '/docs/directx-pipeline' },
+              { text: 'Lifespan of a frame in 3dm', link: '/docs/lifespan-of-a-frame' },
+              { text: 'Advanced hunting & dumping', link: '/docs/advanced-hunting' },
+              { text: 'How to log', link: '/docs/logs' },
+
+              { text: 'Shader Regex', link: '/docs/shader-regex' },
+              { text: 'Fuzzy Matching', link: '/docs/fuzzy-matching' },
+              { text: 'CustomShader', link: '/docs/custom-shader' },
+              { text: 'System Values', link: '/docs/system-values' },
+              { text: 'Namespace', link: '/docs/namespace' },
+            ]
+          },
         ]
       }
     ],
