@@ -63,7 +63,7 @@ Sections and properties are case-insensitive, but in GIMI, sections are written 
 ...
 ```
 
-The part enclosed in [] is the beginning of a **section** as well as it's identifier. A section represents a code block, and its scope includes the current line, up to the line before the next section or the end of the file. All other types need to be within a section, with the exception of [namespace](/Namespace). Lastly, it's worth mentioning that INI files are case-insensitive, but in GIMI section names follow the PascalCase convention.
+The part enclosed in [] is the beginning of a **section** as well as it's identifier. A section represents a code block, and its scope includes the current line, up to the line before the next section or the end of the file. All other types need to be within a section, with the exception of [namespace](./namespace). Lastly, it's worth mentioning that INI files are case-insensitive, but in GIMI section names follow the PascalCase convention.
 
 ## Properties
 
@@ -75,7 +75,7 @@ $exampleVariable = 1000
 ...
 ```
 
-Properties are sub-items of a section, they are often used to assign values or to excecute functions within the scope of that section. They can be [Parameters](/Parameters) or [Variables](/Variables), more information about them can be found in their respective sections.
+Properties are sub-items of a section, they are often used to assign values or to excecute functions within the scope of that section. They can be [Parameters](./parameters) or [Variables](./variables), more information about them can be found in their respective sections.
 
 ## Comments
 
@@ -93,16 +93,16 @@ That's the basic introduction to INI files. As long as you know how to distingui
 
 > There are some words that shouldn't be used as variables because they could overwrite some system-defined values.
 
-[time](/time)
+[time]
 
-[if, endif, else if, else](/condition)
+[if, endif, else if, else]
 
-[run](/run)
+[run]
 
-[x123, y123, z123, w123](/iniParams) (These numbers can vary, they are just examples.)
+[x123, y123, z123, w123] (These numbers can vary, they are just examples.)
 
 There is a lot more reserved words, but they are not listed here because they are not commonly used in mods files.
 <!-- TODO: add more detail about how 3dm properties can be modified from within mods files. which are likley to be mistakenly used as variables. -->
 ---
 
-First timers should take a look into [syntax](/Syntax) to comprehend better how to write `.ini` files and their capabilities. More experienced users will have a better time reading specific sections of this wiki, please use the navigation tree on the side to find the section you are looking for.
+First timers should take a look into syntax to comprehend better how to write `.ini` files and their capabilities. More experienced users will have a better time reading specific sections of this wiki, please use the navigation tree on the side to find the section you are looking for.
