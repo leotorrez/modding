@@ -89,7 +89,7 @@ export default defineConfig({
     ],
 
     footer: {      
-      message: 'Do you have a tool, guide or translation that you want to add to the site? Check <a href="/contribute">How to contribute?</a>',
+      message: 'Do you have a tool, guide or translation that you want to add to the site? Check <a href="/modding/contribute">How to contribute?</a>',
       copyright: 'Developed by <a href="https://github.com/leotorrez">leotorrez</a>'
     },
 

@@ -16,13 +16,13 @@ hero:
       link: guides/getting-started
     - theme: alt
       text: Download links
-      link: Downloads
+      link: downloads
     - theme: alt
       text: Guides
-      link: Guides
+      link: guides
     - theme: alt
       text: Docs
-      link: Docs
+      link: docs
     - theme: brand
       text: Discord Server
       link: https://discord.gg/agmg
