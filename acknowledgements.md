@@ -98,6 +98,7 @@ const devs = [
     title: 'Author of LeoTools',
     links: [
       { icon: 'github', link: 'https://github.com/leotorrez' },
+      { icon: 'x', link: 'https://bsky.app/profile/leomods.bsky.social' },
       { icon: 'gamebanana', link: 'https://gamebanana.com/members/2419201'},
     ]
   },
@@ -109,6 +110,7 @@ const writers = [
     title: 'Author of the first porting mod in video format',
     links: [
       // { icon: 'github', link: 'https://github.com/caverabbit'},
+      { icon: 'x', link: 'https://x.com/cybertron231'},
       { icon: 'gamebanana', link: 'https://gamebanana.com/members/1994459'},
     ]
   },
