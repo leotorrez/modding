@@ -27,7 +27,7 @@ You might be wondering how can it be this simple, matter of fact it is! The laun
 2. Browse the site and download the mod you want to install. They tend to be in a `.zip` file(or similar) with all the necessary files inside.
 3. Open the launcher, click on the "Open Mods folder"
 ![Open Mods folder](./img/openmodsfolder.png)
-4. [Extract the zip file](www.google.com/search?q=how+to+extract+a+compressed+file) you downloaded into the mods folder
+4. [Extract the zip file](https://www.google.com/search?q=how+to+extract+a+compressed+file) you downloaded into the mods folder
 5. Head over to your game and press f10 to hot reload the mods.
 6. Done! You're now playing with your first mod active
 

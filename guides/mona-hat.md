@@ -1,6 +1,4 @@
-EN | [中文](CN_MonaWalkthrough.md)
-
-## Mona Hat Removal Walkthrough
+# Mona Hat Removal Walkthrough
 
 This is a walkthrough that goes through the process of deleting an object (Mona's hat) from the character mesh from start to finish.
 
@@ -8,7 +6,7 @@ Prior to 3Dmigoto, there was no way to cleanly remove her hat - it does not have
 
 These instructions can be generally applied to remove any part of the mesh, though in some cases there will be a hole in the model underneath (especially for larger objects) - a walkthrough on how to patch mesh holes will come later.
 
-1. Ensure 3DMigoto and the 3DMigoto Blender plugin are installed (see [README](../README.md) on main github page)
+1. Ensure 3DMigoto and the 3DMigoto Blender plugin are installed
 2. Download the Mona character files from the CharacterData folder of https://github.com/SilentNightSound/GI-Model-Importer-Assets. Your folder should look like this:
 
 <img src="https://user-images.githubusercontent.com/107697535/178895141-ba8572ba-091c-4c49-85e6-841634747211.png" width="600"/>
