@@ -11,8 +11,10 @@ Here is a list of trusted developers that provide fixes for mods:
 
 - [SilentNightSound](https://gamebanana.com/members/2176153)
 - [Petrascyll](https://gamebanana.com/members/2644630)
-- [SpectrumQT](https://gamebanana.com/members/2837527)
 - [Gustav0](https://gamebanana.com/members/2890460)
+- [SpectrumQT](https://gamebanana.com/members/2837527) - Specializes in WW fixes
+- [sora_](https://gamebanana.com/members/1367828) - Specializes in HSR fixes
+- [Thoronium](https://gamebanana.com/members/3210319) - Specializes in "reverse" fixes for private servers
 
 ## The halves method
 

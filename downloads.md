@@ -16,12 +16,20 @@ prev: false
 
 ## Mod Creation tools
 
+### Modding essentials
+
 - [XXMI Tools](https://github.com/leotorrez/XXMITools/releases/latest) - Tools for creating mods for XXMI games(Except WW)
 - [WWMI Tools](https://github.com/SpectrumQT/WWMI-TOOLS/releases/latest) - Tools for creating mods for WW
-- [ArmatureXXMI](https://github.com/Seris0/Gustav0/tree/main/Addons/ArmatureXXMI) - Tools for advanced use of XXMITools
-- [Robust Weight Transfer](https://jinxxy.com/SentFromSpaceVR/products/robust-weight-transfer) (requires signup for download) - Blender addon for transferring weights between meshes
+
+### Useful blender tools
+
+- [LEO Alpha Paint](https://github.com/HummyR/LEOAlphaPaint) - Blender addon for advanced Vertex Painting
+- [Armature XXMI](https://github.com/Seris0/Gustav0/tree/main/Addons/ArmatureXXMI) - Tools for advanced use of XXMITools
+- [Quick Import XXMI](https://github.com/Seris0/QuickImportXXMI/releases) - Blender addon for quick import, clean up and material setup for XXMI games(requires XXMI Tools)
 - [GIMI Tools](https://github.com/hazrategolabi/gimi_tools) - Blender addon for extra options in vg menus
-- [LEOAlphaPaint](https://github.com/HummyR/LEOAlphaPaint) - Blender addon for advanced Vertex Painting
+- [Robust Weight Transfer](https://jinxxy.com/SentFromSpaceVR/products/robust-weight-transfer) (requires signup for download) - Blender addon for transferring weights between meshes
+- [Material Combiner](https://github.com/Grim-es/material-combiner-addon/releases) - Blender addon for combining materials' textures into a single atlas
+
 <!-- 
 ## Example projects
 
