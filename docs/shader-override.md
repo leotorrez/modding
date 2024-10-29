@@ -1,6 +1,5 @@
 
-
--------------------------------------------------------------------------------------------------
+<!-- -------------------------------------------------------------------------------------------------
  On the fly regular expression shader patching engine
 ------------------------------------------------------------------------------------------------------
 
@@ -319,4 +318,4 @@ Example: Undefine a custom resource until something is copied into it:
 post ResourceDepthBuffer = null
 Example: Clear a custom resource with black/zero at the start of each frame
 (beware that driver bugs may mean only one eye is cleared in some cases):
-post clear = ResourceFoo
+post clear = ResourceFoo -->
