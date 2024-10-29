@@ -19,10 +19,10 @@ export default defineConfig({
     //   label: 'Chinese',
     //   lang: 'zh-CN'
     // },
-    ru: {
-      label: 'Russian',
-      lang: 'ru'
-    },
+    // ru: {
+    //   label: 'Russian',
+    //   lang: 'ru'
+    // },
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
