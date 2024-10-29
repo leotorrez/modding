@@ -26,7 +26,7 @@ export default defineConfig({
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: '/SVGcrose.svg',
+    logo: './modding/SVGcrose.svg',
 
     nav: [
       { text: 'Home', link: '/' },
