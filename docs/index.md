@@ -1,7 +1,7 @@
 ---
 next: 
     text: Glossary
-    link: /glossary
+    link: ./glossary
 ---
 
 # 3dmigoto INI File Documentation
