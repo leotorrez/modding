@@ -10,8 +10,8 @@ prev: false
 We are happy to accept contributions to the project, this includes guides, tools, translations and more.
 In order to contribute follow any of these alternate paths:
 
-- Contact the developer of the website directly in discord under the username [leotorrez](https://discord.com/users/leotorrez)
-- Use the following [google form to submit your contribution](https://forms.gle/)
+- Contact the developer of the website directly in discord under the username [leotorrez](https://discord.com/users/335615146648928257)
+<!-- - Use the following [google form to submit your contribution](https://forms.gle/) -->
 - Fork the repository and submit a pull request with your changes `(preferred method)`
 
 ## Contribution Guidelines
