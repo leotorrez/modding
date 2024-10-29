@@ -29,6 +29,16 @@ When you have an issue and you don't know which mod is causing it, you can use t
 Mathematically speaking, this method is the most efficient way to find a problematic mod(no more than 7 iterations).
 Some times there are no mods breaking things and instead the conflict is caused by some file in `/ShaderFixes`. If removing all mods from your `/Mods` folder doesn't fix the issue, then using this method in `/ShaderFixes` is the way to go.
 
+## Mod doesn't load at all
+
+Ensure 3dmigoto is actually running, and that you have placed the mod in the correct Mod folder. Also make sure to press F10 in-game to reload any changed mods. Finally, if all else fails try emptying your ShaderCache and ShaderFixes folders, since sometimes those can cause issues when loading mods.
+
+## Large number of warnings(orange text) about mod conflicts
+
+This is caused by the game attempting to load more than one file to the same hash. This usually is a result of using two mods for the same character at the same time.
+
+To fix, remove any duplicate mod folders. If you are sure that you have removed them all and the warnings still show up, go into the .ini file the warning mentions and delete or comment out the lines.
+
 ## Game crashes when I try to start it
 
 Make sure you have the latest version of the launcher, game and mods installed. If all else fails you can try the "halves method" to track down the problematic mod. Once identified you can diagnose its issue or ask for help in the [Discord server's #mod-help channel](https://discord.com/channels/971945032552697897/995556765179596890), more advanced users will be glad to lend a hand. Alternatively you can simply get rid of the mod and wait for an update or fix to be released.
@@ -40,6 +50,40 @@ Due to technical limitations when a mod is first loaded, is best to avoid having
 This is a known issue and we are working on a more sofisticated fix.
 
 To fix it you simply need to reload your character/object in memory, the safest way to achieve this to restart the game. Alternatively you can try hiding the character/object in question from the camera and teleport away or load a new stage. It should clear enough of your memory to force your character/object to reload.
+
+## Mod loads, but does not show up in game / Errors when loading mod(yellow text)
+
+Unlike warnings, errors usually indicate that the program has failed to load in the mod. The cause can vary, but some common ones are:
+
+- Incorrect names (name in .ini file does not match file in folder, like different extension)
+- Textures have wrong format (look at original to see what format, usually dds and must have heights/widths that are powers of 2 and have integer ratios like 1024x1024, 2048x2048, 1024x2048, etc.)
+- Did not paint/transfer any vertex groups on the new model, when the old model had vertex groups
+
+## Objects load in with the wrong orientation
+
+This is because the object in blender imported by the 3dmigoto and the one you are replacing it with are using different coordinate spaces. Even if they seem to line up in blender, you may actually need to rotate and translate relative to the 3dmigoto model to get the correct orientation. Most commonly, rotate character models 90 degrees so they are facing upwards, then select all and apply all transforms.
+
+Example of correct orientation between original (Kazuha) and new (Noelle)
+
+## Model is completely FUBAR
+  
+Very likely due to vertex group issues. The vertex group number, order and positions need to match up between the new model and the old. Confirm that all the vertex groups are there in the new model, that they are in the correct order (e.g. 4 6 7 8 5 should be 4 5 6 7 8) and that there are no gaps (e.g. 4 7 8 9 -> 4 5 6 7 8 9), if there are gaps, fill them with new empty vertex groups.
+
+## Model is slightly FUBAR
+
+Still vertex group issues - double check the above, as well as ensure that the weight for the new model in that section matches up with that of the original model
+
+## Incorrect textures
+
+This can be due to a large variety of reasons. Most common ones are:
+
+- Not naming the uv map as TEXCOORD.xy
+- Reversed normals
+- Damaged or incorrect ObjectTexcoord.buf
+- Forgot to replace textures with new ones, so it is still loading up the old ones from the original model
+- Very bright/glowing textures
+
+This is most likely due to the texture map you are using having no alpha channel. Refer to the walkthroughs on this repo for details, but basically make sure you have a transparent layer on top of any texture files (the top layer is used to control emission and makes things bright, the bottom layer is used to draw the model colors and patterns).
 
 ## Private servers and game versions
 
