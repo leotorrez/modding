@@ -1,15 +1,15 @@
 import { defineConfig, type DefaultTheme } from 'vitepress'
 
 export const zh = defineConfig({
-    lang: 'en-US',
+    lang: 'zh-CN',
     description: "Modding tutorials, guides and documentations for users and mod creators.",
 
     themeConfig: {
-        nav: nav('/es/'),
+        nav: nav('/zh/'),
 
         sidebar: {
-            '/es/guides/': { base: '/es/guides/', items: sidebarGuide() },
-            '/es/docs/': { base: '/es/docs/', items: sidebarReference() }
+            '/zh/guides/': { base: '/zh/guides/', items: sidebarGuide() },
+            '/zh/docs/': { base: '/zh/docs/', items: sidebarReference() }
         },
 
         editLink: {

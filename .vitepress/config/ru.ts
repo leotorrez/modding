@@ -5,11 +5,11 @@ export const ru = defineConfig({
     description: "Modding tutorials, guides and documentations for users and mod creators.",
 
     themeConfig: {
-        nav: nav('/es/'),
+        nav: nav('/ru/'),
 
         sidebar: {
-            '/es/guides/': { base: '/es/guides/', items: sidebarGuide() },
-            '/es/docs/': { base: '/es/docs/', items: sidebarReference() }
+            '/ru/guides/': { base: '/ru/guides/', items: sidebarGuide() },
+            '/ru/docs/': { base: '/ru/docs/', items: sidebarReference() }
         },
 
         editLink: {
