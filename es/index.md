@@ -1,7 +1,6 @@
 ---
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
-navbar: false
 
 hero:
   name: "Modding Guides"
@@ -33,4 +32,3 @@ features:
     details: The relevant information you need to be able to craft your own INIs as well as the tools you need to create tools to extend them.
 
 ---
-español 
