@@ -19,14 +19,14 @@ export default defineConfig({
     //   label: 'Chinese',
     //   lang: 'zh-CN'
     // },
-    // ru: {
-    //   label: 'Russian',
-    //   lang: 'ru'
-    // },
+    ru: {
+      label: 'Russian',
+      lang: 'ru'
+    },
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: './modding/public/SVGcrose.svg',
+    logo: '/SVGcrose.svg',
     search: {
       provider: 'local'
     },
@@ -40,36 +40,39 @@ export default defineConfig({
       { text: 'Acknowledgements', link: '/acknowledgements' },
     ],
 
-    sidebar: [
-      {
+    sidebar: {
+      '/guides/':[
+        {
         text: 'Mod usage',
-        items: [
-          { text: 'Quick start', link: '/guides/getting-started' },
-          { text: 'Where to get mods?', link: '/guides/getting-mods' },
-          { text: 'Launchers', link: '/guides/launchers' },
-          { text: 'Mod managers', link: '/guides/mod-managers' },
-          { text: 'Troubleshooting', link: '/guides/troubleshooting' },
-          { text: 'FAQ', link: '/guides/faq' },
-        ]
-      },
-      {
-        text: 'Guides',
-        items: [
-          { text: 'Modding 101', link: '/guides/modding-101' },
-          { text: 'Hunting', link: '/guides/weapon-banana' },
-          { text: 'Textures 101', link: '/guides/textures-101' },
-          { text: 'Shaders 101', link: '/guides/shaders-101' },
-          { text: 'XXMI Tools', link: '/guides/xxmi' },
-          { text: 'WWMI Tools', link: '/guides/wwmi' },
-          { text: 'Mona Hat', link: '/guides/mona-hat' },
-          { text: 'Weapon banana', link: '/guides/weapon-banana' },
-          { text: 'ZZZ textures and properties', link: '/guides/zzz-textures' },
-        ]
-      },
+          items: [
+            { text: 'Quick start', link: '/guides/getting-started' },
+            { text: 'Where to get mods?', link: '/guides/getting-mods' },
+            { text: 'Launchers', link: '/guides/launchers' },
+            { text: 'Mod managers', link: '/guides/mod-managers' },
+            { text: 'Troubleshooting', link: '/guides/troubleshooting' },
+            { text: 'FAQ', link: '/guides/faq' },
+          ]
+        },
+        {
+          text: 'Guides',
+          items: [
+            { text: 'Modding 101', link: '/guides/modding-101' },
+            { text: 'Hunting', link: '/guides/weapon-banana' },
+            { text: 'Textures 101', link: '/guides/textures-101' },
+            { text: 'Shaders 101', link: '/guides/shaders-101' },
+            { text: 'XXMI Tools', link: '/guides/xxmi' },
+            { text: 'WWMI Tools', link: '/guides/wwmi' },
+            { text: 'Mona Hat', link: '/guides/mona-hat' },
+            { text: 'Weapon banana', link: '/guides/weapon-banana' },
+            { text: 'ZZZ textures and properties', link: '/guides/zzz-textures' },
+          ]
+        },
+      ],
+      "/docs/": [
       {
         text: 'INI Documentation',
         items: [
-          { text: 'Introduction', link: '/docs' },
+          { text: 'Introduction', link: '/docs/' },
           { text: 'Glossary', link: '/docs/glossary' },
           { text: '3dm Statics', link: '/docs/3dm-statics' },
           {
@@ -111,7 +114,82 @@ export default defineConfig({
           },
         ]
       }
-    ],
+      ],
+      '/ru/guides/':[
+        {
+        text: 'Mod usage',
+          items: [
+            { text: 'Quick start', link: '/ru/guides/getting-started' },
+            { text: 'Where to get mods?', link: '/ru/guides/getting-mods' },
+            { text: 'Launchers', link: '/ru/guides/launchers' },
+            { text: 'Mod managers', link: '/ru/guides/mod-managers' },
+            { text: 'Troubleshooting', link: '/ru/guides/troubleshooting' },
+            { text: 'FAQ', link: '/ru/guides/faq' },
+          ]
+        },
+        {
+          text: 'Guides',
+          items: [
+            { text: 'Modding 101', link: '/ru/guides/modding-101' },
+            { text: 'Hunting', link: '/ru/guides/weapon-banana' },
+            { text: 'Textures 101', link: '/ru/guides/textures-101' },
+            { text: 'Shaders 101', link: '/ru/guides/shaders-101' },
+            { text: 'XXMI Tools', link: '/ru/guides/xxmi' },
+            { text: 'WWMI Tools', link: '/ru/guides/wwmi' },
+            { text: 'Mona Hat', link: '/ru/guides/mona-hat' },
+            { text: 'Weapon banana', link: '/ru/guides/weapon-banana' },
+            { text: 'ZZZ textures and properties', link: '/ru/guides/zzz-textures' },
+          ]
+        },
+      ],
+      "/ru/docs/": [
+        {
+          text: 'INI Documentation',
+          items: [
+            { text: 'Introduction', link: '/ru/docs/' },
+            { text: 'Glossary', link: '/ru/docs/glossary' },
+            { text: '3dm Statics', link: '/ru/docs/3dm-statics' },
+            {
+              text:"Basic concepts", 
+              items:[
+                { text: 'Override', link: '/ru/docs/override' },
+                { text: 'Resource', link: '/ru/docs/resource' },
+                { text: 'Flags', link: '/ru/docs/flags' },
+                { text: 'Shader Override', link: '/ru/docs/shader-override' },
+                { text: 'Texture Override', link: '/ru/docs/texture-override' },
+              ]
+            },
+            {
+              text:"Logic", 
+              items:[
+                { text: 'Operators', link: '/ru/docs/operators' }, //move pre and post here
+                { text: 'Constants', link: '/ru/docs/constants' },
+                { text: 'Present', link: '/ru/docs/present' },
+                { text: 'Key', link: '/ru/docs/key' },
+                { text: 'CommandList', link: '/ru/docs/command-list' },
+                { text: 'Draws Calls', link: '/ru/docs/draw-calls' },
+                { text: 'Debugging INIs', link: '/ru/docs/debugging' },
+              ]
+            },
+            {
+              text:"Advanced concepts",
+              items:[
+                { text: 'DirectX pipeline', link: '/ru/docs/directx-pipeline' },
+                { text: 'Lifespan of a frame in 3dm', link: '/ru/docs/lifespan-of-a-frame' },
+                { text: 'Advanced hunting & dumping', link: '/ru/docs/advanced-hunting' },
+                { text: 'How to log', link: '/ru/docs/logs' },
+
+                { text: 'Shader Regex', link: '/ru/docs/shader-regex' },
+                { text: 'Fuzzy Matching', link: '/ru/docs/fuzzy-matching' },
+                { text: 'CustomShader', link: '/ru/docs/custom-shader' },
+                { text: 'System Values', link: '/ru/docs/system-values' },
+                { text: 'Namespace', link: '/ru/docs/namespace' },
+              ]
+            },
+          ]
+        }
+      ],
+    },
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/leotorrez' },
