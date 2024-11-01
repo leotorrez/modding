@@ -1,19 +1,19 @@
-# Guides
+# Гайды
 
-First timers
+Для новоприбывших
 
 ## Glosary
 
-- mod user
+- Для игроков
 
-- mod maker
+- Для модеров
 
-- tool
+- Инструменты
 
-- mod
+- Моды
 
-- fixes
+- Фиксы и исправления
 
-## Mod usage tutorials
+## Как пользоваться модами?
 
-## Mod making tutorials
+## Как делать моды?

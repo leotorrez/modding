@@ -4,79 +4,79 @@
 
 До появления 3Dmigoto не существовало методого прямого удаления шляпы - у нее нет уникального шейдера, поэтому ее нельзя удалить в Special K; она не является уникальным объектом в иерархии объектов unity, поэтому ее нельзя удалить с помощью Melon; а кости, которые к ней прикреплены, также связаны с волосами Моны, поэтому любая попытка изменить структуру костей приведет к повреждению и волос Моны.
 
-These instructions can be generally applied to remove any part of the mesh, though in some cases there will be a hole in the model underneath (especially for larger objects) - a walkthrough on how to patch mesh holes will come later.
+Эти инструкции можно применить для удаления любой части сетки, хотя в некоторых случаях под ней останется дыра в модели (особенно для крупных объектов) - о том, как залатать дыры в сетке, мы рассмотрим позже.
 
-1. Ensure 3DMigoto and the 3DMigoto Blender plugin are installed
-2. Download the Mona character files from the CharacterData folder of https://github.com/SilentNightSound/GI-Model-Importer-Assets. Your folder should look like this:
+1. Убедитесь, что 3DMigoto и плагин 3DMigoto для Blender установлены.
+2. Загрузите файлы персонажа Моны из папки CharacterData на сайте https://github.com/SilentNightSound/GI-Model-Importer-Assets. Ваша папка должна выглядеть следующим образом:
 
 <img src="https://user-images.githubusercontent.com/107697535/178895141-ba8572ba-091c-4c49-85e6-841634747211.png" width="600"/>
 
-3. We are now going to load the model into Blender. Under File->Import there is an option to import 3DMigoto Frame Analysis Dumps. If you do not see this option, ensure the 3DMigoto plugin is installed and activated
+3. Теперь мы собираемся загрузить модель в Blender. В меню File -> Import есть опция импортировать "3DMigoto Frame Analysis Dumps". Если вы не видите этой опции, убедитесь, что плагин 3DMigoto установлен и включен.
 
 <img src="https://user-images.githubusercontent.com/107697535/174457627-5b52357a-0983-4dd5-bf64-301ada192a07.png" width="800"/>
 
-4. Navigate to the character folder and select all the .txt files. Leave all settings as default and press import.
+4. Перейдите в папку с персонажами и выберите все файлы .txt формата. Оставьте все настройки по умолчанию и нажмите импорт.
 
 <img src="https://user-images.githubusercontent.com/107697535/174457693-c5fa6ef1-799a-471a-ba2d-7ecc55decc8f.png" width="800"/>
 
-5. If everything has been setup correctly, you should see Mona's model imported into the viewport. It consists of two objects, the head and body
+5. Если все настроено правильно, вы должны увидеть модельку Моны, импортированную во viewport. Она состоит из двух объектов, головы и тела.
 
 <img src="https://user-images.githubusercontent.com/107697535/174457712-3499f864-50cb-4b18-b01e-bf88a5d8fd5e.png" width="800"/>
 
-6. We want to remove the hat, so select the head mesh and enter edit mode. Highlight all the vertices of the hat, then delete them
+6. Мы хотим удалить шапку, поэтому выберите сетку головы и войдите в режим редактирования. Выделите все вершины шапки и удалите их
 
 <img src="https://user-images.githubusercontent.com/107697535/174457736-387f6a53-1d33-4a5b-88c5-972d52e05304.png" width="800"/>
 
 <img src="https://user-images.githubusercontent.com/107697535/174457765-c59e3e10-0187-4578-9b0b-21dd47d316e7.png" width="800"/>
 
-7. Now that Mona is hatless, we want to export the models. Ensure that there is a single object named "MonaHead" and one named "MonaBody" (and optionally one named "CharDress"/"CharExtra" for characters that have a third/fourth part - Mona only has two). The option to export is under File->Export->Exports Genshin Mod folder. Navigate to the character folder you loaded the original data from, and export the model as "Mona.vb"
+7. Теперь когда Мона лишилась своей шляпы, мы хотим экспортировать модель. Убедитесь, что есть один объект с именем «MonaHead» и один с именем «MonaBody» (и дополнительно один с именем «CharDress»/«CharExtra» для персонажей, у которых есть третья/четвертая часть - у Моны в данном случае их всего две). Опция экспорта находится в меню File->Export->Exports Genshin Mod Folder. Перейдите в папку с персонажами, из которой вы загрузили исходные данные, и экспортируйте модель под именем «Mona.vb».
 
 <img src="https://user-images.githubusercontent.com/107697535/175569818-4d150043-555c-41a7-90ca-3d0e05c1c3f5.png" width="800"/>
 
 <img src="https://user-images.githubusercontent.com/107697535/175570101-9717b9eb-7ef9-4e1c-82e2-f6871497f5f6.png" width="800"/>
 
-8. A MonaMod folder should now be generated right next to the original character folder that looks like this (if the mod folder does not generate, double check the folder you are exporting to has hash.json):
+8. Теперь рядом с оригинальной папкой персонажа должна появиться папка MonaMod, которая будет выглядеть следующим образом (если папка мода не создается, проверьте есть ли в папке в которую вы экспортируете файл hash.json):
 
 <img src="https://user-images.githubusercontent.com/107697535/178895073-201685fb-d4a0-40e2-9e74-5d80b8d16938.png" width="800"/>
 
-   - (Note: another way to generate the Mod folder is to export each component separately as MonaHead and MonaBody with the 3DMigoto raw buffers option, then use the genshin_3dmigoto_generate.py script with `python .\genshin_3dmigoto_generate.py -n "Mona"`)
+   - (Примечание: есть конечно и другой способ создания папки Mod - экспортировать каждый компонент отдельно как MonaHead и MonaBody с опцией 3DMigoto raw buffers, а затем использовать скрипт genshin_3dmigoto_generate.py с `python .\genshin_3dmigoto_generate.py -n «Mona»`)
 
-9. Copy the MonaMod folder into the 3DMigoto Mods folder created during setup:
+9. Скопируйте папку MonaMod в папку 3DMigoto Mods, созданную во время настройки:
 
 <img src="https://user-images.githubusercontent.com/107697535/174458172-01751459-13a5-4e11-9827-f039dc762066.png" width="800"/>
 
 <img src="https://user-images.githubusercontent.com/107697535/174458178-e09637de-7149-463e-bd7a-499e986cba1d.png" width="800"/>
 
-10. Press "F10" in Genshin to reload all .ini files and apply the mod. If everything has gone according to plan, your Mona will now be hatless!
+10. Нажмите «F10» в самой игре, чтобы перезагрузить все .ini файлы и применить мод. Если все прошло хорошо, ваша Мона теперь будет без шляпы!
 
 <img src="https://user-images.githubusercontent.com/107697535/174458194-426f8602-31d5-416a-96ed-d58ecdcee39d.png" width="800"/>
 
-We can do a bit more to improve this. Notices that Mona's hair is discolored where the hat used to be - this is controlled by her head's lightmap texture. The character folder includes this file as MonaHeadLightMap.dds, and we can modify it to improve the result further.
+Как вы могли заметить, в области где раньше была шляпа Моны, волосы обесцвечены и имеют тень, хотя так не должно быть. Дело в том что работу со светом и тенями отвечает особая текстура именуемая "LightMap", когда мы удалили шляпу, мы только удалили сетку, но никак не затрагивали данную текстуру. Для того чтобы поправить данное положение нам стоит перерисовать и саму текстуру "LightMap"
 
-11. In order to edit the dds textures, we use Paint.net with the [DDS extension](https://forums.getpaint.net/topic/111731-dds-filetype-plus-04-11-2022/) and any extension that allows us to edit the alpha layer [Alpha Mask Import](https://forums.getpaint.net/topic/1854-alpha-mask-import-plugin-20/) or [Modify Channels](https://forums.getpaint.net/topic/110805-modify-channels-v111-2022-03-07/) - I will use the former in this walkthrough, and for an example with the latter see [GI_Assets](https://github.com/zeroruka/GI_Assets/wiki/Creating-Skins)
+11. Для редактирования dds-текстур мы используем Paint.net вместе с [DDS расширением](https://forums.getpaint.net/topic/111731-dds-filetype-plus-04-11-2022/) и любым расширением, позволяющим редактировать альфа-слой [Alpha Mask Import](https://forums.getpaint.net/topic/1854-alpha-mask-import-plugin-20/) или [Modify Channels](https://forums.getpaint.net/topic/110805-modify-channels-v111-2022-03-07/) - я буду использовать первое в этом обзоре, а пример со вторым смотрите в [GI_Assets](https://github.com/zeroruka/GI_Assets/wiki/Creating-Skins).
 
-12. Opening MonaHeadLightMap.dds, we can remove the alpha layer by clicking on Effects->Alpha Mask and making sure all options are unselected and pressing OK:
+12. Открыв файл MonaHeadLightMap.dds, мы можем удалить альфа-слой, нажав Effects->Alpha Mask, убедившись, что все опции не выбраны, и нажав OK:
 
 <img src="https://user-images.githubusercontent.com/107697535/175790813-24c1e522-41d1-42f5-a661-f25f7787dd4a.png" width="800"/>
 
 <img src="https://user-images.githubusercontent.com/107697535/175790898-f26b3f1d-6ed2-4f71-b186-c94ddf44174b.png" width="800"/>
 
-13. We can now see that portions of Mona's hair texture are darker. We can smooth these out in order to remove the shadows from Mona's hair:
+13. Теперь мы видим, что некоторые участки текстуры волос Моны стали темнее. Мы можем сгладить их, чтобы убрать тени с волос Моны:
 
 <img src="https://user-images.githubusercontent.com/107697535/174458242-75283d3c-72d5-4043-b75d-6273dce32671.png" width="800"/>
 
 <img src="https://user-images.githubusercontent.com/107697535/174458258-1c92a244-40e9-45c5-9a50-da3bfaa2bca4.png" width="800"/>
 
-14. We can then re-apply the alpha layer by clicking on Effects->Alpha Mask with the entire image selected and checking the "Invert Mask" option:
+14. Затем мы можем повторно применить альфа-слой, нажав «Эффекты->Альфа-маска» со всем выделенным изображением и отметив опцию «Инвертировать маску»:
 
 <img src="https://user-images.githubusercontent.com/107697535/175790958-5530e001-655b-4966-9e03-23be7dd93c7d.png" width="800"/>
 
-   - Note: A small amount of information related to emissions and blush has been lost compared to the original because we are inverting the alpha channel of the entire image - if you want to keep emission effects when re-applying, see https://www.youtube.com/watch?v=1y8oZ1TFZtg for an example of using masks to selectively apply the inversion to only parts of the image (tutorial is for Special K, but 3dmigoto functions the same) . Alternatively, you could also use [Modify Channels](https://forums.getpaint.net/topic/110805-modify-channels-v111-2022-03-07/) plugin to avoid losing any emissions and blush data.
+   - Примечание: Небольшое количество данных, связанной с свечением и румянцем, было потеряно в сравнении с оригиналом, поскольку мы инвертируем альфа-канал ВСЕГО изображения - если вы хотите сохранить эффекты выделений при повторном инвертировании, смотрите https://www.youtube.com/watch?v=1y8oZ1TFZtg пример использования масок для выборочного применения инверсии только к части изображения (руководство предназначено для Special K, но 3dmigoto работает так же). В качестве альтернативы можно использовать плагин [Modify Channels](https://forums.getpaint.net/topic/110805-modify-channels-v111-2022-03-07/), чтобы избежать потери данных о выделениях и румянце.
 
-15. Export the image by saving as a .dds, making sure to use "BC7 (Linear, DX 11+)" and setting Generate Mip Maps (Note: Lightmaps use BC7 Linear when exporting, Diffuse maps use BC7 SRGB)
+15. Экспортируйте изображение, сохранив его в формате .dds, обязательно используя опцию «BC7 (Linear, DX 11+)» и установив Generate Mip Maps (Примечание: карты освещения (LightMap) при экспорте используют BC7 Linear, а карты рассеивания (Diffuse - те что являются обычными цветными текстурами) - BC7 SRGB).
 
 <img src="https://user-images.githubusercontent.com/107697535/175790979-3f20d159-0eec-4fc0-947d-0cd6b02c95c9.png" width="800"/>
 
-16. Finally, we can replace the MonaHeadLightMap.dds that the mod is currently using either by directly overwriting it in the MonaMod folder or putting it back in the Mona character folder and recreating the mod folder again (the plugin will pull the texture .dds from the character folder every time it runs)
+16. Наконец, мы можем заменить файл MonaHeadLightMap.dds, который мод использует в данный момент, либо непосредственно перезаписав его в папке MonaMod, либо поместив его обратно в папку персонажа Mona и создав папку с модом заново (плагин будет извлекать текстуру .dds из папки персонажа при каждом экспорте).
 
 <img src="https://user-images.githubusercontent.com/107697535/174458283-1bec92ab-5008-4ae6-a6f8-110d7a0dee49.png" width="800"/>

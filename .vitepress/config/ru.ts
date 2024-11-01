@@ -2,7 +2,7 @@ import { defineConfig, type DefaultTheme } from 'vitepress'
 
 export const ru = defineConfig({
     lang: 'ru-RU',
-    description: "Modding tutorials, guides and documentations for users and mod creators.",
+    description: "Обучающие материалы, руководства и документация по моддингу для пользователей и модмэйкеров.",
 
     themeConfig: {
         nav: nav('/ru/'),
@@ -14,51 +14,51 @@ export const ru = defineConfig({
 
         editLink: {
             pattern: 'https://github.com/leotorrez/modding/edit/main/:path',
-            text: 'Edit this page on GitHub'
+            text: 'Редактировать эту страницу на GitHub'
         },
 
         footer: {
-            message: 'Do you have a tool, guide or translation that you want to add to the site? Check <a href="/modding/contribute">How to contribute?</a>',
-            copyright: 'Developed by <a href="https://github.com/leotorrez">leotorrez</a>'
+            message: 'У вас есть инструмент, руководство или перевод, которые вы хотите добавить на сайт? Перейдите в <a href="/modding/contribute">Как помочь проекту?</a>',
+            copyright: 'Разработан <a href="https://github.com/leotorrez">leotorrez</a>'
         },
     }
 })
 
 function nav(base:string): DefaultTheme.NavItem[] {
     return [
-        { text: 'Inicio', link: base},
-        { text: 'Descargas', link: base + 'downloads' },
-        { text: 'Inicio Rápido', link: base + 'guides/getting-started' },
-        { text: 'Guias de modding', link: base + 'guides' },
-        { text: 'Documentación INI', link: base + 'docs' },
-        { text: 'Reconocimientos', link: base + 'acknowledgements' },
+        { text: 'Главная', link: base},
+        { text: 'Скачивания', link: base + 'downloads' },
+        { text: 'С чего начать?', link: base + 'guides/getting-started' },
+        { text: 'Руководства', link: base + 'guides' },
+        { text: 'INI документация', link: base + 'docs' },
+        { text: 'Благодарности', link: base + 'acknowledgements' },
     ]
 }
 
 function sidebarGuide(): DefaultTheme.SidebarItem[] {
     return [
         {
-            text: 'Mod usage',
+            text: 'Как пользоваться?',
             items: [
-                { text: 'Quick start', link: 'getting-started' },
-                { text: 'Where to get mods?', link: 'getting-mods' },
-                { text: 'Launchers', link: 'launchers' },
-                { text: 'Mod managers', link: 'mod-managers' },
-                { text: 'Troubleshooting', link: 'troubleshooting' },
+                { text: 'С чего начать', link: 'getting-started' },
+                { text: 'Где достать моды?', link: 'getting-mods' },
+                { text: 'Лаунчеры', link: 'launchers' },
+                { text: 'Мод мэнеджеры', link: 'mod-managers' },
+                { text: 'Исправления ошибок', link: 'troubleshooting' },
                 { text: 'FAQ', link: 'faq' },
             ]
         },
         {
-            text: 'Guides',
+            text: 'Руководства по созданию модов',
             items: [
-                { text: 'Modding 101', link: 'modding-101' },
-                { text: 'Hunting', link: 'weapon-banana' },
-                { text: 'Textures 101', link: 'textures-101' },
-                { text: 'Shaders 101', link: 'shaders-101' },
-                { text: 'XXMI Tools', link: 'xxmi' },
-                { text: 'WWMI Tools', link: 'wwmi' },
+                { text: 'Modding 101 (В разработке)', link: 'modding-101' },
+                { text: 'Hunting (В разработке)', link: 'weapon-banana' },
+                { text: 'Textures 101 (В разработке)', link: 'textures-101' },
+                { text: 'Shaders 101 (В разработке)', link: 'shaders-101' },
+                { text: 'XXMI Tools (В разработке)', link: 'xxmi' },
+                { text: 'WWMI Tools (В разработке)', link: 'wwmi' },
                 { text: 'Mona Hat', link: 'mona-hat' },
-                { text: 'Weapon banana', link: 'weapon-banana' },
+                { text: 'Weapon banana (В разработке)', link: 'weapon-banana' },
                 { text: 'ZZZ textures and properties', link: 'zzz-textures' },
             ]
         },
@@ -67,46 +67,46 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
 
 function sidebarReference(): DefaultTheme.SidebarItem[] {
     return [{
-        text: 'INI Documentation',
+        text: 'INI Документация',
         items: [
-            { text: 'Introduction', link: '' },
-            { text: 'Glossary', link: 'glossary' },
-            { text: '3dm Statics', link: '3dm-statics' },
+            { text: 'Введение', link: '' },
+            { text: 'Терминология', link: 'glossary' },
+            { text: '3dm статика', link: '3dm-statics' },
             {
-                text: "Basic concepts",
+                text: "Базовые понятия",
                 items: [
-                    { text: 'Override', link: 'override' },
-                    { text: 'Resource', link: 'resource' },
-                    { text: 'Flags', link: 'flags' },
-                    { text: 'Shader Override', link: 'shader-override' },
-                    { text: 'Texture Override', link: 'texture-override' },
+                    { text: 'Что такое Override', link: 'override' },
+                    { text: 'Ресурсы', link: 'resource' },
+                    { text: 'Флаги', link: 'flags' },
+                    { text: 'Замена шейдеров', link: 'shader-override' },
+                    { text: 'Замена текстур', link: 'texture-override' },
                 ]
             },
             {
-                text: "Logic",
+                text: "Логика",
                 items: [
-                    { text: 'Operators', link: 'operators' }, //move pre and post here
-                    { text: 'Constants', link: 'constants' },
-                    { text: 'Present', link: 'present' },
-                    { text: 'Key', link: 'key' },
-                    { text: 'CommandList', link: 'command-list' },
-                    { text: 'Draws Calls', link: 'draw-calls' },
-                    { text: 'Debugging INIs', link: 'debugging' },
+                    { text: 'Операторы', link: 'operators' }, //move pre and post here
+                    { text: 'Константы', link: 'constants' },
+                    { text: 'Оператор Present', link: 'present' },
+                    { text: 'Ключи | Key', link: 'key' },
+                    { text: 'Лист команд', link: 'command-list' },
+                    { text: 'Вызовы отрисовок', link: 'draw-calls' },
+                    { text: 'Как дебажить INI', link: 'debugging' },
                 ]
             },
             {
-                text: "Advanced concepts",
+                text: "Продвинутые понятия",
                 items: [
-                    { text: 'DirectX pipeline', link: 'directx-pipeline' },
-                    { text: 'Lifespan of a frame in 3dm', link: 'lifespan-of-a-frame' },
-                    { text: 'Advanced hunting & dumping', link: 'advanced-hunting' },
-                    { text: 'How to log', link: 'logs' },
+                    { text: 'Пайплан DirectX', link: 'directx-pipeline' },
+                    { text: 'Графический конвеер в 3dm', link: 'lifespan-of-a-frame' },
+                    { text: 'Продвинутый дампинг и поиск', link: 'advanced-hunting' },
+                    { text: 'Как логировать', link: 'logs' },
 
-                    { text: 'Shader Regex', link: 'shader-regex' },
-                    { text: 'Fuzzy Matching', link: 'fuzzy-matching' },
-                    { text: 'CustomShader', link: 'custom-shader' },
-                    { text: 'System Values', link: 'system-values' },
-                    { text: 'Namespace', link: 'namespace' },
+                    { text: 'Шейдер Regex', link: 'shader-regex' },
+                    { text: 'Нечеткое сопоставление', link: 'fuzzy-matching' },
+                    { text: 'Кастомные Шейдеры', link: 'custom-shader' },
+                    { text: 'Системные значения', link: 'system-values' },
+                    { text: 'Пространство имен', link: 'namespace' },
                 ]
             }
         ]
