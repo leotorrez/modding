@@ -1,118 +1,118 @@
-# ZZZ Textures and properties
+# ZZZ Текстуры и свойства
 
-The current tutorial assumes you already know how to mod the game and all the basics of 3D modeling. Concepts such as UV, texturing, modeling, kit-bashing, import and export won't be covered here. Feel free to learn more basic concepts at my modding guide.
+Данное руководство предполагает, что вы уже знаете, как делать моды в игре и все основы 3D-моделирования. Такие понятия, как UV, текстурирование, моделирование, кит-башинг, импорт и экспорт, здесь рассматриваться не будут. Не стесняйтесь узнать больше базовых понятий в моем руководстве по моддингу.
 
-- [How to mod ZZZ](https://drive.google.com/file/d/11CSjnhNc0kPGuspM152a_uJLS4IJAM-Q/view?usp=sharing)
+- [Как модить ZZZ](https://drive.google.com/file/d/11CSjnhNc0kPGuspM152a_uJLS4IJAM-Q/view?usp=sharing)
 
-ZZZ models have a few types of information encoded into their meshes other than the mere position of their vertex. That would be its normals, tangents, uvs, vertex color and weights.
+Модели ZZZ имеют несколько типов информации, закодированной в их сетках, помимо простого положения вершины. Это нормали, тангент, uv развёртки, цвет и веса вершин.
 
-Normals, tangents and weights are needed for the proper rendering of a 3d model and won't be covered here. The first two have some incidence on outline shape but the plugins should deal with them automatically for you.
+Нормали, тангенты и веса необходимы для правильного рендеринга 3d-модели и не рассматриваются здесь. Первые два параметра влияют на форму контура, но плагины должны справляться с ними автоматически.
 
-## Table of Contents
+## Оглавление
 [[toc]]
 
-## Vertex Color
+## Цвет вершин
 
-![Vertex Color](https://images.gamebanana.com/img/ss/tuts/669ed8191ffe3.jpg)
-I've set up a custom material in order to comfortably visualize vertex color as I work on it and of course for illustration purposes in this guide. Feel free to copy the node setup.
+![Цвета Вертексов](https://images.gamebanana.com/img/ss/tuts/669ed8191ffe3.jpg)
+Я создал кастомный материал, чтобы удобно визуализировать цвет вершин в процессе работы над ним и, конечно, для иллюстрации в этом руководстве. Не стесняйтесь копировать настройку узла.
 
-### Red channel
+### Красный канал
 
-![Red Channel](https://images.gamebanana.com/img/ss/tuts/669ed81b9c36f.jpg)
+![Красный канал](https://images.gamebanana.com/img/ss/tuts/669ed81b9c36f.jpg)
 
-Is hard to tell at first what is the purpose of this channel so allow me to walk you through it. The game uses it as a way to thicken or thin the outline around the character. For example at the end of a hair strand the outline becomes thinner to get that hand drawn lineart effect. That is why you see some dark spots all over Nicole's hair. It is also used around some edges of her clothing for a similar effect. There is not specific pattern that a mod maker should follow when dealing with these, is simply a tool that gives more control over what's shown on the screen. By default you might want to just make it a flat grey as most of her body is.
+Поначалу трудно понять, для чего нужен этот канал, поэтому позвольте мне провести вас через него. В игре он используется как способ утолщения или утончения обводки вокруг персонажа. Например, в конце пряди волос контур становится тоньше, чтобы получить эффект ручной прорисовки. Вот почему вы видите темные пятна на волосах Николь. Он также используется по краям ее одежды для достижения аналогичного эффекта. Нет никакого определенного шаблона, которому должен следовать создатель мода при работе с ними, это просто инструмент, который дает больше контроля над тем, что отображается на экране. По умолчанию вы можете просто сделать его ровным серым, как и большую часть ее тела.
 
-### Green Channel
-![Green Channel](https://images.gamebanana.com/img/ss/tuts/669ed81b608b5.jpg)
+### Зеленый канал
+![Зеленый канал](https://images.gamebanana.com/img/ss/tuts/669ed81b608b5.jpg)
 
-This is the one I am least confident about. I have my theories about its use but the pattern breaks from character to character. So feel free to dm me information about it if you get to testing it at some point. To avoid it causing issues, defaulting it to a midtone again is the safe bet.
+В этом я уверен меньше всего. У меня есть свои теории по поводу его использования, но шаблон меняется от персонажа к персонажу. Так что не стесняйтесь присылать мне информацию о нем в личные сообщения (Небольшое уточнение от переводчика, автор данного туториала англо-испано говорящий человек, так что если решитесь написать LeoTorrez'у, пишите ему на языке который он понимает :3 ), если вам доведется испытать его в какой-то момент. Чтобы это не вызывало проблем, лучше всего снова установить по умолчанию средний тон.
 
-### Blue channel
-![Blue Channel](https://images.gamebanana.com/img/ss/tuts/669ed81b6539c.jpg)
+### Синий канал
+![Синий канал](https://images.gamebanana.com/img/ss/tuts/669ed81b6539c.jpg)
 
-This one seems to be exclusively used on hairstyles. And my supposition is that is used as a guide to tell the game what part of the hair should cast a harder shadow over the body. It is also useful to identify which part of the mesh is hair- So the game might be using it to give hairstyles a different shading in general as well. More testing is required to confirm these suspicious. Defaulting to absolute 0 or black seems fine for the body in general.
+Похоже, что он используется исключительно для причесок. Я предполагаю, что он используется в качестве направляющей, чтобы указать игре, какая часть волос должна отбрасывать более сильную тень на тело. Он также полезен для определения того, какая часть сетки является волосами. Так что игра может использовать его для придания прическам другого оттенка в целом. Для подтверждения этих подозрений требуется дополнительное тестирование. Для тела по умолчанию используется абсолютный 0 или черный цвет.
 
-### Alpha channel
-![Alpha Channel](https://images.gamebanana.com/img/ss/tuts/669ed81b7b181.jpg)
+### Альфа-канал
+![Альфа-канал](https://images.gamebanana.com/img/ss/tuts/669ed81b7b181.jpg)
 
-Seems to be related to the neck of the character but I haven't had time nor need to modify it so far. I tend to simply keep the original neck of the character fully circumventing having to deal with this. It might be useful however for some special shading cases.
+Похоже, это связано с шеей персонажа, но пока у меня не было ни времени, ни необходимости ее изменять. Я предпочитаю просто сохранять оригинальную шею персонажа, чтобы не возиться с этим. Однако это может быть полезно для некоторых особых случаев затенения.
 
-## Texture slots and their purpose
-![Texture Slots](https://images.gamebanana.com/img/ss/tuts/669ed81be6cce.jpg)
+## Текстурные слоты и их назначение
+![Текстурные слоты](https://images.gamebanana.com/img/ss/tuts/669ed81be6cce.jpg)
 
-The images top left Diffuse, top right NormalMap, bottom left LightMap, bottom right MaterialMap.
+Изображения: слева вверху - Diffuse, справа вверху - NormalMap, слева внизу - LightMap, справа внизу - MaterialMap.
 
-The names are somewhat technically wrong but they are good enough as to identify what is the general purpose of each image.
+Названия несколько технически неправильные, но они достаточно хороши, чтобы определить общее назначение каждого изображения.
 
-The `diffuse` texture is simply the coloring of the mesh and is encoded in BC7 sRGB while the rest is BC7 Linear.
+Текстура `diffuse` - это просто раскраска сетки и закодирована в BC7 sRGB, а остальные - в BC7 Linear.
 
-The `normal map` red and green channels keep the vertical and horizontal normal information for the mesh. Whilst its blue channel is an occlusion mask.
+Красный и зеленый каналы `normal map` хранят информацию о вертикальных и горизонтальных нормалях сетки. В то время как синий канал является маской окклюзии.
 
-The `LightMap` and material map tend to look similar and can be confusing, as a rule of thumb the material map tends to be mostly pink or mostly orange overall. While the lightmap seems to be generally red. There is no guarantee in this of course but is a good guide.
+Карта света и карта материала выглядят одинаково и могут сбивать с толку. Как правило, карта материала имеет тенденцию быть преимущественно розовой или преимущественно оранжевой. В то время как карта света, как правило, красная. Конечно, в этом нет никакой гарантии, но это хороший ориентир.
 
-The `LightMap` red channel encodes outline and shadowramp information for each part of the mesh in what seems to be up to 5 thresholds of intensity. This is quite similar to the alpha channel in genshin's LM.
+Красный канал `LightMap` кодирует информацию о контурах и теневой рампе для каждой части сетки с интенсивностью до 5 порогов. Это очень похоже на альфа-канал в LM Геншина.
 
-The green channel is metallic and the blue is some form of gloss.
+Зеленый канал - это металлизированность поверхности, а синий - некий глянец.
 
-The `Material Map`'s red channel seems to be used on some models to encode which part of the mesh should be transparent and how intense that is. Keep in mind this is not used in all characters. Good examples are Anby's glass box on her backpack or glasses in some characters.
+Красный канал `Material Map`, похоже, используется в некоторых моделях для кодирования того, какая часть сетки должна быть прозрачной и насколько интенсивной. Имейте в виду, что это используется не во всех персонажах. Хорошими примерами являются стеклянная коробка на рюкзаке Энби или очки некоторых персонажей.
 
-The green channel is another form of metallic-ness but is hard to describe it in a single word.
+Зеленый канал - это еще одна форма металлического блеска, но его трудно описать одним словом.
 
-The blue channel seems to be specular information, but again is not quite it in the traditional PBR sense.
+Синий канал кажется спекулярной информацией, но опять же не совсем в традиционном понимании PBR.
 
-## UVs
+## UV развёртка
 
 ### TEXCOORD.xy
 ![TEXCOORD.xy](https://images.gamebanana.com/img/ss/tuts/669ed81c5c95c.jpg)
 
-This one is a classic mesh that maps your 2D texture to the 3D space
+Это классическая сетка, которая отображает вашу 2D-текстуру в 3D-пространство.
 
 ### TEXCOORD1.xy
 ![TEXCOORD1.xy](https://images.gamebanana.com/img/ss/tuts/669ed81c3c2fd.jpg)
 
-This is quite the odd one no? I will elaborate further on it further down the lane. It has its uses but its quite nieche.
+Это довольно странно, не так ли? Я расскажу о нем подробнее дальше. У него есть свое применение, но он довольно нишевый.
 
 ### TEXCOORD2.xy
 ![TEXCOORD2.xy](https://images.gamebanana.com/img/ss/tuts/669ed81ae8f21.jpg)
 
-This is simply an isometric projection of your mesh, it is likely used by the game for some visual effects. If you add mesh to your model you will need to generate this one.
+Это просто изометрическая проекция вашего меша, которая, вероятно, используется в игре для некоторых визуальных эффектов. Если вы добавляете сетку в свою модель, вам нужно будет сгенерировать эту.
 
 ### TEXCOORD3.xy
 ![TEXCOORD3.xy](https://images.gamebanana.com/img/ss/tuts/669ed81be26c9.jpg)
 
-Last but not least. This one is almost the same as TEXCOORD.XY but it can be used to map the inner side of a mesh to a different part of the texture, for example the underside of a skirt. There are alternative methods to achieve this effect so don't worry if it gets troublesome to use.
+И последнее, но не менее важное. Это почти то же самое, что и TEXCOORD.XY, но его можно использовать для отображения внутренней стороны сетки на другую часть текстуры, например, на нижнюю часть юбки. Для достижения этого эффекта существуют альтернативные методы, так что не переживайте, если его использование окажется затруднительным.
 
-### A note on TEXCOORD1.xy
+### Заметка о TEXCOORD1.xy
 
-This is used by the game for some operation over the outline of the character. I can't quite tell exactly what it does but it can make it so a new added mesh looks different from the original. When put side by side it will become very evident. So I've made a pair of node setups that make it easier to visualize them. Their values go from -1 to 1 hence why a giant ball ends up showing it int's UV.
+Он используется игрой для некоторых операций над контуром персонажа. Я не могу точно сказать, что именно он делает, но он может сделать так, что новая добавленная сетка будет выглядеть иначе, чем оригинальная. При наложении друг на друга это будет очень заметно. Поэтому я создал пару узлов, чтобы было легче их визуализировать. Их значения изменяются от -1 до 1, поэтому гигантский шар в итоге показывает свой UV.
 
-If your mesh looks weird and you have no idea how to fix it, it might be related to these. The easy fix is to UV unwrap your mesh for this UV and scale the uv to 0. Then move the result to the top left corner of the uv. That will equal to 0 on both axis.
+Если ваша сетка выглядит странно, и вы не знаете, как ее исправить, это может быть связано с этим. Простое исправление - развернуть сетку в UV для этого UV и масштабировать uv до 0. Затем переместите результат в левый верхний угол uv. Это будет равно 0 по обеим осям.
 
-All of these will need to be updated as more mods are made and a better understanding of these values comes to light so please let me know anything you find out about these.
+Все эти данные будут обновляться по мере создания новых модов и лучшего понимания этих ценностей, поэтому, пожалуйста, сообщайте мне обо всем, что вы узнаете о них.
 
 ## TL;DL
 
-### Material Map
+### Материалы
 
-- R: Transparency(when enabled)
-- G: God Knows
-- B: Specular-ish
+- R: Прозрачность (если включена)
+- G: Бог знает что
+- B: Блеск
 
-### Light Map
+### Карта света
 
-- R: Shadowramp / outline config (Can be preset color or darkened diffuse)
-- G: Metalic
-- B: Gloss
+- R: Конфигурация тени/контура (может быть предустановленным цветом или затемненной текстурой)
+- G: Металлическая поверхность
+- B: Глянец
 
-### Normal Map
+### Карта нормалей
 
-- R: Normal Map Vertical
-- G: Normal Map Horizontal
-- B: Oclussion
+- R: Вертикальная координата
+- G: Горизонтальная координата
+- B: Глубина
 
-### Vertex paint
+### Покраска вертексов
 
-- R: Outline Thicc
-- G: God knwos but maybe Z-depth outline
-- B: Contact shadow intensity - MAYBE
-- Alpha: Something about the neck man
+- R: Размер обводки
+- G: Непонятно, но возможно глубина обводки по Z-координате
+- B: Интенсивность контактных теней - возможно...
+- Alpha: Что то связанное с шеей, дружище...

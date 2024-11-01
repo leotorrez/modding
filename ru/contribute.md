@@ -5,18 +5,18 @@ next: false
 prev: false
 ---
 
-# Contribute
+# Как помочь проекту?
 
-We are happy to accept contributions to the project, this includes guides, tools, translations and more.
-In order to contribute follow any of these alternate paths:
+Если вы желаете помочь нашему обучающему проекту своими руководствами, проектами, инструментами, переводами или другим.
+Чтобы внести свой вклад в данный проект, в ыможете:
 
-- Contact the developer of the website directly in discord under the username [leotorrez](https://discord.com/users/335615146648928257)
+- Свяжитесь с разработчиком данного сайта напрямую в Discord под именем пользователя (прим. он англ-испано говорящий) [leotorrez](https://discord.com/users/335615146648928257)
 <!-- - Use the following [google form to submit your contribution](https://forms.gle/) -->
-- Fork the repository and submit a pull request with your changes `(preferred method)`
+- Или же создайте форк репозитория и сделайте pull-request. `(предпочтительно)`
 
-## Contribution Guidelines
+## Правило внесения вклада в проект
 
-- All content must be SFW (this includes images and text)
-- There can't be any copyrighted material without proper attribution and/or license to use it
-- All content must be related to the games and tools mentioned in the website
-- All content must be in markdown format or plain text
+- Весь контент должен быть SFW (Отсутствие 18+ контента, или других нежелательных контентов, включая изображения и текст)
+- Вы не можете выложить сюда материал защищённый авторскими правами, без разрешения и указания автора, или лицензии на его использования.
+- Весь контент должен быть связан с играми и инструментами, упомянутыми на сайте.
+- Весь контент должен быть в формате markdown (.md) или в виде обычного текста (.txt).

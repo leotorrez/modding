@@ -128,27 +128,27 @@ const writers = [
 <VPTeamPage>
   <VPTeamPageTitle>
     <template #title>
-      Acknowledgements
+      Благодарности этим людям
     </template>
   </VPTeamPageTitle>
   <VPTeamPageSection>
-    <template #title>3dmigoto Author's</template>
+    <template #title>Создатели 3dmigoto</template>
     <template #lead>
-      Разработка 3DMigoto сделала моддинг возможным. Без помощи этих людей нас бы здесь впринципе и не было бы.
+      Существование 3DMigoto сделала моддинг возможным. Если бы не эти люди, нас бы тут впринципе и не было бы :3 
     </template>
     <template #members>
       <VPTeamMembers :members="authors" />
     </template>
   </VPTeamPageSection>
   <VPTeamPageSection>
-    <template #title>Разработчики инструментов для моддинга</template>
-    <template #lead>Благодаря их работе игры XXMI постоянно обновляется и исправляется.</template>
+    <template #title>Разработчики инструментария для моддинга</template>
+    <template #lead>Благодаря их работе, игры XXMI постоянно обновляются и исправляются.</template>
     <template #members>
       <VPTeamMembers size="small" :members="devs" />
     </template>
   </VPTeamPageSection>
   <VPTeamPageSection>
-    <template #title>Авторы туториалов</template>
+    <template #title>Руководства и переводы</template>
     <template #lead>Замечательные участники, которые предоставили свои знания в данный проект.</template>
     <template #members>
       <VPTeamMembers size="small" :members="writers" />
