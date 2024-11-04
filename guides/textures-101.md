@@ -1,6 +1,6 @@
 # 3DMigoto GIMI Texture Modding Tutorial
 
-> Writen by: [SilentNightSound](github.com/SilentNightSound)
+> Writen by: [SilentNightSound](https://github.com/SilentNightSound)
 
 This tutorial will go through the process of modding GI’s textures.
 
@@ -125,7 +125,7 @@ And instead using [ShaderOverride] sections to specify what you are looking for 
 
 11. Now, lets create those textures and add them to the same folder as the Banner.ini. Note that all 3 textures have `BC7_UNORM` as their type, which corresponds to `BC7 Linear`
 
-    For the banner, I’ll give it a recolor and save it as `DendroBannerCard.dds` (details on how to open and save dds files in the [Mona Hat Removal](Guides/MonaWalkthrough.md) tutorial)
+    For the banner, I’ll give it a recolor and save it as `DendroBannerCard.dds` (details on how to open and save dds files in the [Mona Hat Removal](./mona-hat.md) tutorial)
 
  <img src="https://user-images.githubusercontent.com/107697535/208989556-0a5b60a1-1396-4b38-94a9-35eec74bdeea.png"  style="display:block;float:none;margin-left:auto;margin-right:auto">
 

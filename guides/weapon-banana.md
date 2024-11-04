@@ -1,14 +1,14 @@
 # Custom Weapon Modding Walkthrough
 
-> Writen by: [SilentNightSound](github.com/SilentNightSound)
+> Writen by: [SilentNightSound](https://github.com/SilentNightSound)
 
 This is a walkthrough for importing custom weapon models into Genshin Impact.
 
 For this tutorial, I am assuming you are familiar with the basics of using GIMI (how to set it up/import/export/load); if not, please read through [Mona Hat Removal](./mona-hat). I am also assuming basic Blender knowledge – for questions on Blender basics like how to change modes, select vertices and open certain menus please search the knowledge you need on Google/Youtube.
 
-Weapon mods are more complicated than basic mesh edits, but less complicated than importing custom characters. ~90% of the steps remain the same for custom characters, but characters involve much more complicated vertex group/bone structures than weapons. 
+Weapon mods are more complicated than basic mesh edits, but less complicated than importing custom characters. ~90% of the steps remain the same for custom characters, but characters involve much more complicated vertex group/bone structures than weapons.
 
-I will be demonstrating three different weapon models, ordered by complexity. Generally speaking, for weapons the order of difficulty from easiest to hardest is Swords/Spears/Claymores without tassels → Swords/Spears/Claymores with tassels → Bows → Catalysts. Each weapon builds on the last in terms of complexity, so please read through in order. 
+I will be demonstrating three different weapon models, ordered by complexity. Generally speaking, for weapons the order of difficulty from easiest to hardest is Swords/Spears/Claymores without tassels → Swords/Spears/Claymores with tassels → Bows → Catalysts. Each weapon builds on the last in terms of complexity, so please read through in order.
 
 I will be using [this]( https://sketchfab.com/3d-models/banana-6d99c6c1a8bc4b3e97cebbc49d62115d) model of a Banana for all three mods (credits to Marc Ed).
 
@@ -122,7 +122,7 @@ Let’s start with the one of the simplest types of weapons, a claymore without 
 
 15. We are almost done! The last part is to change the name to have “SerpentSpineHead” and remove that text from the original object so the plugin knows which object to export. Once you have named things correctly, export using the Export Genshin Mod Folder back to SerpentSpine data folder (see Mona tutorial for full steps)
 
-    If you have any issues with exporting, please refer to the [GIMI troubleshooting guide](/Guides/Troubleshooting.md#model-exporting-issues) to see if your issue shows up.
+    If you have any issues with exporting, please refer to the [Troubleshooting guide](./troubleshooting) to see if your issue shows up.
 
 16. At this point, it is a good idea to confirm that your model is loading into the game correctly before we start working on textures. Copy over the Mod folder and reload:
 

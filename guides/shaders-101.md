@@ -1,6 +1,6 @@
 # 3DMigoto GIMI Effect and Shader Tutorial
 
-> Writen by: [SilentNightSound](github.com/SilentNightSound)
+> Writen by: [SilentNightSound](https://github.com/SilentNightSound)
 
 This tutorial will go over the process of changing Genshin’s effects such as skill effects, lighting effects, and any in-game objects that are not controlled through textures or buffers. Learning how shaders work will significantly increase the range of what you are able to mod.
 

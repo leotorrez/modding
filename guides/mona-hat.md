@@ -1,6 +1,6 @@
 # Mona Hat Removal Walkthrough
 
-> Writen by: [SilentNightSound](github.com/SilentNightSound)
+> Writen by: [SilentNightSound](https://github.com/SilentNightSound)
 
 This is a walkthrough that goes through the process of deleting an object (Mona's hat) from the character mesh from start to finish.
 
