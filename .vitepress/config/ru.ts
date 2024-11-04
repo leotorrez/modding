@@ -52,7 +52,7 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
             text: 'Руководства по созданию модов',
             items: [
                 { text: 'Modding 101 (В разработке)', link: 'modding-101' },
-                { text: 'Hunting (В разработке)', link: 'weapon-banana' },
+                { text: 'Hunting (В разработке)', link: 'hunting' },
                 { text: 'Textures 101 (В разработке)', link: 'textures-101' },
                 { text: 'Shaders 101 (В разработке)', link: 'shaders-101' },
                 { text: 'XXMI Tools (В разработке)', link: 'xxmi' },

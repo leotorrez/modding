@@ -40,26 +40,26 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
         {
             text: 'Mod usage',
             items: [
-                { text: 'Quick start', link: 'getting-started' },
-                { text: 'Where to get mods?', link: 'getting-mods' },
+                { text: 'Inicio Rápido', link: 'getting-started' },
+                { text: 'Donde conseguir mods?', link: 'getting-mods' },
                 { text: 'Launchers', link: 'launchers' },
                 { text: 'Mod managers', link: 'mod-managers' },
                 { text: 'Troubleshooting', link: 'troubleshooting' },
-                { text: 'FAQ', link: 'faq' },
+                { text: 'Preguntas frecuentes', link: 'faq' },
             ]
         },
         {
             text: 'Guides',
             items: [
                 { text: 'Modding 101', link: 'modding-101' },
-                { text: 'Hunting', link: 'weapon-banana' },
-                { text: 'Textures 101', link: 'textures-101' },
+                { text: 'Hunting', link: 'hunting' },
+                { text: 'Texturas 101', link: 'textures-101' },
                 { text: 'Shaders 101', link: 'shaders-101' },
                 { text: 'XXMI Tools', link: 'xxmi' },
                 { text: 'WWMI Tools', link: 'wwmi' },
-                { text: 'Mona Hat', link: 'mona-hat' },
-                { text: 'Weapon banana', link: 'weapon-banana' },
-                { text: 'ZZZ textures and properties', link: 'zzz-textures' },
+                { text: 'Sombrero Mona', link: 'mona-hat' },
+                { text: 'Arma Banana', link: 'weapon-banana' },
+                { text: 'ZZZ texturas y propiedades', link: 'zzz-textures' },
             ]
         },
     ]
