@@ -1,5 +1,7 @@
 # Mona Hat Removal Walkthrough
 
+> Writen by: [SilentNightSound](github.com/SilentNightSound)
+
 This is a walkthrough that goes through the process of deleting an object (Mona's hat) from the character mesh from start to finish.
 
 Prior to 3Dmigoto, there was no way to cleanly remove her hat - it does not have a unique shader, so it cannot be removed in Special K; it is not a unique object in the unity object hierarchy so it cannot be removed using Melon; and the bones that are attached to it are also connected to Mona's hair meaning any attempt to change the bone structure would result in damaging Mona's hair as well.
