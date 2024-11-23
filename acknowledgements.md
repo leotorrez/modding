@@ -107,7 +107,7 @@ const writers = [
   {
     avatar: 'https://www.github.com/cybertron.png',
     name: 'Cybertron',
-    title: 'Author of the first porting mod in video format',
+    title: 'Author of the 1st porting guide in video format',
     links: [
       // { icon: 'github', link: 'https://github.com/caverabbit'},
       { icon: 'x', link: 'https://x.com/cybertron231'},
@@ -121,6 +121,15 @@ const writers = [
   links: [
     // { icon: 'github', link: 'https://github.com/rayvich'},
     { icon: 'gamebanana', link: 'https://gamebanana.com/members/2370640'},
+  ]
+  },
+  {
+  avatar: 'https://anilyan.carrd.co/assets/images/image03.jpg?v=50db0d5a',
+  name: 'Anilyan',
+  title: 'Guide writer',
+  links: [
+    { icon: 'instagram', link: 'https://anilyan.carrd.co'},
+    { icon: 'discord', link: 'https://discord.com/invite/HcgvjWFCaG'},
   ]
   },
 ]
