@@ -10,9 +10,7 @@ prev: false
 ## Modding tools
 
 - [XXMI Launcher](https://github.com/SpectrumQT/XXMI-Launcher/releases/latest) - A launcher for WW, GI, ZZZ and HSR
-- [JASM](https://github.com/Jorixon/JASM) - "Just Another Mod Manager" for all 3dmigoto games
 - [Bunny Reshade](https://gamebanana.com/tools/18082) - Reshade for XXMI games (compatible with XXMI Launcher)
-<!-- - [Another mod manager](https://dummy.com) - Mod Manager for ZZZ -->
 
 ## Mod Creation tools
 

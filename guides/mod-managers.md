@@ -13,4 +13,4 @@ Alright alright, disclaimers aside mod managers are quite interesting projects a
     - [https://gamebanana.com/tools/17807](In-Game 'Mod Manager' for ZZMI)
     - [https://gamebanana.com/tools/17435](In-Game 'Mod Manager' for WWMI)
 - [https://gamebanana.com/tools/14574](JASM - Just Another Skin Manager)
-- [https://gamebanana.com/tools/17728](GI Mod Manager)
+- [https://gamebanana.com/tools/12471](GI Mod Manager)
