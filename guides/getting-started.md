@@ -23,10 +23,10 @@ You might be wondering how it can be this simple. As a matter of fact, it is! Th
 ## Installing your first mod
 
 1. Head over to your modding site of choice. We recommend [gamebanana.com](https://gamebanana.com) but sites like [nexusmods.com](https://nexusmods.com) or [loverslab.com](https://loverslab.com) are also good sources.
-    - [GI mods](https://gamebanana.com/mods/1)
-    - [WW mods](https://gamebanana.com/mods/1)
-    - [HSR mods](https://gamebanana.com/mods/1)
-    - [ZZZ mods](https://gamebanana.com/mods/1)
+    - [GI mods](https://gamebanana.com/games/8552)
+    - [WW mods](https://gamebanana.com/games/20357)
+    - [HSR mods](https://gamebanana.com/games/18366)
+    - [ZZZ mods](https://gamebanana.com/games/19567)
 2. Browse the site and download the mod you want to install. They tend to be in a `.zip` file (or similar) with all the necessary files inside.
 3. Open the launcher, click on the "Open Mods folder"
 
