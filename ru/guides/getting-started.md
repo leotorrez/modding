@@ -1,6 +1,6 @@
 ---
 outline: deep
-sidebar: false
+sidebar: true
 ---
 # Начало работы
 
@@ -8,7 +8,7 @@ sidebar: false
 
 1. Скачайте и установите последнюю версию [Launcher](https://github.com/SpectrumQT/XXMI-Launcher/releases/latest) 
 ![downloadlauncher](./img/downloadlauncher.png)
-2. Запустите лаунчер, выбирте нужную вам игру, и нажмите "Start"
+2. Запустите лаунчер, выберете нужную вам игру, и нажмите "Start"
 ![Start](./img/start.png)
     - Перед вами откроется окно, в котором вы узнаете основные сочетания клавиш для использования 3dmigoto. Внимательно прочитайте его и нажмите упомянутую клавишу, чтобы закрыть его.
     ![firstscreen](./img/firstscreen.png)

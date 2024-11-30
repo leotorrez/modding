@@ -1,6 +1,6 @@
 ---
 outline: deep
-sidebar: false
+sidebar: true
 ---
 # Getting Started
 
