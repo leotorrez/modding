@@ -1,6 +1,6 @@
 ---
 outline: deep
-sidebar: true
+sidebar: false
 ---
 # Начало работы
 
