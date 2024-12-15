@@ -148,9 +148,9 @@ You must replace it for a `LucyHairBlend` texture override, keep in mind its has
 [TextureOverrideLucyHairPosition]
 hash = 5315f036
 handling = skip
+vb2 = ResourceLucyHairBlend
 if DRAW_TYPE == 1
     vb0 = ResourceLucyHairPosition
-    vb2 = ResourceLucyHairBlend
     draw = 3079,0
 endif
 

@@ -147,9 +147,9 @@ Debes reemplazarlo por una anulación de textura `LucyHairBlend`, ten en cuenta 
 [TextureOverrideLucyHairPosition]
 hash = 5315f036
 handling = skip
+vb2 = ResourceLucyHairBlend
 if DRAW_TYPE == 1
     vb0 = ResourceLucyHairPosition
-    vb2 = ResourceLucyHairBlend
     draw = 3079,0
 endif
 
