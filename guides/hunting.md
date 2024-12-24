@@ -40,21 +40,18 @@ All controls can be changed in `d3dx.ini` under `[Hunting]` section, with valid 
 
 First of all, make sure hunting is enabled, press `numpad 0`, you should see green text on top and bottom of the screen.
 
-1.Counters section
-   - `VS` - Vertex Shader
+![green-text](img/hunting/green-text.png)
+
+1. Counters section, numbers after them displays `current`/`total count`.
+      - `VS` - Vertex Shader
    - `PS` - Pixel Shader
    - `IB` - Index Buffer
    - `VB` - Vertex Buffer
    - `CS` - Compute Shader
-
-numbers after them displays `current`/`total count`.
-
-2.Hashes
-
-Displays hash that currently marked and can be copied, if was enabled "Dump Shaders" then it will save
+2. Hashes
+   - Displays hash that currently marked and can be copied
+   - if was enabled "Dump Shaders" then it will save
 shader to `ShaderFixes` folder.
-
-![green-text](img/hunting/green-text.png)
 
 ---
 
@@ -118,6 +115,8 @@ In different games, and between different object in same game, may be different 
 To select which texture which type, click in it with LMB, and pick from list.
 You need to pick them for all objects, and click "Done".
 
+![gui_collect-extract](img/hunting/gui_collect-extract.png)
+
 How to identify textures:
    - Diffuse
       - fully colored texture
@@ -127,8 +126,6 @@ How to identify textures:
       - simple colored texture.
    - Material
       - simple colored texture, with some details.
-
-![gui_collect-extract](img/hunting/gui_collect-extract.png)
 
 ---
 
