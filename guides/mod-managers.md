@@ -9,8 +9,8 @@ Therefore, I recommend to make a backup of your mod folder before even testing a
 Alright alright, disclaimers aside mod managers are quite interesting projects and they need more support and aid to polish their work. I will be linking the ones I am aware of without much explanation of their functionality both because they explain it in their own links and because their functionalities are always evolving. 
 
 - In-game mod manager by [Nurarihyon]
-    - [https://gamebanana.com/tools/17415](In-Game 'Mod Manager' for GIMI)
-    - [https://gamebanana.com/tools/17807](In-Game 'Mod Manager' for ZZMI)
-    - [https://gamebanana.com/tools/17435](In-Game 'Mod Manager' for WWMI)
-- [https://gamebanana.com/tools/14574](JASM - Just Another Skin Manager)
-- [https://gamebanana.com/tools/12471](GI Mod Manager)
+    - [In-Game 'Mod Manager' for GIMI](https://gamebanana.com/tools/17415)
+    - [In-Game 'Mod Manager' for ZZMI](https://gamebanana.com/tools/17807)
+    - [In-Game 'Mod Manager' for WWMI](https://gamebanana.com/tools/17435)
+- [JASM - Just Another Skin Manager](https://gamebanana.com/tools/14574)
+- [GI Mod Manager](https://gamebanana.com/tools/12471)

@@ -20,18 +20,19 @@ in most cases it's shader mods, so better to rename `Mods` folder or add `DISABL
 
 ## Launcher settings
 
+![enable-hunting](img/hunting/enable-hunting.png)
+
 By default, mods may not be enabled, to enable them, open settings, then MI tab and enable hunting,
 if you need to modify shaders, and not just get fresh hash, enable "Dump Shaders".
-
-![enable-hunting](img/hunting/enable-hunting.png)
+Additionally, to get textures in dump, check that `d3dx.ini` has only 1 `analyse_options` and `jps_dds` is listed in it
 
 ## Controls
 
 After game started, on first launch you will see popup with hunting controls, if you don't see it, press `F12`.
 
-All controls can be changed in `d3dx.ini` under `[Hunting]` section, with valid [virtual key codes](https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes).
-
 ![controls](img/hunting/controls.png)
+
+All controls can be changed in `d3dx.ini` under `[Hunting]` section, with valid [virtual key codes](https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes).
 
 ## Action !
 
@@ -39,21 +40,18 @@ All controls can be changed in `d3dx.ini` under `[Hunting]` section, with valid 
 
 First of all, make sure hunting is enabled, press `numpad 0`, you should see green text on top and bottom of the screen.
 
-1.Counters section
-   - `VS` - Vertex Shader
+![green-text](img/hunting/green-text.png)
+
+1. Counters section, numbers after them displays `current`/`total count`.
+      - `VS` - Vertex Shader
    - `PS` - Pixel Shader
    - `IB` - Index Buffer
    - `VB` - Vertex Buffer
    - `CS` - Compute Shader
-
-numbers after them displays `current`/`total count`.
-
-2.Hashes
-
-Displays hash that currently marked and can be copied, if was enabled "Dump Shaders" then it will save
+2. Hashes
+   - Displays hash that currently marked and can be copied
+   - if was enabled "Dump Shaders" then it will save
 shader to `ShaderFixes` folder.
-
-![green-text](img/hunting/green-text.png)
 
 ---
 
@@ -62,6 +60,9 @@ shader to `ShaderFixes` folder.
 To get extracted dump, ready to import into blender, start gui_collect with launch.bat.
 
 After collect started, you will see next interface:
+
+![gui_collect-interface](img/hunting/gui_collect-interface.png)
+
 1. Set path to your MI folder.
 2. Place for copied from hunting IB hash.
 3. Name of what it was.
@@ -79,8 +80,6 @@ in GI there usually IB for body that may be blank.
 8. Texture hashes, indicates if textures hashes will be included in resulting `hash.json`.
 9. Last frame-dump, auto selects from chosen MI folder latest frame-dump folder.
 10. Extract, opens dialogue to select assets to include in dump, extracted from selected frame-dump.
-
-![gui_collect-interface](img/hunting/gui_collect-interface.png)
 
 ---
 
@@ -102,17 +101,21 @@ I got next hashes, and pasted them into collect:
 To make dump, you need to create frame-dump folder by pressing `F8` with `hunting`*(green text)* mode  enabled,
 before that, make sure that you disabled mods for target that you want to dump.
 
+Regular dumps may be hefty with gigabytes in size, so you may try to use `targeted dump` described [there](../docs/advanced-hunting.md#targeted-dump-with-gui_collect)
+
 After you press `F8`, game will freeze to create frame-dump, after it's done, select last folder and extract.
 
 ![gui_collect-copied](img/hunting/gui_collect-copied.png)
 
 ---
 
-In Extract dialogue you can select which textures, and texture hashes, will be contained in dump.
+In Extract dialogue you can select which textures, and texture hashes, will be contained in dump, if textures dumping enabled in `d3dx.ini`.
 In different games, and between different object in same game, may be different formats.
 
 To select which texture which type, click in it with LMB, and pick from list.
 You need to pick them for all objects, and click "Done".
+
+![gui_collect-extract](img/hunting/gui_collect-extract.png)
 
 How to identify textures:
    - Diffuse
@@ -123,8 +126,6 @@ How to identify textures:
       - simple colored texture.
    - Material
       - simple colored texture, with some details.
-
-![gui_collect-extract](img/hunting/gui_collect-extract.png)
 
 ---
 
