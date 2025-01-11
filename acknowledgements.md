@@ -132,6 +132,14 @@ const writers = [
     { icon: 'discord', link: 'https://discord.com/invite/HcgvjWFCaG'},
   ]
   },
+  {
+  avatar: 'https://github.com/Satan1c.png',
+  name: 'Satan1c',
+  title: 'Guide writer',
+  links: [
+    { icon: 'github', link: 'https://github.com/Satan1c'},
+  ]
+  },
 ]
 </script>
 <VPTeamPage>

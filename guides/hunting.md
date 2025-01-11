@@ -20,38 +20,41 @@ in most cases it's shader mods, so better to rename `Mods` folder or add `DISABL
 
 ## Launcher settings
 
-![enable-hunting](img/hunting/enable-hunting.png)
-
 By default, mods may not be enabled, to enable them, open settings, then MI tab and enable hunting,
 if you need to modify shaders, and not just get fresh hash, enable "Dump Shaders".
-Additionally, to get textures in dump, check that `d3dx.ini` has only 1 `analyse_options` and `jps_dds` is listed in it
+
+![enable-hunting](img/hunting/enable-hunting.png)
 
 ## Controls
 
 After game started, on first launch you will see popup with hunting controls, if you don't see it, press `F12`.
 
-![controls](img/hunting/controls.png)
-
 All controls can be changed in `d3dx.ini` under `[Hunting]` section, with valid [virtual key codes](https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes).
 
-## Action !
+![controls](img/hunting/controls.png)
+
+## Action
 
 ### Getting hashes
 
 First of all, make sure hunting is enabled, press `numpad 0`, you should see green text on top and bottom of the screen.
 
-![green-text](img/hunting/green-text.png)
+1.Counters section
 
-1. Counters section, numbers after them displays `current`/`total count`.
-      - `VS` - Vertex Shader
-   - `PS` - Pixel Shader
-   - `IB` - Index Buffer
-   - `VB` - Vertex Buffer
-   - `CS` - Compute Shader
-2. Hashes
-   - Displays hash that currently marked and can be copied
-   - if was enabled "Dump Shaders" then it will save
+- `VS` - Vertex Shader
+- `PS` - Pixel Shader
+- `IB` - Index Buffer
+- `VB` - Vertex Buffer
+- `CS` - Compute Shader
+
+numbers after them displays `current`/`total count`.
+
+2.Hashes
+
+Displays hash that currently marked and can be copied, if was enabled "Dump Shaders" then it will save
 shader to `ShaderFixes` folder.
+
+![green-text](img/hunting/green-text.png)
 
 ---
 
@@ -60,8 +63,6 @@ shader to `ShaderFixes` folder.
 To get extracted dump, ready to import into blender, start gui_collect with launch.bat.
 
 After collect started, you will see next interface:
-
-![gui_collect-interface](img/hunting/gui_collect-interface.png)
 
 1. Set path to your MI folder.
 2. Place for copied from hunting IB hash.
@@ -81,6 +82,8 @@ in GI there usually IB for body that may be blank.
 9. Last frame-dump, auto selects from chosen MI folder latest frame-dump folder.
 10. Extract, opens dialogue to select assets to include in dump, extracted from selected frame-dump.
 
+![gui_collect-interface](img/hunting/gui_collect-interface.png)
+
 ---
 
 As example of dumping, I'll dump Qingyi model.
@@ -94,14 +97,13 @@ as alternative you can change marking_mode in d3dx.ini)*.
 ![Qingyi-marked](img/hunting/Qingyi-marked.png)
 
 I got next hashes, and pasted them into collect:
-   - `3cacba0a` - Hair
-   - `195857d8` - Body
-   - `8e8426df` - Bottle
+
+- `3cacba0a` - Hair
+- `195857d8` - Body
+- `8e8426df` - Bottle
 
 To make dump, you need to create frame-dump folder by pressing `F8` with `hunting`*(green text)* mode  enabled,
 before that, make sure that you disabled mods for target that you want to dump.
-
-Regular dumps may be hefty with gigabytes in size, so you may try to use `targeted dump` described [there](../docs/advanced-hunting.md#targeted-dump-with-gui_collect)
 
 After you press `F8`, game will freeze to create frame-dump, after it's done, select last folder and extract.
 
@@ -109,23 +111,24 @@ After you press `F8`, game will freeze to create frame-dump, after it's done, se
 
 ---
 
-In Extract dialogue you can select which textures, and texture hashes, will be contained in dump, if textures dumping enabled in `d3dx.ini`.
+In Extract dialogue you can select which textures, and texture hashes, will be contained in dump.
 In different games, and between different object in same game, may be different formats.
 
 To select which texture which type, click in it with LMB, and pick from list.
 You need to pick them for all objects, and click "Done".
 
-![gui_collect-extract](img/hunting/gui_collect-extract.png)
-
 How to identify textures:
-   - Diffuse
-      - fully colored texture
-   - Normal
-      - gradient, noticeable volume/bump effect.
-   - Light
-      - simple colored texture.
-   - Material
-      - simple colored texture, with some details.
+
+- Diffuse
+  - fully colored texture
+- Normal
+  - gradient, noticeable volume/bump effect.
+- Light
+  - simple colored texture.
+- Material
+  - simple colored texture, with some details.
+
+![gui_collect-extract](img/hunting/gui_collect-extract.png)
 
 ---
 
@@ -134,3 +137,72 @@ How to identify textures:
 As result, you will see same folder, with selected textures and compiled ib/vb0 files, to import them into blender.
 
 ![extracted-dump](img/hunting/extracted-dump.png)
+
+## Targeted dump
+
+:::warning
+The following section is completely optional
+:::
+
+Targeted dump is a technique to do dump only targeted objects, instead of whole scene,
+allows to shrink dump folder size from gigabytes to hundreds of megabytes.
+
+### Targeted dump with gui_collect
+
+If you don't know how to do regular dumps with `gui_collect`, read [that tutorial](../guides/hunting.md) first
+
+Enable target dump in gui_collect
+
+![settings](img/hunting/settings.png)
+
+After enabling that you will see next options on extract page
+
+![ui](img/hunting/ui.png)
+
+1. is field to find ini with targeting generated code
+   - you can find it in `gui_collect/include/auto_generated.ini`
+2. generate and fill with targeting code
+3. clear that file
+
+---
+
+To integrate that with game you may do 2 things
+
+1. is to add `include` call in `d3dx.ini`
+   - it's not recommended, since XXMI updates may remove it
+2. create an `ini` with overrides for `d3dx.ini` params
+   - example of ini for that:
+      - include support relative paths, in example used
+      - overrides path: `Mods/Etc/d3dx overrides.ini`
+      - generated path: `XXMI Launcher/gui_collect-main/include/auto_generated.ini`
+
+```ini
+[Include]
+include = ..\..\..\gui_collect-main\include\auto_generated.ini
+```
+
+after you added that, press F10 to update configs
+
+If you do a lot of F10 while dumping or making a mod, you may encounter pretty long delay between them,
+to speedup them you can enable shader cache.
+<!-- 
+::: danger
+Be aware that it may bring some issues,
+main issue is updated shader but old cache, that may run into crashes in rare scenarios.
+:::
+
+To enable cache, add that to your overrides ini:
+
+```ini
+[Rendering]
+cache_shaders = 1
+```
+
+--- -->
+
+To use new target, fill sections, and click generate, after that press F10 in game,
+now you should see panel with targeted objects that will be included in dump
+
+![targets_panel](img/hunting/targets_panel.png)
+
+Press F8, and you're done, in my case, regular dump is 3.4gb, when targeted is 840mb

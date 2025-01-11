@@ -52,7 +52,7 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
             text: 'Guides',
             items: [
                 { text: 'Modding 101', link: 'modding-101' },
-                { text: 'Hunting', link: 'hunting' },
+                { text: 'Hunting & dumping', link: 'hunting' },
                 { text: 'Textures 101', link: 'textures-101' },
                 { text: 'Shaders 101', link: 'shaders-101' },
                 { text: 'XXMI Tools', link: 'xxmi' },
