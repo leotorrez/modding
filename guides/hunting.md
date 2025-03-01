@@ -13,13 +13,13 @@ This tutorial will provide a simple description of buffers/shaders and a walkthr
 You will need the latest versions of [XXMI launcher](getting-started.md) and [gui_collect](https://github.com/Petrascyll/gui_collect) installed.
 
 While hunting, it is recommended to disable all mods. For that, you have to press `F6` in game; however, some mods may remain enabled.
-In most cases these will be shader mods, so it is often better to rename the `Mods` folder or add `DISABLED` to it (or whichever is the highest folder with mods that would interfere with the dumping process in it).
+In most cases these will be shader mods, so it is often better to rename the `Mods` folder or add `DISABLED` to it (or whichever is the highest folder with mods that would interfere with the dumping process).
 
 ![disable-mods](img/hunting/disable-mods.png)
 
 ## Launcher settings
 
-By default, the ability to enter hunting mode may not be enabled. To enable hunting with XXMI, open settings from the cog wheel in top right of the UI, then go to the appropiate \*\*MI tab for the game you are using and check the "Enable Hunting" setting.
+By default, the ability to enter hunting mode may not be enabled. To enable hunting with XXMI, open the settings from the cog wheel in the top right of the UI, then go to the appropiate \*\*MI tab for the game you are using and check the "Enable Hunting" setting.
 If you need to modify shaders and not just get an updated hash for them, be sure to also enable "Dump Shaders".
 Please note that this needs to be done *before* you launch the game with XXMI; if the game is already running and these settings were not enabled, you can either quit the game and enable them then relaunch, or you will need to manually edit the corresponding values in `d3dx.ini`.
 
@@ -46,7 +46,7 @@ At the top you will see a section that contains counters for the things we can h
 - `VB` - Vertex Buffer
 - `CS` - Compute Shader
 
-The numbers after them display `current`/`total count`, that is the index of the current buffer/shader out of the total number for the scene.
+The numbers after them display `current`/`total count`, that is, the index of the current buffer/shader out of the total number for the scene.
 The bottom of the screen should always display "Stereo disabled".
 
 The next section you will see comes up only after you have moved forward or backward through one of the above options. It displays the hash that is currently selected for each buffer or shader which can be "marked". If the setting "Dump Shaders" is enabled then it will also save the decompiled/disassembled shader to the `ShaderFixes` folder; "marking" a hash by default only copies the hash value to your system clipboard.
@@ -61,13 +61,13 @@ Now that we are set up to hunt for the hashes we need, we can move on to dumping
 To get an extracted dump -- ready to import into blender -- start gui_collect with launch.bat.
 (You should already have this installed and know how to launch it from its own instructions).
 
-After the program has started, you will be met with the screen show in the image just below. The numbered parts of this image are as follows:
+After the program has started, you will be met with the screen shown in the image just below. The numbered parts of this image are as follows:
 
-1. A button that opens a file chooser. It it used to tell gui_collect the path of the Frame Analysis dumped from the game.
+1. A button that opens a file chooser. It is used to tell gui_collect the path of the Frame Analysis dumped from the game.
 2. This is were you would enter the IB hash copied to your clipboard from hunting.
 3. Name of the thing the IB hash is responsible for.
    - Use only ASCII letters and numbers; don't use spaces or non-ASCII symbols.
-   - The name is just for your and other modders' reference and does not affect anything for the dumping and extraction process, but they **should be unique**.
+   - The name is just for your and other modders' reference and does not affect anything for the dumping and extraction process, but it **should be unique**.
    - If the Index Buffer is responsible for the whole object or the majority of it, then it may be blank; in GI there is usually an IB for the body that may be blank.
 4. Name of the extraction, usually whatever the whole object is or the character name.
    - As before, use only ASCII letters and numbers; no spaces or non-ASCII symbols.
@@ -78,16 +78,16 @@ After the program has started, you will be met with the screen show in the image
 8. Toggle button that controls whether texture hashes should be included in the resulting `hash.json` file.
 9. A button that lets you choose from the history of frame dumps that you have done before.
    - Tries to automatically select this value from the chosen MI folder and set it to the last frame dump done.
-10. Extract button. It opens a dialog to select assets to be included in extracted dump from selected frame-dump.
+10. Extract button. It opens a dialog to select assets to be included in the extracted dump from the selected frame-dump.
 
 ![gui_collect-interface](img/hunting/gui_collect-interface.png)
 
 ---
 
-In order to properly show the dumping process, we will be using dumping Qingyi's model as an example.
+In order to properly show the dumping process, we will be dumping Qingyi's model as an example.
 
-:::warning
-If you're planning to use the dumped materials to create a mod, it is advised that you do not dump faces, or don't include their hashes/buffers in resulting dump, as currently face modding is not fully supported. Changing the face model will result in it being broken in game (typically by lacking expressions); thus, only the face texture can be modded without any issue at the moment.
+::: warning
+If you're planning to use the dumped materials to create a mod, it is advised that you do not dump faces, or don't include their hashes/buffers in the resulting dump, as currently face modding is not fully supported. Changing the face model will usually result in it being broken in game (typically by lacking expressions); thus, only the face texture can be modded without any issue at the moment.
 :::
 
 When you're hunting for a hash, the object that it belongs to will disappear. This is the default marking method. If you wish to use an alternative method, you can change `marking_mode` in `d3dx.ini`. It contains comments on what the available options are and what they do.
@@ -133,11 +133,11 @@ The final result once you are done assigning the types to the textures will be a
 
 ## Targeted dump
 
-:::warning
+::: warning
 The following section is completely optional
 :::
 
-Targeted dumping is a technique to dump only targeted objects instead of the whole scene which allows for a much smaller dump folder size; It will go from gigabytes big to just hundreds of megabytes.
+Targeted dumping is a technique to dump only targeted objects instead of the whole scene which allows for a much smaller dump folder size; it will go from gigabytes big to just hundreds of megabytes.
 
 ### Targeted dump with gui_collect
 
@@ -175,7 +175,7 @@ To make sure this new ini is loaded by the \*\*MI of the game, you may do one of
 include = ..\..\..\gui_collect-main\include\auto_generated.ini
 ```
 
-Before you generate the ini however, be sure to fill the IB hash sections. Afterwards, once the generated ini file is added somewhere the \*\*MI will be load it, press `F10` to update the configs.
+Before you generate the ini however, be sure to fill the IB hash sections. Afterwards, once the generated ini file is added somewhere the \*\*MI will need to load it; press `F10` to update the configs.
 
 ::: info
 If you find yourself having to press `F10` a lot while dumping or making a mod, you may encounter a pretty long delay each time. To speed up the load time, if the slowness is due to many shaders being loaded, you can enable the shader cache in `d3dx.ini`.
