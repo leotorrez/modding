@@ -203,10 +203,6 @@ Values for `draw`. `$\SRMI\vertcount`, `override_vertex_count` is same as in `ar
 [TextureOverrideMydeiBodyBlend]
 hash = 2506e1cf
 vb2 = ResourceMydeiBodyBlend
-if DRAW_TYPE == 1
-	vb0 = ResourceMydeiBodyPosition
-	draw = . . .,0
-endif
 if DRAW_TYPE == 8    
 	Resource\SRMI\PositionBuffer = ref ResourceMydeiBodyPositionCS
 	Resource\SRMI\BlendBuffer = ref ResourceMydeiBodyBlendCS
@@ -214,6 +210,9 @@ if DRAW_TYPE == 8
 	$\SRMI\vertcount = . . .
 elif DRAW_TYPE != 1
 	$_blend_ = 2
+else
+	vb0 = ResourceMydeiBodyPosition
+	draw = . . .,0
 endif
 
 [TextureOverrideMydeiBodyVertexLimitRaise]
