@@ -175,7 +175,7 @@ Find `Position` override section, by its hash or name, and add `;` at the beginn
 ```
 
 Then you need to add few `Resource` sections at the bottom of file, and create `Constants` section, or add to existent, `$_blend_` variable. usually `Position` `stride` is `40` and `Blend` `stride` is `32`, to check it, you can find existent `ResourceMydeiBodyPosition` & `ResourceMydeiBodyPosition` sections.
-Value for `array` parameter, you can calculate by yourself, look at position .buf file size and divide it by Position stride, for example `2161720 / 40` = `54043`.
+Value for `array` parameter you can calculate by yourself, look at position `.buf` file `size` and divide it by Position `stride`, for example `2161720 / 40` = `54043`.
 ```ini
 [Constants]
 global $_blend_
