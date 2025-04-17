@@ -159,12 +159,11 @@ endif
 
 ## [HSR] 3.2 update, mod is not auto-fixed
 
-The issue because after 3.2 update, posing method is changed in game, and mods should use new one ny including new SRMI features in mod ini.
-Version fix script may not cover all things, like weapons, or fail to apply fix because of weird mod format, elements/hashes are not included, or because it's not "classically" merged.
-To fix it the author of the mod will have to update it to include all required new features.
-However, if you are comfortable editing ini files you can update it yourself.
+Mods for 3.2 can be either auto fixed, fixed by the mod author or you can fix them yourself manually. To do the last one proceed as such:
 
-Find `Position` override section, by its hash or name, and add `;` at the beginning of each line, so it should look like that:
+Converting `Position` to `Blend` sections can be done by the script with the `-sbp` flag, in CLI.
+
+Alternatively, you can do it manually, by finding `Position` override section, by its hash or name, and add `;` at the beginning of each line, so it should look like that:
 ```ini
 ;[TextureOverrideMydeiBodyPosition]
 ;hash = 4aaeda33
