@@ -156,3 +156,72 @@ endif
 
 ...
 ```
+
+## [HSR] 3.2 update, mod is not auto-fixed
+
+The issue because after 3.2 update, posing method is changed in game, and mods should use new one ny including new SRMI features in mod ini.
+Version fix script may not cover all things, like weapons, or fail to apply fix because of weird mod format, elements/hashes are not included, or because it's not "classically" merged.
+To fix it the author of the mod will have to update it to include all required new features.
+However if you are comfortable editing ini files you can update it yourself.
+
+Find `Position` override section, by its hash or name, and add `;` at the beginning of each line, so it should look like that:
+```ini
+;[TextureOverrideMydeiBodyPosition]
+;hash = 4aaeda33
+;vb2 = ResourcecMydeiBodyBlend
+;vb0 = ResourcecMydeiBodyPosition
+;handling = skip
+;draw = 54043, 0
+```
+
+Then you need to add few `Resource` sections at the bottom of file, and create `Constants` sections or add to existent `$_blend_` variable. usually `Position` `stride` is `40` and `Blend` `stride` is `32`, to check it, you can find existent `ResourceMydeiBodyPosition` & `ResourceMydeiBodyPosition` sections.
+Value for `array` parameter, you can calculate by yourself, look at position .buf file size and divide it by Position stride, for example `2161720 / 40` = `54043`.
+```ini
+[Constants]
+global $_blend_
+```
+```ini
+[ResourceMydeiBodyDrawCS]
+type = RWStructuredBuffer
+array = . . .
+data = R32_FLOAT 1 2 3 4 5 6 7 8 9 10
+
+[ResourceMydeiBodyPositionCS]
+type = StructuredBuffer
+stride = 40
+filename = MydeiBodyPosition.buf
+
+[ResourceMydeiBodyBlendCS]
+type = StructuredBuffer
+stride = 32
+filename = MydeiBodyBlend.buf
+```
+
+After that, you can edit `Blend` & `VertexLimitRaise`(aka `draw_vb`) override section, by adding all required new features.
+Values for `draw`. `$\SRMI\vertcount`, `override_vertex_count` is same as in `array` form previous step
+```ini
+[TextureOverrideMydeiBodyBlend]
+hash = 2506e1cf
+vb2 = ResourceMydeiBodyBlend
+if DRAW_TYPE == 1
+	vb0 = ResourceMydeiBodyPosition
+	draw = . . .,0
+endif
+if DRAW_TYPE == 8    
+	Resource\SRMI\PositionBuffer = ref ResourceMydeiBodyPositionCS
+	Resource\SRMI\BlendBuffer = ref ResourceMydeiBodyBlendCS
+	Resource\SRMI\DrawBuffer = ref ResourceMydeiBodyDrawCS
+	$\SRMI\vertcount = . . .
+elif DRAW_TYPE != 1
+	$_blend_ = 2
+endif
+
+[TextureOverrideMydeiBodyVertexLimitRaise]
+hash = d2fa0357
+override_vertex_count = . . .
+override_byte_stride = 40
+if DRAW_TYPE != 8 && DRAW_TYPE != 1 && $_blend_ > 0
+	$_blend_ = $_blend_ - 1
+	this = ref ResourceMydeiBodyDrawCS
+endif
+```
