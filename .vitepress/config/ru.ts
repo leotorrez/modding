@@ -45,21 +45,22 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
                 { text: 'Лаунчеры', link: 'launchers' },
                 { text: 'Мод мэнеджеры', link: 'mod-managers' },
                 { text: 'Исправления ошибок', link: 'troubleshooting' },
-                { text: 'FAQ', link: 'faq' },
+                { text: 'FAQ (Часто Задаваемые Вопросы)', link: 'faq' },
             ]
         },
         {
             text: 'Руководства по созданию модов',
             items: [
-                { text: 'Modding 101 (В разработке)', link: 'modding-101' },
-                { text: 'Hunting (В разработке)', link: 'hunting' },
-                { text: 'Textures 101 (В разработке)', link: 'textures-101' },
-                { text: 'Shaders 101 (В разработке)', link: 'shaders-101' },
-                { text: 'XXMI Tools (В разработке)', link: 'xxmi' },
-                { text: 'WWMI Tools (В разработке)', link: 'wwmi' },
-                { text: 'Mona Hat', link: 'mona-hat' },
-                { text: 'Weapon banana (В разработке)', link: 'weapon-banana' },
-                { text: 'ZZZ textures and properties', link: 'zzz-textures' },
+                { text: 'Моддинг 101', link: 'modding-101' },
+                { text: 'Хантинг и Дампинг', link: 'hunting' },
+                { text: 'Текстурирование 101', link: 'textures-101' },
+                { text: 'Шейдеры 101', link: 'shaders-101' },
+                { text: 'XXMI инструменты', link: 'xxmi' },
+                { text: 'WWMI инструменты', link: 'wwmi' },
+                { text: 'Шляпка Моны', link: 'mona-hat' },
+                { text: 'Банановый меч', link: 'weapon-banana' },
+                { text: 'ZZZ текстуры и параметры', link: 'zzz-textures' },
+                { text: 'Советы по моделированию в Блендер', link: 'blender-tips'}
             ]
         },
     ]
