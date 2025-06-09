@@ -63,7 +63,7 @@ Sections and properties are case-insensitive, but in GIMI, sections are written 
 ...
 ```
 
-The part enclosed in [] is the beginning of a **section** as well as it's identifier. A section represents a code block, and its scope includes the current line, up to the line before the next section or the end of the file. All other types need to be within a section, with the exception of [namespace](./namespace). Lastly, it's worth mentioning that INI files are case-insensitive, but in GIMI section names follow the PascalCase convention.
+The part enclosed in [] is the beginning of a **section** as well as it's identifier. A section represents a code block, and its scope includes the current line, up to the line before the next section or the end of the file. All other types need to be within a section, with the exception of [namespace](/docs/namespace.md). Lastly, it's worth mentioning that INI files are case-insensitive, but in GIMI section names follow the PascalCase convention.
 
 ## Properties
 

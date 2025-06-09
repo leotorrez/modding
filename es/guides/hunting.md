@@ -11,7 +11,7 @@ Este tutorial recorrerá una descripción básica de los buffers/shaders y un ej
 
 ## Requisitos previos
 
-Tener instalado el último [lanzador XXMI](getting-started.md) y [gui_collect](https://github.com/Petrascyll/gui_collect).
+Tener instalado el último [lanzador XXMI](/es/guides/getting-started.md) y [gui_collect](https://github.com/Petrascyll/gui_collect).
 
 Mientras cazas, recomiendo deshabilitar todos los mods, para eso, necesitas presionar `F6`, sin embargo, algunos mods pueden permanecer habilitados,
 en la mayoría de los casos son mods de shaders, por lo que es mejor renombrar la carpeta `Mods` o agregar `DISABLED` a las carpetas superiores con mods.

@@ -55,7 +55,7 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
                 { text: 'Hunting', link: 'hunting' },
                 { text: 'Texturas 101', link: 'textures-101' },
                 { text: 'Shaders 101', link: 'shaders-101' },
-                { text: 'XXMI Tools', link: 'xxmi' },
+                { text: 'XXMI Tools', link: 'xxmi_tools' },
                 { text: 'WWMI Tools', link: 'wwmi' },
                 { text: 'Sombrero Mona', link: 'mona-hat' },
                 { text: 'Arma Banana', link: 'weapon-banana' },

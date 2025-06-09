@@ -55,7 +55,7 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
                 { text: 'Хантинг и Дампинг', link: 'hunting' },
                 { text: 'Текстурирование 101', link: 'textures-101' },
                 { text: 'Шейдеры 101', link: 'shaders-101' },
-                { text: 'XXMI инструменты', link: 'xxmi' },
+                { text: 'XXMI инструменты', link: 'xxmi_tools' },
                 { text: 'WWMI инструменты', link: 'wwmi' },
                 { text: 'Шляпка Моны', link: 'mona-hat' },
                 { text: 'Банановый меч', link: 'weapon-banana' },
