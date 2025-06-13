@@ -160,10 +160,8 @@ endif
 ## [HSR] 3.2 update, mod is not auto-fixed
 
 Mods for 3.2 can be either auto fixed, fixed by the mod author or you can fix them yourself manually. To do the last one proceed as such:
+Finding `Position` or `Blend` override section, by its hash or name, and add `;` at the beginning of each line, so it should look like that:
 
-Converting `Position` to `Blend` sections can be done by the script with the `-sbp` flag, in CLI.
-
-Alternatively, you can do it manually, by finding `Position` override section, by its hash or name, and add `;` at the beginning of each line, so it should look like that:
 ```ini
 ;[TextureOverrideMydeiBodyPosition]
 ;hash = 4aaeda33
@@ -173,18 +171,8 @@ Alternatively, you can do it manually, by finding `Position` override section, b
 ;draw = 54043, 0
 ```
 
-Then you need to add few `Resource` sections at the bottom of file, and create `Constants` section, or add to existent, `$_blend_` variable. usually `Position` `stride` is `40` and `Blend` `stride` is `32`, to check it, you can find existent `ResourceMydeiBodyPosition` & `ResourceMydeiBodyPosition` sections.
-Value for `array` parameter you can calculate by yourself, look at position `.buf` file `size`, not "on disk", and divide it by Position `stride`, for example `2161720 / 40` = `54043`.
+Then you need to add few `Resource` sections at the bottom of file, usually `Position` `stride` is `40` and `Blend` `stride` is `32`, to check it, you can find existent `ResourceMydeiBodyPosition` & `ResourceMydeiBodyPosition` sections.
 ```ini
-[Constants]
-global $_blend_
-```
-```ini
-[ResourceMydeiBodyDrawCS]
-type = RWStructuredBuffer
-array = . . .
-data = R32_FLOAT 1 2 3 4 5 6 7 8 9 10
-
 [ResourceMydeiBodyPositionCS]
 type = StructuredBuffer
 stride = 40
@@ -197,29 +185,34 @@ filename = MydeiBodyBlend.buf
 ```
 
 After that, you can edit `Blend` & `VertexLimitRaise`(aka `draw_vb`) override section, by adding all required new features.
-Values for `draw`. `$\SRMI\vertcount`, `override_vertex_count` is same as in `array` form previous step
+Value for `$\SRMI\vertex_count = ` parameter you can calculate by yourself, look at position `.buf` file `size`, not "on disk", and divide it by Position `stride`, for example `2161720 / 40` = `54043`
 ```ini
 [TextureOverrideMydeiBodyBlend]
 hash = 2506e1cf
 vb2 = ResourceMydeiBodyBlend
-if DRAW_TYPE == 8    
-	Resource\SRMI\PositionBuffer = ref ResourceMydeiBodyPositionCS
-	Resource\SRMI\BlendBuffer = ref ResourceMydeiBodyBlendCS
-	Resource\SRMI\DrawBuffer = ref ResourceMydeiBodyDrawCS
-	$\SRMI\vertcount = . . .
-elif DRAW_TYPE != 1
-	$_blend_ = 2
-else
+if DRAW_TYPE == 1
 	vb0 = ResourceMydeiBodyPosition
 	draw = . . .,0
 endif
+if DRAW_TYPE == 8    
+	Resource\SRMI\PositionBuffer = ref ResourceMydeiBodyPositionCS
+	Resource\SRMI\BlendBuffer = ref ResourceMydeiBodyBlendCS
+	$\SRMI\vertex_count = . . .
+endif
 
+Here you need to add `uav_byte_stride = 4`
+If `override_vertex_count` or `override_byte_stride` is missing in your conversion, add them manually. `override_byte_stride` is always `40`, and `override_vertex_count` must match the previous `\SRMI\vertex_count` value.
 [TextureOverrideMydeiBodyVertexLimitRaise]
 hash = d2fa0357
 override_vertex_count = . . .
 override_byte_stride = 40
-if DRAW_TYPE != 8 && DRAW_TYPE != 1 && $_blend_ > 0
-	$_blend_ = $_blend_ - 1
-	this = ref ResourceMydeiBodyDrawCS
-endif
+uav_byte_stride = 4
 ```
+
+## ⚠️ Important Caveats
+
+### "The mod blinks randomly"
+
+This usually means the `$vertex_count` value is too low.
+Start increasing the `$vertex_count` value in steps (e.g., by 3000). For example:
+   * If your current value is 19000, try 22000, then 25000, etc.
