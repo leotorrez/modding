@@ -28,7 +28,7 @@ prev: false
 - [Robust Weight Transfer](https://jinxxy.com/SentFromSpaceVR/products/robust-weight-transfer) (requires signup for download) - Blender addon for transferring weights between meshes
 - [Material Combiner](https://github.com/Grim-es/material-combiner-addon/releases) - Blender addon for combining materials' textures into a single atlas
 
-<!-- 
+<!--
 ## Example projects
 
 - [Mona Hat tutorial](https://dummy.com) - A blender file that follows the Mona Hat tutorial -->
@@ -36,6 +36,7 @@ prev: false
 ## Assets
 
 <!-- - [Base body collection](https://dummy.com) - A collection of base bodies for WW -->
+
 - [ZZZ assets repository](https://github.com/leotorrez/ZZ-Model-Importer-assets) - A collection of assets for ZZZ
 - [HSR assets repository](https://github.com/SilentNightSound/SR-Model-Importer-assets) - A collection of assets for HSR
 - [GI assets repository](https://github.com/SilentNightSound/GI-Model-Importer-assets) - A collection of assets for GI
