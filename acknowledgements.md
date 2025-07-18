@@ -3,6 +3,7 @@ layout: page
 sidebar: false
 footer: false
 ---
+
 <script setup>
 import {
   VPTeamPage,
