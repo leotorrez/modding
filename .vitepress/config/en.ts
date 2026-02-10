@@ -90,6 +90,7 @@ function sidebarReference(): DefaultTheme.SidebarItem[] {
         {
           text: "Logic",
           items: [
+            { text: "Expressions & Functions", link: "expressions" },
             { text: "Operators", link: "operators" }, //move pre and post here
             { text: "Constants", link: "constants" },
             { text: "Present", link: "present" },
