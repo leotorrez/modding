@@ -333,7 +333,7 @@ Automatically determines vertex or index count from currently bound vertex/index
 ```ini
 draw = auto
 drawindexed = auto
-drawindexedinstanced = auto <instance_count>
+drawindexedinstanced = auto
 ```
 
 **Examples:**
@@ -346,15 +346,18 @@ draw = auto
 ib = ResourceCustomIndices
 drawindexed = auto
 
-; Auto-detect index count, specify instance count
+; Auto-detect index count, use instance count from caller
+[TextureOverrideSomeHash]
 ib = ResourceCustomIndices
-drawindexedinstanced = auto 10
+drawindexedinstanced = auto
 ```
 
 **How It Works:**
 - For `draw = auto`: Reads vertex buffer description and calculates vertex count from buffer size and stride
 - For `drawindexed = auto`: Reads index buffer description and calculates index count from buffer size and format (16-bit or 32-bit)
-- For `drawindexedinstanced = auto <N>`: Calculates index count automatically, uses specified instance count
+- For `drawindexedinstanced = auto`: Calculates index count automatically from index buffer, instance count is taken from the original draw call that triggered the command list
+
+**Important:** `drawindexedinstanced = auto` can only be used in contexts where a draw call is active (e.g., within TextureOverride sections). It reuses the instance count from the triggering draw call.
 
 **Use Cases:**
 - Custom vertex/index buffers with variable sizes
