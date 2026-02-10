@@ -817,16 +817,3 @@ vs-t110 = copy oD          ; Must copy depth buffer
 ; Unless_null avoids errors
 ps-t1 = unless_null ResourceMaybeEmpty
 ```
-
-## See Also
-
-- [ShaderOverride](/docs/shader-override.md) - Shader-specific overrides
-- [TextureOverride](/docs/texture-override.md) - Texture-specific overrides
-- [Resource](/docs/resource.md) - Custom resource definitions
-- [Present](/docs/present.md) - Per-frame operations
-- [Key](/docs/key.md) - Key bindings and presets
-- [Draw Calls](/docs/draw-calls.md) - Draw and dispatch commands
-- [Expressions](/docs/expressions.md) - Expression syntax
-- [Operators](/docs/operators.md) - Operators and conditionals
-- [Properties](/docs/properties.md) - Variables and IniParams
-- [Modifiers](/docs/modifiers.md) - Command modifiers (pre, post, copy, etc.)

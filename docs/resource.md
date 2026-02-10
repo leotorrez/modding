@@ -711,11 +711,3 @@ filename = Textures\texture.dds
 [ResourceTexture]
 filename = .\Assets\Textures\texture.dds
 ```
-
-## See Also
-
-- [Command List](/docs/command-list.md) - Using resources in CommandLists
-- [ShaderOverride](/docs/shader-override.md) - Using resources in shaders
-- [TextureOverride](/docs/texture-override.md) - Texture overriding
-- [Custom Shader](/docs/custom-shader.md) - Creating custom shaders with resources
-- [Draw Calls](/docs/draw-calls.md) - Drawing with custom resources

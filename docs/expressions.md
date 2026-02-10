@@ -792,10 +792,3 @@ else
     x0 = 0
 endif
 ```
-
-## See Also
-
-- [Properties](/docs/properties.md) - Variables and IniParams
-- [Constants](/docs/constants.md) - Defining constants
-- [Command List](/docs/command-list.md) - Using expressions in commands
-- [Debugging INIs](/docs/debugging.md) - Testing and debugging expressions
