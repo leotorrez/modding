@@ -17,57 +17,82 @@ run = CommandListPerFrame
 
 The `[Present]` section has two execution phases controlled by the `pre` and `post` modifiers. Understanding the difference is crucial for correct behavior.
 
-### Post (Start of Frame) - Default
+### Understanding Frame Boundaries
 
-By default, or when explicitly using `post`, commands execute at the **start of the next frame**, before any rendering occurs:
+The DirectX `Present()` API call is the **frame boundary** that separates Frame N from Frame N+1. The timing of `pre` and `post` commands is relative to this Present() call:
 
-```ini
-[Present]
-; These all execute at START of frame (default behavior)
-$frame_init = 0
-post $frame_init = 0        ; Explicit post (same as above)
-post ResourceTemp = null    ; Clear resource before frame starts
+```
+Frame N rendering completes
+    ↓
+[1] "pre" commands execute  ← Before Present() call
+    ↓
+[2] Present() API call      ← Frame boundary (swaps buffers)
+    ↓
+[3] "post" commands execute ← After Present() call
+    ↓
+Frame N+1 rendering begins
 ```
 
-**Use `post` for:**
-- Initializing variables for the new frame
-- Clearing temporary resources
-- Resetting counters
-- Setting up state before rendering begins
+**Important:** The naming is relative to the Present() call, not to conceptual "frame start/end":
+- `pre` = **before Present()** = end of Frame N (after rendering completes)
+- `post` = **after Present()** = start of Frame N+1 (before rendering begins)
 
-### Pre (End of Frame)
+### Pre (Before Present Call)
 
-When using `pre`, commands execute at the **end of the current frame**, after all rendering is complete:
+`pre` commands execute **before the Present() API call**, at the end of Frame N after all rendering is complete:
 
 ```ini
 [Present]
-; Execute at END of frame
+; Execute before Present() call (end of Frame N)
 pre run = CommandListDrawOverlay
 pre $frame_complete = 1
 ```
 
-**Use `pre` (default/end of frame) for:**
+**Use `pre` (before Present) for:**
 - Drawing overlays on top of the rendered frame
 - Post-processing effects
 - Capturing final frame state
 - Final calculations after all rendering
 
-### Execution Order
+**Frame association:** Commands belong to Frame N (the frame that just finished rendering)
 
-The execution order within a frame is:
+### Post (After Present Call) - Default
 
-1. **Previous frame's `pre` commands** (end of previous frame)
-2. **Current frame's `post` commands** (start of current frame)
-3. **Game rendering and shader overrides**
-4. **Current frame's `pre` commands** (end of current frame)
+By default, or when explicitly using `post`, commands execute **after the Present() API call**, at the start of Frame N+1 before any rendering occurs:
 
 ```ini
 [Present]
-; Start of frame - initialize
+; These all execute after Present() call (start of Frame N+1)
+$frame_init = 0
+post $frame_init = 0        ; Explicit post (same as above)
+post ResourceTemp = null    ; Clear resource before frame starts
+```
+
+**Use `post` (after Present) for:**
+- Initializing variables for the new frame
+- Clearing temporary resources
+- Resetting counters
+- Setting up state before rendering begins
+
+**Frame association:** Commands belong to Frame N+1 (the frame about to start rendering)
+
+### Execution Order
+
+The complete execution order across frame boundaries:
+
+1. **Frame N rendering** (game draw calls and shader overrides)
+2. **Frame N `pre` commands** (before Present call)
+3. **Present() API call** ← **Frame boundary**
+4. **Frame N+1 `post` commands** (after Present call)
+5. **Frame N+1 rendering** (game draw calls and shader overrides)
+
+```ini
+[Present]
+; After Present() call - initialize new frame
 post $frame_start = time
 post x10 = 0
 
-; End of frame - finalize
+; Before Present() call - finalize completed frame
 pre $frame_end = time
 pre x11 = x10
 pre run = CommandListOverlay

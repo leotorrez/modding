@@ -6,9 +6,27 @@ Modifiers are keywords that modify the behavior of commands, resource assignment
 
 These modifiers control when commands execute during the frame rendering pipeline.
 
+### Understanding Pre/Post Timing
+
+The `pre` and `post` modifiers are named relative to the DirectX `Present()` API call, which is the frame boundary:
+
+```
+Frame N rendering completes
+    ↓
+[1] "pre" commands  ← Before Present() call (end of Frame N)
+    ↓
+[2] Present() call ← Frame boundary
+    ↓
+[3] "post" commands ← After Present() call (start of Frame N+1)
+    ↓
+Frame N+1 rendering begins
+```
+
+**Key insight:** `pre` and `post` refer to positioning relative to the `Present()` call, not to conceptual "frame start/end".
+
 ### post
 
-Explicitly executes a command in the post-command list (beginning of frame). When used in sections like `[Present]`, `post` runs before the game's rendering begins, making it ideal for initialization and resource setup.
+Explicitly executes a command in the post-command list (after Present call). When used in sections like `[Present]`, `post` runs **after the Present() API call** at the start of Frame N+1, before the game's rendering begins, making it ideal for initialization and resource setup.
 
 **Syntax:**
 ```ini
@@ -22,11 +40,13 @@ post $triggerDate = time
 post ResourceBackup = copy ps-t0
 ```
 
-**Source:** `IniHandler.cpp:1987-1994`
+**Timing:** Executes after Present() call, at the start of the next frame (Frame N+1).
+
+**Source:** `IniHandler.cpp:1987-1994`, `HackerDXGI.cpp:569`
 
 ### pre
 
-Explicitly executes a command in the pre-command list (end of frame). When used in sections like `[Present]`, `pre` runs after the game's rendering completes, making it ideal for overlays and post-processing.
+Explicitly executes a command in the pre-command list (before Present call). When used in sections like `[Present]`, `pre` runs **before the Present() API call** at the end of Frame N, after the game's rendering completes, making it ideal for overlays and post-processing.
 
 **Syntax:**
 ```ini
@@ -41,7 +61,9 @@ pre ps-t0 = ResourceOverlay
 pre run = CommandListPostProcess
 ```
 
-**Source:** `IniHandler.cpp:1987-1994`
+**Timing:** Executes before Present() call, at the end of the current frame (Frame N).
+
+**Source:** `IniHandler.cpp:1987-1994`, `HackerDXGI.cpp:211`
 
 ### run
 
