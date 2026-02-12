@@ -730,13 +730,3 @@ scale_factor = rt_width / 1920.0
 ; Better than:
 x = rt_width / 1920.0 * (16.0 / 9.0) * 60.0  ; What does this do?
 ```
-
----
-
-## See Also
-
-- [Expressions](./expressions.md) - Complete expression reference with examples
-- [Control Flow](./control-flow.md) - Conditional execution and flow control
-- [Constants](./constants.md) - Constant values and parameters
-- [Command List](./command-list.md) - Command list syntax and execution
-- [Namespace](./namespace.md) - Variable scopes and namespaces

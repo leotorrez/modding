@@ -717,13 +717,3 @@ Frame analysis shows complete resource flow:
 ```
 
 ---
-
-## See Also
-
-- [Resource](./resource.md) - Resource types and formats
-- [Custom Shader](./custom-shader.md) - Pipeline state configuration
-- [Draw Calls](./draw-calls.md) - Draw command reference
-- [ShaderOverride](./override.md#shader-override) - Shader interception
-- [TextureOverride](./override.md#texture-override) - Texture replacement
-- [Frame Analysis](./debugging.md#frame-analysis) - Pipeline inspection
-- [Glossary](./glossary.md) - DirectX terminology

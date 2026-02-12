@@ -899,12 +899,3 @@ export PATH=$PATH:/path/to/3dmigoto/x64
 export FXC="/path/to/fxc.exe"
 export CMD_DECOMPILER="/path/to/cmd_Decompiler.exe"
 ```
-
-## See Also
-
-- [Debugging](./debugging.md) - Shader hunting and frame analysis
-- [Shader Regex](./shader-regex.md) - Runtime shader modification
-- [Custom Shader](./custom-shader.md) - Shader replacement
-- [System Values](./system-values.md) - Shader semantics reference
-- [Glossary](./glossary.md) - Terminology (DXBC, FNV-64, etc.)
-- [Troubleshooting](./troubleshooting.md) - Error diagnosis

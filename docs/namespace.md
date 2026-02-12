@@ -750,13 +750,3 @@ else
     ps-t0 = ResourceStandardTexture
 endif
 ```
-
----
-
-## See Also
-
-- [Constants](./constants.md) - Variable declaration and initialization
-- [Properties](./properties.md#variable-declaration) - Variable types
-- [Command List](./command-list.md) - Command list syntax
-- [Include](./include.md) - Including other INI files
-- [Glossary](./glossary.md#namespace) - Namespace terminology

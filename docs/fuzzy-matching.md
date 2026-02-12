@@ -763,12 +763,3 @@ match_usage ! immutable
 ```
 
 Reference: `IniHandler.cpp:3041-3054` (default usage restriction)
-
-## See Also
-
-- [TextureOverride](./texture-override.md) - Complete TextureOverride documentation
-- [Resource](./resource.md) - Resource types and formats
-- [Flags](./flags.md) - DirectX flag reference
-- [Expressions](./expressions.md) - Expression syntax and evaluation
-- [Operators](./operators.md) - Operator reference
-- [Troubleshooting](./troubleshooting.md) - General troubleshooting guide
