@@ -308,20 +308,21 @@ bind_flags = vertex_buffer
 
 ## Misc Flags
 
-Additional resource creation flags. Multiple flags can be combined.
+**Type:** Named flags or hexadecimal  
+**Default:** None (0x00000000)
 
-### Available Misc Flags
+Specifies special resource properties and capabilities. Multiple flags can be combined.
 
-| Flag                      | Description                                   |
-|---------------------------|-----------------------------------------------|
-| `generate_mips`           | Enable automatic mipmap generation            |
-| `shared`                  | Resource can be shared between devices        |
-| `texturecube`             | Texture is a cube map                         |
-| `drawindirect_args`       | Buffer contains draw indirect arguments       |
-| `buffer_allow_raw_views`  | Allow raw buffer views                        |
-| `buffer_structured`       | Buffer is a structured buffer                 |
-| `resource_clamp`          | Clamp texture coordinates                     |
+**Common flags:**
+- `generate_mips` (0x01) - Enable automatic mipmap generation
+- `texturecube` (0x04) - Texture is a cubemap (6 faces)
+- `buffer_structured` (0x40) - Buffer is structured (has stride)
+- `drawindirect_args` (0x10) - Buffer contains DrawIndirect arguments
+- `buffer_allow_raw_views` (0x20) - Buffer supports raw (ByteAddress) views
 
+See [Flags - Misc Flags](./flags.md#miscellaneous-flags-d3d11_resource_misc_flag) for complete flag reference.
+
+**Example:**
 ```ini
 [ResourceCubeMap]
 type = Cube
