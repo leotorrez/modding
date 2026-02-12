@@ -274,21 +274,23 @@ byte_width = vertex_count * 32
 
 ## Bind Flags
 
-Specify how the resource can be used in the pipeline. Multiple flags can be combined.
+**Type:** Named flags or hexadecimal  
+**Default:** `0x08` (shader_resource for textures)
 
-### Available Bind Flags
+Specifies where the resource can be bound in the rendering pipeline. Multiple flags can be combined.
 
-| Flag                   | Description                                    |
-|------------------------|------------------------------------------------|
-| `vertex_buffer`        | Can be bound as vertex buffer                  |
-| `index_buffer`         | Can be bound as index buffer                   |
-| `constant_buffer`      | Can be bound as constant buffer                |
-| `shader_resource`      | Can be bound as shader resource (texture/SRV)  |
-| `stream_output`        | Can be used for stream output                  |
-| `render_target`        | Can be used as render target                   |
-| `depth_stencil`        | Can be used as depth/stencil buffer            |
-| `unordered_access`     | Can be bound as UAV (read/write access)        |
+**Common flags:**
+- `shader_resource` (0x08) - Most common for textures, allows reading in shaders
+- `render_target` (0x20) - For render-to-texture operations
+- `depth_stencil` (0x40) - For depth buffers
+- `unordered_access` (0x80) - For compute shader read/write access
+- `vertex_buffer` (0x01) - For vertex data buffers
+- `index_buffer` (0x02) - For index data buffers
+- `constant_buffer` (0x04) - For uniform buffers
 
+See [Flags - Bind Flags](./flags.md#bind-flags-d3d11_bind_flag) for complete flag reference and usage restrictions.
+
+**Example:**
 ```ini
 [ResourceRenderTarget]
 type = Texture2D
@@ -296,13 +298,6 @@ width = 1920
 height = 1080
 format = R8G8B8A8_UNORM
 bind_flags = render_target shader_resource
-
-[ResourceRWTexture]
-type = Texture2D
-width = 1024
-height = 1024
-format = R32_FLOAT
-bind_flags = unordered_access shader_resource
 
 [ResourceVertexBuffer]
 type = Buffer

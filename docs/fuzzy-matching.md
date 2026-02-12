@@ -196,76 +196,71 @@ Reference: `IniHandler.cpp:2712-2803`, `ResourceHash.cpp:1402-1417`
 
 ## Flag Matching
 
-Flags can be matched using named constants or hexadecimal values with masks.
+Flags can be matched using named constants or hexadecimal values with masks. All flag-matching properties support the same syntax.
 
-### Named Flag Syntax
+### match_bind_flags
+
+Match resources by their bind flags (how they can be bound to the rendering pipeline).
+
+**Syntax:**
+- Use `+` prefix to require a flag (must be present)
+- Use `-` prefix to exclude a flag (must be absent)
+- Use flag names or hexadecimal values
+- Multiple flags can be combined
 
 ```ini
-; Simple flag matching (exact match)
+; Match render targets
 match_bind_flags = render_target
 
-; Multiple flags (must have all specified)
+; Require render_target AND shader_resource
 match_bind_flags = +render_target +shader_resource
 
-; Negative matching (must not have flag)
+; Exclude depth/stencil buffers
 match_bind_flags = -depth_stencil
 
-; Combination
+; Combination: render target with shader resource, but not depth
 match_bind_flags = +render_target +shader_resource -depth_stencil
-```
 
-Reference: `IniHandler.cpp:2954-3024`
-
-### Hexadecimal Flag Syntax
-
-```ini
-; Value only (exact match)
+; Hexadecimal (0x20 = render_target)
 match_bind_flags = 0x00000020
 
-; Value with mask (val / mask)
+; Hexadecimal with mask
 match_bind_flags = 0x00000020 / 0x000000ff
 ```
 
-When using masks, the comparison is: `(lhs & mask) == value`
+When using masks, the comparison is: `(resource_flags & mask) == value`
 
-Reference: `ResourceHash.cpp:1442-1443`
+See [Flags - Bind Flags](./flags.md#bind-flags-d3d11_bind_flag) for available flags and their hexadecimal values.
 
-### Available Flags
+Reference: `IniHandler.cpp:2954-3024`, `ResourceHash.cpp:1442-1443`
 
-**Bind Flags** (D3D11_BIND_FLAG):
-- `vertex_buffer` (0x00000001)
-- `index_buffer` (0x00000002)
-- `constant_buffer` (0x00000004)
-- `shader_resource` (0x00000008)
-- `stream_output` (0x00000010)
-- `render_target` (0x00000020)
-- `depth_stencil` (0x00000040)
-- `unordered_access` (0x00000080)
-- `decoder` (0x00000200)
-- `video_encoder` (0x00000400)
+### match_misc_flags
 
-**CPU Access Flags** (D3D11_CPU_ACCESS_FLAG):
-- `write` (0x00010000)
-- `read` (0x00020000)
+Match resources by their miscellaneous flags (special properties like mipmaps, cubemaps, structured buffers).
 
-**Usage Types** (D3D11_USAGE):
-- `default` (0)
-- `immutable` (1)
-- `dynamic` (2)
-- `staging` (3)
+Uses same syntax as `match_bind_flags`. See [Flags - Misc Flags](./flags.md#misc-flags-d3d11_resource_misc_flag) for available flags.
 
-**Misc Flags** (D3D11_RESOURCE_MISC_FLAG) - partial list:
-- `generate_mips` (0x00000001)
-- `shared` (0x00000002)
-- `texturecube` (0x00000004)
-- `drawindirect_args` (0x00000010)
-- `buffer_allow_raw_views` (0x00000020)
-- `buffer_structured` (0x00000040)
-- `resource_clamp` (0x00000080)
-- `shared_keyedmutex` (0x00000100)
-- `gdi_compatible` (0x00000200)
+### match_cpu_access_flags
 
-See [flags.md](./flags.md) for complete flag reference.
+Match resources by their CPU access flags (read/write capabilities).
+
+**Available flags:**
+- `write` (0x00010000) - CPU can write to resource
+- `read` (0x00020000) - CPU can read from resource
+
+See [Flags - CPU Access Flags](./flags.md#cpu-access-flags-d3d11_cpu_access_flag) for details.
+
+### match_usage
+
+Match resources by their usage type (access pattern and mutability).
+
+**Available values:**
+- `default` (0) - GPU read/write, no CPU access
+- `immutable` (1) - GPU read-only, no CPU access after creation
+- `dynamic` (2) - GPU read-only, CPU write-only (frequent updates)
+- `staging` (3) - GPU to/from CPU transfer
+
+See [Flags - Usage Types](./flags.md#usage-types-d3d11_usage) for detailed descriptions.
 
 Reference: `CommandList.h:437-448`, `ResourceHash.h:270-315`
 
