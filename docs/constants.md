@@ -654,13 +654,3 @@ if $debug_mode == 1
     endif
 endif
 ```
-
----
-
-## See Also
-
-- [Variables](./properties.md#variable-declaration) - Variable types and declaration
-- [Namespace](./namespace.md) - Cross-file variable access
-- [Expressions](./expressions.md) - Expression syntax
-- [Properties](./properties.md#iniparams) - IniParams reference
-- [Command List](./command-list.md) - Command list syntax

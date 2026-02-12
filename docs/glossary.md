@@ -336,11 +336,3 @@ Keyboard shortcuts used during hunting to identify shaders and textures.
 Output from frame analysis containing all draw calls, shaders, textures, and buffers from a single frame.
 
 ---
-
-## See Also
-
-- [Expressions](/expressions.md) - Mathematical and logical expressions
-- [Modifiers](/modifiers.md) - Command and resource modifiers
-- [CommandList](/command-list.md) - Command list syntax
-- [CustomShader](/custom-shader.md) - Custom shader pipelines
-- [Resource](/resource.md) - Resource definitions

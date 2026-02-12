@@ -592,11 +592,3 @@ Reference: globals.h:404, nvprofile.cpp:766-1017
 5. **Check command list recursion** - Circular references cause slowdown
 
 ---
-
-## See Also
-
-- [Logs](./logs.md) - Log file format and interpretation
-- [Troubleshooting](./troubleshooting.md) - Common errors and solutions
-- [Hunting](./hunting.md) - Detailed hunting mode documentation
-- [Key](./key.md) - Key binding configuration
-- [Custom Shaders](./custom-shader.md) - Shader editing and syntax

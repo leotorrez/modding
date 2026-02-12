@@ -712,12 +712,3 @@ pre x996 = $frame_duration  ; Frame time in milliseconds
 ```
 
 ---
-
-## See Also
-
-- [Present](./present.md) - Present section detailed reference
-- [Modifiers](./modifiers.md) - pre/post modifiers
-- [Command List](./command-list.md) - Command list execution
-- [Debugging](./debugging.md) - Frame analysis
-- [ShaderOverride](./override.md#shader-override) - Shader override execution
-- [TextureOverride](./override.md#texture-override) - Texture override execution
