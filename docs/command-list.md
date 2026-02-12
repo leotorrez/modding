@@ -624,7 +624,7 @@ if $enabled
 endif
 ```
 
-See [Operators](/docs/operators.md) and [Expressions](/docs/expressions.md) for more details on conditionals.
+See [Expressions](/docs/expressions.md) for more details on conditionals and operators.
 
 ## Built-in CommandLists
 
