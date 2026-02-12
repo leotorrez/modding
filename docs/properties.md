@@ -155,19 +155,17 @@ $saved_cb = vs-cb0
 
 ## IniParams
 
-IniParams is a special parameter array accessible both in INI files and shaders.
+IniParams is a special parameter array accessible both in INI files and shaders, providing communication between INI configuration and shader code.
 
-### INI File Access
+### Quick Reference
 
-IniParams are indexed by number and component:
-
-**Syntax:** `[xyzw][index]`
+**INI syntax:** `[xyzw][index]` where component is x/y/z/w and index is 0 to 2147483647
 
 ```ini
 ; Set IniParams[0].x = 1.0
 x0 = 1.0
 
-; Set IniParams[123].xyzw
+; Set IniParams[123] components
 x123 = 0.8
 y123 = 1.0
 z123 = 1.2
@@ -180,34 +178,14 @@ if y5 > 0.5
 endif
 ```
 
-**Valid Components:**
-- `x[n]` - First component (.x) of IniParams[n]
-- `y[n]` - Second component (.y) of IniParams[n]
-- `z[n]` - Third component (.z) of IniParams[n]
-- `w[n]` - Fourth component (.w) of IniParams[n]
-
-**Range:**
-- Index: 0 to 2147483647 (dynamically allocated)
-- Component: x, y, z, w
-- Value: float32
-
-Reference: CommandList.cpp:2819-2886
-
-### Shader Access
-
-In HLSL shaders, IniParams is exposed as a Texture1D:
+**Shader access:** Exposed as `Texture1D<float4>` at register t120 (default)
 
 ```hlsl
-// Declare IniParams (usually at register t120)
 Texture1D<float4> IniParams : register(t120);
 
-// Define convenient names
 #define OFFSET IniParams[123].x
 #define SCALE IniParams[123].y
-#define CONVERGENCE IniParams[123].z
-#define SEPARATION IniParams[123].w
 
-// Use in shader
 float4 main(float4 pos : SV_Position) : SV_Target
 {
     float adjusted = pos.x * SCALE + OFFSET;
@@ -215,12 +193,9 @@ float4 main(float4 pos : SV_Position) : SV_Target
 }
 ```
 
-**Binding:**
-- Default register: `t120`
-- Can be changed in [Rendering] section
-- Automatically bound by 3dmigoto
+See [Constants - IniParams](./constants.md#iniparams) for complete reference, best practices, and advanced usage.
 
-Reference: IniHandler.cpp:1520-1640
+Reference: CommandList.cpp:2819-2886, IniHandler.cpp:1520-1640
 
 ---
 
