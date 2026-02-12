@@ -1,265 +1,730 @@
+# Override Sections
 
-# Override
+Override sections are the foundation of 3DMigoto modding. They allow you to intercept specific game objects (shaders, textures, buffers) as they are used during rendering and modify their behavior. The two main override types are **ShaderOverride** and **TextureOverride**, each serving distinct purposes in the rendering pipeline.
 
-There are two types of overrides: `TextureOverride` and `ShaderOverride`. When there is a corresponding hashed object on the screen, it triggers the operation of the respective override section. This is the core functionality of GIMI and the starting point for all mods.
+## Overview
+
+Override sections work by matching against identifiable properties of rendering objects:
+
+- **ShaderOverride** - Matches shaders by their hash and executes commands when that shader is used in a draw call
+- **TextureOverride** - Matches textures/buffers by hash or properties and executes commands when bound to the pipeline
+
+When a match occurs, the override section can:
+- Execute custom commands
+- Replace resources (textures, buffers, shaders)
+- Modify rendering state
+- Skip rendering operations
+- Inject custom data
 
 ```ini
-[*Override*]
-[TextureOverrideLumineBody]
-[ShaderOverridGroundHealthBar]
+; ShaderOverride - Executed when shader is used
+[ShaderOverrideCharacterShader]
+hash = abc12345def67890
+ps-t0 = ResourceCustomTexture
+run = CustomCommands
+
+; TextureOverride - Executed when texture is bound
+[TextureOverrideCharacterTexture]
+hash = fedcba98
+ps-t1 = ResourceReplacementTexture
 ```
 
-# Common properties
-The most used ones for most mods, while not necesary to read for most mod makers is good to learn about them.
-## hash
+## ShaderOverride vs TextureOverride
 
-It tells GIMI which object to pay attention to and triggers the corresponding action when found.
+Understanding when to use each override type is crucial:
+
+| Feature | ShaderOverride | TextureOverride |
+|---------|---------------|-----------------|
+| **Matches** | Shaders (VS, HS, DS, GS, PS) | Textures and buffers |
+| **Hash Size** | 64-bit (16 hex chars) | 32-bit (8 hex chars) |
+| **When Triggered** | During draw calls using the shader | When resource is bound to pipeline |
+| **Primary Use** | Draw call modifications, shader logic | Resource replacement, buffer modifications |
+| **Fuzzy Matching** | No | Yes (match by properties) |
+| **Vertex Limit Raise** | No | Yes |
+| **Filtering** | depth_filter, filter_index, model | Extensive fuzzy matching properties |
+
+### When to Use ShaderOverride
+
+Use ShaderOverride when you need to:
+- Modify behavior for specific draw calls
+- Detect shader combinations (vertex + pixel shader pairs)
+- Skip rendering specific objects
+- Replace or modify shaders
+- Execute logic based on which shader is active
+
 ```ini
-[TextureOverrideLumineBody]
-hash = afd36b46
-[ShaderOverrideOutlines]
-hash = afd36b46afd36b46
-```
-
-## handling
-
-It specifies the rendering operation for the designated object, usually using `skip` to bypass rendering.
-```ini
-[TextureOverrideLumineDress]
+[ShaderOverrideHideObject]
+hash = abc12345def67890
 handling = skip
 ```
 
-## drawindexed
+### When to Use TextureOverride
 
-Tell GIMI to perform our own rendering instead of using the game's rendering. It is usually used in conjunction with [handling](#handling).
+Use TextureOverride when you need to:
+- Replace textures or buffers
+- Increase vertex buffer sizes (vertex limit raise)
+- Match resources by properties (size, format, type)
+- Modify texture dimensions or formats
+- Control buffer behavior
+
 ```ini
-[TextureOverrideLumineBody]
+[TextureOverrideCustomTexture]
+hash = fedcba98
+ps-t0 = ResourceNewTexture
+```
+
+---
+
+## Common Properties
+
+These properties work in both ShaderOverride and TextureOverride sections (with some restrictions noted).
+
+### hash
+
+**Type:** Hexadecimal  
+**Required:** Yes (unless using fuzzy matching in TextureOverride)
+
+The primary identifier for matching game objects.
+
+```ini
+; ShaderOverride: 64-bit hash (16 hex characters)
+[ShaderOverrideExample]
+hash = abc12345def67890
+
+; TextureOverride: 32-bit hash (8 hex characters)
+[TextureOverrideExample]
+hash = fedcba98
+```
+
+**Finding Hashes:**
+1. Enable hunting mode (F10)
+2. Use frame analysis (F8)
+3. Check d3d11_log.txt
+4. Hunt with numpad keys during gameplay
+
+See [Debugging](/docs/debugging.md) for detailed instructions.
+
+Reference: IniHandler.cpp:2267-2271 (ShaderOverride), IniHandler.cpp:2880-2894 (TextureOverride)
+
+---
+
+### handling
+
+**Type:** Enum  
+**Default:** None  
+**Values:** `skip`, `abort`
+
+Controls how the current operation is handled.
+
+```ini
+; Skip rendering this object
+[ShaderOverrideHideObject]
+hash = abc12345def67890
+handling = skip
+
+; Stop processing further (rarely used)
+[TextureOverrideAbort]
+hash = fedcba98
+handling = abort
+```
+
+**Values:**
+- `skip`: Skip the current draw call or resource binding
+- `abort`: Stop processing command list immediately
+
+**Use Case:** Most commonly used to hide objects by skipping their draw calls.
+
+Reference: CommandList.cpp (handling command implementation)
+
+---
+
+### Resource Bindings
+
+Bind custom resources to shader slots.
+
+#### Vertex Buffers (vb0-vb31)
+
+```ini
+[TextureOverrideCustomModel]
+hash = abc12345
+vb0 = ResourcePositionBuffer
+vb1 = ResourceTexcoordBuffer
+```
+
+**Use Case:** Replace vertex data (positions, normals, texcoords) for custom models.
+
+#### Index Buffer (ib)
+
+```ini
+[TextureOverrideCustomModel]
+hash = abc12345
+ib = ResourceIndexBuffer
+```
+
+**Use Case:** Replace index buffer for custom geometry. Only one index buffer per draw call.
+
+#### Shader Resource Views (ps-t*, vs-t*, etc.)
+
+```ini
+[ShaderOverrideCustomTextures]
+hash = abc12345def67890
+ps-t0 = ResourceDiffuse      ; Pixel shader texture slot 0
+ps-t1 = ResourceNormal       ; Pixel shader texture slot 1
+vs-t0 = ResourceVertexData   ; Vertex shader texture slot 0
+```
+
+**Common Texture Slots:**
+- `t0`: Diffuse/albedo texture
+- `t1`: Normal map or lightmap
+- `t2`: Specular/metallic map
+- `t3`: Shadow ramp or other data
+
+::: warning GAME-SPECIFIC
+Texture slot conventions vary by game engine. Use frame analysis to determine which slots contain which data for your specific game.
+:::
+
+#### Constant Buffers (ps-cb*, vs-cb*, etc.)
+
+```ini
+[ShaderOverrideCustomData]
+hash = abc12345def67890
+vs-cb0 = ResourceTransformData
+ps-cb1 = ResourceMaterialData
+```
+
+**Use Case:** Inject custom constant buffer data into shaders.
+
+Reference: CommandList.cpp (resource binding commands)
+
+---
+
+### Draw Commands
+
+#### drawindexed
+
+**Type:** `auto` or parameters  
+**Applies to:** Both override types
+
+Re-issue the draw call with potentially modified parameters.
+
+```ini
+; Re-issue with same parameters
+[TextureOverrideRedraw]
+hash = abc12345
 drawindexed = auto
+
+; Re-issue with custom parameters
+[TextureOverrideCustomDraw]
+hash = abc12345
+drawindexed = 1000, 0, 0, 0, 0
 ```
 
-## draw
+**Use Case:** Re-render an object with modified resources or state. Often used with `handling = skip` to replace the original draw call.
 
-Assigns x vertex in memory space to be drawn at y index. DirectX Documentation: https://learn.microsoft.com/en-us/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-draw
+**Pattern:**
 ```ini
-[TextureOverrideLumineBlend]
-draw = x, y
-```
-## vbx
-Vertex buffer. It usually points directly to another [Resource](#resource) section.
-```ini
-[TextureOverrideLumineBody]
-vb0 = ResourceLuminePosition
-```
-In other games vb1, vb2, etc are used. For genshin's case it's always vb0.
-
-## ib
-Index buffer. It usually points directly to a [Resource](#resource) section that contains the IB. There can only be one index buffer per object.
-```ini
-[TextureOverrideLumineBody]
-ib = ResourceLumineBodyIB
+[TextureOverrideReplace]
+hash = abc12345
+handling = skip         ; Skip original draw
+vb0 = ResourceNewVB     ; Replace resources
+ib = ResourceNewIB
+drawindexed = auto      ; Re-draw with new resources
 ```
 
-## ps-tx
-Texture resource layer. There are several different types, generally, t0 represents the texture map, t1 represents the light map, t2 represents the metal map, and t3 represents the shadow map. In 3.0 characters this convetion is broken. For more info and fix check: 
-```ini
-[TextureOverrideLumineDress]
-ps-t0 = ResourceLumineDressDiffuse
-ps-t1 = ResourceLumineDressLightMap
-ps-t2 = ResourceLumineDressMetalMap
-ps-t3 = ResourceLumineDressShadowRamp
-...
+Reference: See [Draw Calls](/docs/draw-calls.md) for complete draw command documentation.
 
-```
+#### draw
 
-## allow_duplicate_hash
-At ShaderOverride.
-Controls whether to allow overriding the same hash or not.
+**Type:** Vertex count, start vertex  
+**Applies to:** Both override types
 
-Possible values are:
- - true: Overrides when duplicates exist.
- - false: Does not override when duplicates exist.
- - overrule: Forces the override, which seems to be a plugin-level override.
+Issue a non-indexed draw call.
 
 ```ini
-[ShaderOverrideLumineQEffect]
-hash = 030dbce199e10697
-allow_duplicate_hash = overrule
+[TextureOverrideDraw]
+hash = abc12345
+draw = 100, 0    ; Draw 100 vertices starting at vertex 0
 ```
 
-## match_priority
-At TextureOverride.
-Declares the order priority for overrides. The higher the value, the higher the priority.
-It is not commonly used in GIMI, except in cases where it is used to eliminate hash conflicts. In those cases, setting it to 0 is sufficient.
+**Use Case:** Draw calls without index buffers. Less common than drawindexed.
+
+Reference: See [Draw Calls](/docs/draw-calls.md)
+
+---
+
+### run
+
+**Type:** String (command list name)  
+**Applies to:** Both override types
+
+Execute a named command list.
+
 ```ini
-[TextureOverrideLumineGlasses]
-match_priority = 0
+[ShaderOverrideComplex]
+hash = abc12345def67890
+run = CustomLogic
+
+[CustomLogic]
+if $condition == 1
+    ps-t0 = ResourceA
+else
+    ps-t0 = ResourceB
+endif
 ```
 
-# Advanced properties
-These are often not applied in most mods but they can be very powerful.
+**Use Case:** Complex conditional logic, multiple operations, organized code structure.
 
-## filter_index
+Reference: See [Command List](/docs/command-list.md) for command syntax.
 
-Declares a check value that allows checking elsewhere. It is likely to occupy ps-t0, so it is uncertain whether it is a good approach.
-<!-- Actually it's still not very clear (for me), from someone, it seems that it can disable a specified filter. -->
+---
+
+### filter_index
+
+**Type:** Float  
+**Applies to:** ShaderOverride
+
+Enable partner shader detection.
+
 ```ini
-[TextureOverrideLumineGlasses]
-filter_index = 34
-```
-## analyse_options
+[ShaderOverrideVertexShader]
+hash = abc12345def67890
+x = 0.5
+filter_index = 0.5
 
-can also be specified in `[ShaderOverride*]` sections (or other
-command lists) to set up triggers to change the options mid-way through a
-frame analysis, either for a single draw call (default), or permanently (by
-adding the 'persist' keyword).
-
-Alternatively, `"dump"` can be specified in a `[ShaderOverride*]` section (or
-any other command list) to dump specific resources with per-resource options
+[ShaderOverridePixelShader]
+hash = fedcba9876543210
+y = oVS    ; Read vertex shader filter_index
+if y == 0.5
+    ; Specific VS is active
+    ps-t0 = ResourceCustomTexture
+endif
 ```
-"dump = dump_tex dds share_dupes mono ps-t0"
-```
- dump resources at a
-specific point in time (e.g. `"pre dump = o0"`) or dump a custom resource that
-frame analysis cannot otherwise see  
-```
-"dump = ResourceDepthBuffer"
-```
- Use additional `"dump"` commands to dump multiple resources.
 
+**Use Case:** Execute commands only when specific shader combinations are active.
 
-## match_first_index
+Reference: See [ShaderOverride](/docs/shader-override.md) for complete filter_index documentation.
 
-Specifies the starting position of the buffer. Sometimes, a hash may contain more than one material, so it is necessary to specify the correct resource to load.
+---
+
+### match_priority (TextureOverride only)
+
+**Type:** Integer  
+**Default:** `0`  
+**Applies to:** TextureOverride only
+
+Set evaluation priority when multiple fuzzy matches could apply.
+
 ```ini
-[TextureOverrideLumineBody]
-match_first_index = 25600
-```
-
-
-## match_type
-At TextureOverride.
-Used instead of hash. Called when any component of the selected type is rendered.
-```ini
-[TextureOverrideTexture2D]
+[TextureOverrideSpecific]
 match_type = Texture2D
-```
-
-## match_width
-At TextureOverride.
-Checks the width of the texture.
-```ini
-[TextureOverrideWidth1024]
 match_width = 1024
-```
-
-## match_height
-At TextureOverride.
-Checks the height of the texture.
-```ini
-[TextureOverrideHeight1024]
 match_height = 1024
+match_priority = 10    ; Higher priority
+
+[TextureOverrideGeneral]
+match_type = Texture2D
+match_priority = 0     ; Lower priority
 ```
 
-## match_msaa
-At TextureOverride.
-Filter by MSAA (Not used in anime game).
+**Use Case:** Resolve conflicts when multiple TextureOverride sections match the same resource. Higher values take precedence.
+
+Reference: See [TextureOverride](/docs/texture-override.md#match_priority) for details.
+
+---
+
+### allow_duplicate_hash (ShaderOverride only)
+
+**Type:** Boolean or `overrule`  
+**Default:** `false`  
+**Applies to:** ShaderOverride only
+
+Allow multiple ShaderOverride sections to share the same hash.
+
 ```ini
-[TextureOverrideMsaa]
-match_msaa = 1
+[ShaderOverrideMod1]
+hash = abc12345def67890
+allow_duplicate_hash = true
+run = Mod1Commands
+
+[ShaderOverrideMod2]
+hash = abc12345def67890
+allow_duplicate_hash = true
+run = Mod2Commands
 ```
 
-## match_msaa_quality
-At TextureOverride.
+**Use Case:** Multiple mods need to add commands to the same shader without conflicts.
+
+Reference: See [ShaderOverride](/docs/shader-override.md#allow_duplicate_hash) for complete documentation.
+
+---
+
+## Fuzzy Matching (TextureOverride Only)
+
+TextureOverride sections support fuzzy matching - matching resources by their properties instead of hash. This is powerful for matching classes of resources.
+
 ```ini
-[TextureOverrideMsaaQuality]
-match_msaa_quality = 1
+; Match all 1024x1024 render targets
+[TextureOverrideRenderTargets]
+match_type = Texture2D
+match_width = 1024
+match_height = 1024
+match_bind_flags = render_target
+ps-t125 = ResourceBackup
 ```
 
-## match_usage
-At TextureOverride.
+### Common Fuzzy Match Properties
 
-This setting doesn't make much sense and defaults to DEFAULT.
+#### match_type
 
-More details here:
-https://learn.microsoft.com/en-us/windows/win32/api/d3d11/ne-d3d11-d3d11_usage
+Match by DirectX 11 resource type.
+
 ```ini
-[TextureOverrideUsage]
-match_usage = IMMUTABLE
+match_type = Texture2D
+match_type = Buffer
+match_type = Texture2DMS
 ```
 
-## match_bind_flags
-At TextureOverride.
-Another filter.
-You can use + or - before the flag to change the filtering.
-If there is no + or - then the filter is simply not used.
+#### match_width / match_height
+
+Match by texture dimensions. Supports expressions.
+
 ```ini
-[TextureOverrideAllBindFlags]
-match_bind_flags = +VERTEX_BUFFER -INDEX_BUFFER CONSTANT_BUFFER SHADER_RESOURCE STREAM_OUTPUT RENDER_TARGET DEPTH_STENCIL UNORDERED_ACCESS DECODER VIDEO_ENCODER
+match_width = 1920
+match_height = 1080
+
+; Expression matching
+match_width = res_width
+match_height = res_height / 2
 ```
 
-## match_cpu_access_flags
-At TextureOverride.
-Another filter.
-You can use + or - before the flag to change the filtering.
-If there is no + or - then the filter is simply not used.
-```ini
-[TextureOverrideAllCPUAccessFlags]
-match_cpu_access_flags = +READ -WRITE
-```
+#### match_format
 
-## match_misc_flags
-At TextureOverride.
-Another filter.
-You can use + or - before the flag to change the filtering.
-If there is no + or - then the filter is simply not used.
-```ini
-[TextureOverrideAllMiscFlags]
-match_misc_flags = GENERATE_MIPS SHARED TEXTURECUBE DRAWINDIRECT_ARGS BUFFER_ALLOW_RAW_VIEWS BUFFER_STRUCTURED RESOURCE_CLAMP SHARED_KEYEDMUTEX GDI_COMPATIBLE SHARED_NTHANDLE RESTRICTED_CONTENT RESTRICT_SHARED_RESOURCE RESTRICT_SHARED_RESOURCE_DRIVER GUARDED TILE_POOL TILED
-```
+Match by DXGI format.
 
-## match_byte_width
-At TextureOverride.
-Match byte width.
 ```ini
-[TextureOverrideByteWidth]
-match_byte_width = res_width * res_height
-```
-
-## match_stride
-At TextureOverride.
-Something to do with buffers.
-```ini
-[TextureOverrideStride]
-match_stride = 40
-```
-
-## match_mips
-At TextureOverride.
-```ini
-[TextureOverrideMips]
-match_mips = 1
-```
-
-## match_format
-At TextureOverride.
-Filter by format. Useful for modifying something that doesn't have a constant hash.
-List of DX formats:
-https://learn.microsoft.com/en-us/windows/win32/api/dxgiformat/ne-dxgiformat-dxgi_format
-```ini
-[TextureOverrideFormat]
+match_format = R8G8B8A8_UNORM
 match_format = R32G32B32A32_FLOAT
 ```
 
-## match_depth
-At TextureOverride.
+#### match_bind_flags
+
+Match by DirectX 11 bind flags. Use `+` to require, `-` to exclude.
+
 ```ini
-[TextureOverrideDepth]
-match_depth = 1
+; Require render_target, exclude depth_stencil
+match_bind_flags = +render_target -depth_stencil
+
+; All possible flags
+match_bind_flags = vertex_buffer index_buffer constant_buffer shader_resource stream_output render_target depth_stencil unordered_access
 ```
 
-## match_array
-At TextureOverride.
+See [TextureOverride](/docs/texture-override.md) and [Fuzzy Matching](/docs/fuzzy-matching.md) for complete fuzzy matching documentation.
+
+---
+
+## Draw Context Matching (TextureOverride Only)
+
+TextureOverride can match based on draw call context - the parameters of the draw call itself.
+
 ```ini
-[TextureOverrideArray]
-match_array = 12
+[TextureOverrideSpecificDrawCall]
+hash = abc12345
+match_first_index = 0
+match_index_count = 3600
+ps-t0 = ResourceCustomTexture
 ```
+
+### Draw Context Properties
+
+- `match_first_vertex` - Match by first vertex index
+- `match_first_index` - Match by first index
+- `match_first_instance` - Match by first instance
+- `match_vertex_count` - Match by number of vertices
+- `match_index_count` - Match by number of indices
+- `match_instance_count` - Match by number of instances
+
+**Use Case:** When the same texture/buffer is used by multiple objects, distinguish them by their draw call parameters.
+
+Example - Separate body parts with same hash:
+
+```ini
+[TextureOverrideHead]
+hash = abc12345
+match_first_index = 0
+match_index_count = 1200
+vb0 = ResourceHeadVB
+
+[TextureOverrideBody]
+hash = abc12345
+match_first_index = 1200
+match_index_count = 3600
+vb0 = ResourceBodyVB
+```
+
+Reference: See [TextureOverride](/docs/texture-override.md#draw-context-matching)
+
+---
+
+## Common Patterns
+
+### Pattern 1: Replace Texture
+
+```ini
+[TextureOverrideCustomTexture]
+hash = abc12345
+ps-t0 = ResourceNewTexture
+```
+
+### Pattern 2: Hide Object
+
+```ini
+[ShaderOverrideHideObject]
+hash = abc12345def67890
+handling = skip
+```
+
+### Pattern 3: Replace Model
+
+```ini
+[TextureOverrideCustomModel]
+hash = abc12345
+handling = skip
+vb0 = ResourceNewPosition
+vb1 = ResourceNewTexcoord
+ib = ResourceNewIB
+drawindexed = auto
+```
+
+### Pattern 4: Conditional Modification
+
+```ini
+[ShaderOverrideConditional]
+hash = abc12345def67890
+run = ConditionalLogic
+
+[ConditionalLogic]
+if $enable_mod == 1
+    ps-t0 = ResourceModTexture
+    vs-cb13 = ResourceModData
+endif
+```
+
+### Pattern 5: Shader Pair Detection
+
+```ini
+[ShaderOverrideVS]
+hash = abc12345def67890
+filter_index = 0.75
+x = 0.75
+
+[ShaderOverridePS]
+hash = fedcba9876543210
+y = oVS
+if y == 0.75
+    ; Specific VS+PS combination active
+    ps-t0 = ResourcePairTexture
+endif
+```
+
+### Pattern 6: Fuzzy Depth Buffer Override
+
+```ini
+[TextureOverrideDepthBuffer]
+match_type = Texture2D
+match_bind_flags = depth_stencil
+match_width = res_width
+match_height = res_height
+ps-t125 = ResourceDepthCopy
+```
+
+### Pattern 7: Vertex Limit Raise
+
+```ini
+[TextureOverrideExpandBuffer]
+hash = abc12345
+vb0 = ResourceLargerBuffer
+match_first_index = 0
+; Vertex buffer ResourceLargerBuffer has increased size
+```
+
+---
+
+## Best Practices
+
+### Organization
+
+**Group related overrides:**
+```ini
+; Character model overrides
+[ShaderOverrideCharacterShader]
+hash = abc12345def67890
+
+[TextureOverrideCharacterBody]
+hash = abc12345
+
+[TextureOverrideCharacterHead]
+hash = def67890
+
+; UI overrides
+[ShaderOverrideUI]
+hash = fedcba9876543210
+
+[TextureOverrideUIBackground]
+hash = fedcba98
+```
+
+### Naming Conventions
+
+**Use descriptive names:**
+```ini
+; Good
+[ShaderOverrideCharacterOutline]
+[TextureOverrideWeaponDiffuse]
+
+; Bad
+[ShaderOverride1]
+[TextureOverride_abc]
+```
+
+### Hash Comments
+
+**Document what each hash represents:**
+```ini
+; Character body shader - controls lighting and shading
+[ShaderOverrideCharacterBody]
+hash = abc12345def67890
+
+; Main diffuse texture - 2048x2048 RGBA
+[TextureOverrideCharacterDiffuse]
+hash = abc12345
+```
+
+### Testing
+
+**Test in isolation:**
+1. Comment out other overrides
+2. Test one override at a time
+3. Verify hash is correct
+4. Check logs for errors
+
+**Use frame analysis:**
+1. F8 to start frame analysis
+2. Check ShaderFixes/ for dumped resources
+3. Verify hashes match your INI
+4. Examine resource properties
+
+---
+
+## Troubleshooting
+
+### Override Not Triggering
+
+**Problem:** Override section defined but not executing.
+
+**Solutions:**
+1. **Verify hash** - Use frame analysis to confirm correct hash
+2. **Check section name** - Must start with `ShaderOverride` or `TextureOverride`
+3. **Check hash length** - ShaderOverride: 16 hex chars, TextureOverride: 8 hex chars
+4. **Enable logging** - Set `calls = 1` in `[Logging]` to see execution
+5. **Check conditions** - If using `if` statements, verify they evaluate true
+
+### Wrong Object Affected
+
+**Problem:** Override affects different object than intended.
+
+**Solutions:**
+1. **Hash collision** - Different objects may share hashes (rare but possible)
+2. **Use draw context matching** - Add `match_first_index` or `match_index_count`
+3. **Use fuzzy matching** - Match by specific properties to narrow down
+4. **Check game updates** - Game patches may change hashes
+
+### Performance Issues
+
+**Problem:** Game slows down after adding overrides.
+
+**Solutions:**
+1. **Check execution frequency** - Some resources bound very frequently
+2. **Optimize command lists** - Reduce operations in frequently-executed overrides
+3. **Use conditions** - Skip unnecessary work with `if` statements
+4. **Profile with logs** - Enable timing logs to identify bottlenecks
+
+### Resources Not Loading
+
+**Problem:** Resources specified but not appearing in game.
+
+**Solutions:**
+1. **Verify resource exists** - Check [Resource] section is defined
+2. **Check resource path** - Verify file paths are correct
+3. **Check slot numbers** - Ensure binding to correct shader slots
+4. **Check resource type** - Must match what the slot expects (texture vs buffer)
+
+---
+
+## Advanced Topics
+
+### Namespace
+
+Override sections support namespace for variable isolation:
+
+```ini
+[ShaderOverride.MyMod.CharacterShader]
+hash = abc12345def67890
+$mymod_enabled = 1    ; Variable scoped to .MyMod namespace
+```
+
+See [Namespace](/docs/namespace.md) for complete documentation.
+
+### Command Lists
+
+Override sections act as command lists and support all command list syntax:
+
+```ini
+[ShaderOverrideComplex]
+hash = abc12345def67890
+; Variable operations
+$temp = x + y
+x = $temp * 2.0
+
+; Conditionals
+if $condition
+    ps-t0 = ResourceA
+else
+    ps-t0 = ResourceB
+endif
+
+; Loops (in command lists called via run)
+run = ComplexLogic
+```
+
+See [Command List](/docs/command-list.md) for complete command syntax.
+
+### Pre and Post Commands
+
+Commands can run before (default) or after (post) the draw call:
+
+```ini
+[ShaderOverridePrePost]
+hash = abc12345def67890
+; Before draw call
+ps-t0 = ResourceSetup
+x = 1.0
+
+; After draw call
+post ps-t0 = null
+post x = 0.0
+```
+
+See [Command List](/docs/command-list.md#post-modifier) for details.
+
+---
+
+## Related Documentation
+
+- [ShaderOverride](/docs/shader-override.md) - Complete ShaderOverride documentation
+- [TextureOverride](/docs/texture-override.md) - Complete TextureOverride documentation
+- [Command List](/docs/command-list.md) - Command syntax reference
+- [Resource](/docs/resource.md) - Defining custom resources
+- [Draw Calls](/docs/draw-calls.md) - Draw command reference
+- [Debugging](/docs/debugging.md) - Hunting and frame analysis
+- [Fuzzy Matching](/docs/fuzzy-matching.md) - TextureOverride fuzzy matching
+- [Namespace](/docs/namespace.md) - Variable scoping
