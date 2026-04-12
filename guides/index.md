@@ -37,12 +37,12 @@ The following guides are set up in roughly the order they should be read in.
   },
   { 
     title: 'XXMI Guides', 
-    details: 'Tutorials for the XXMI Blender plugin.', 
+    details: 'Tutorials for the XXMI Blender plugin and its various features.', 
     link: './xxmi/xxmi' 
   },
   { 
     title: 'WWMI Guides', 
-    details: 'Tutorials for the WWMI Blender plugin.', 
+    details: 'Tutorials for the WWMI Blender plugin and its various features.', 
     link: './wwmi/wwmi' 
   },
     { 
