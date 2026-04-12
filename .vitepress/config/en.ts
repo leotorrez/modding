@@ -76,8 +76,6 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
                 { text: 'WWMI Toolbox', link: 'wwmi/wwmi_toolbox' },
             ]
         },
-        { text: "Mona Hat", link: "mona-hat" },
-        { text: "Weapon banana", link: "weapon-banana" },
         { text: 'GI Guides', 
             items: [
                 { text: "GI Textures and Properties", link: "games/gi/gi-textures" },
@@ -106,6 +104,12 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
                 { text: "Blender Materials and Baking", link: "blender/blender-baking" },
             ]
         },
+        { text: 'Tutorials',
+          items: [
+            { text: "Mona Hat", link: "tutorials/mona-hat" },
+            { text: "Weapon banana", link: "tutorials/weapon-banana" },
+          ]
+        }
       ],
     },
   ];
