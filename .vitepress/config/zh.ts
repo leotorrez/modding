@@ -55,8 +55,16 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
                 { text: 'Hunting', link: 'hunting' },
                 { text: 'Textures 101', link: 'textures-101' },
                 { text: 'Shaders 101', link: 'shaders-101' },
-                { text: 'XXMI Tools', link: 'xxmi_tools' },
-                { text: 'WWMI Tools', link: 'wwmi' },
+                { text: 'XXMI Guides', 
+                    items: [
+                        { text: 'XXMI Tools', link: 'xxmi_tools' },
+                    ]
+                },
+                { text: 'WWMI Guides', 
+                    items: [
+                        { text: 'WWMI Tools', link: 'wwmi' },
+                    ]
+                },
                 { text: 'Mona Hat', link: 'mona-hat' },
                 { text: 'Weapon banana', link: 'weapon-banana' },
                 { text: 'ZZZ textures and properties', link: 'zzz-textures' },

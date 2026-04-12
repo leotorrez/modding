@@ -54,16 +54,58 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
     {
       text: "Guides",
       items: [
-        { text: "Modding 101", link: "modding-101" },
-        { text: "Hunting & dumping", link: "hunting" },
-        { text: "Textures 101", link: "textures-101" },
-        { text: "Shaders 101", link: "shaders-101" },
-        { text: "XXMI Tools", link: "xxmi_tools" },
-        { text: "WWMI Tools", link: "wwmi_tools" },
+        { text: 'Basics',
+          items: [
+            { text: "Modding 101", link: "basics/modding-101" },
+            { text: "Hunting & dumping 101", link: "basics/hunting" },
+            { text: "Textures 101", link: "basics/textures-101" },
+            { text: "Shaders 101", link: "basics/shaders-101" },
+          ]
+        },
+        { text: 'XXMI Guides', 
+            items: [
+                { text: 'XXMI Tools', link: 'xxmi/xxmi_tools' },
+            ]
+        },
+        { text: 'WWMI Guides', 
+            items: [
+                { text: 'WWMI Tools', link: 'wwmi/wwmi_tools' },
+                { text: 'WWMI Extracting', link: 'wwmi/wwmi_extract' },
+                { text: 'WWMI Importing', link: 'wwmi/wwmi_import' },
+                { text: 'WWMI Exporting', link: 'wwmi/wwmi_export' },
+                { text: 'WWMI Toolbox', link: 'wwmi/wwmi_toolbox' },
+            ]
+        },
         { text: "Mona Hat", link: "mona-hat" },
         { text: "Weapon banana", link: "weapon-banana" },
-        { text: "ZZZ textures and properties", link: "zzz-textures" },
-        { text: "Blender Tips", link: "blender-tips" },
+        { text: 'GI Guides', 
+            items: [
+                { text: "GI Textures and Properties", link: "games/gi/gi-textures" },
+            ]
+        },
+        { text: 'HSR Guides', 
+            items: [
+                { text: "HSR Textures and Properties", link: "games/hsr/hsr-textures" },
+            ]
+        },
+        { text: 'WW Guides', 
+            items: [
+                { text: "WW Textures and Properties", link: "games/wuwa/ww-textures" },
+            ]
+        },
+        { text: 'ZZZ Guides', 
+            items: [
+                { text: "ZZZ Textures and Properties", link: "games/zzz/zzz-textures" },
+            ]
+        },
+        { text: 'Blender Guides', 
+            items: [
+                { text: "Blender Edit Mode", link: "blender/blender-edit" },
+                { text: "Blender UI", link: "blender/blender-ui" },
+                { text: "Blender Modifiers", link: "blender/blender-modifiers" },
+                { text: "Blender Materials and Baking", link: "blender/blender-baking" },
+            ]
+        },
       ],
     },
   ];
