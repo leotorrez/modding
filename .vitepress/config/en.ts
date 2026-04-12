@@ -57,7 +57,7 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
         { text: 'Basics',
           items: [
             { text: "Modding 101", link: "basics/modding-101" },
-            { text: "Hunting & dumping 101", link: "basics/hunting" },
+            { text: "Hunting & Dumping 101", link: "basics/hunting" },
             { text: "Textures 101", link: "basics/textures-101" },
             { text: "Shaders 101", link: "basics/shaders-101" },
           ]

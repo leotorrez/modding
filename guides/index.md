@@ -2,7 +2,7 @@
 
 The following guides are set up in roughly the order they should be read in.
 
-## Glosary
+## Glossary
 
 - **Mod user**: Person who uses mods in XXMI games.
 - **Mod maker**: Person who creates mods for XXMI games.
@@ -19,12 +19,11 @@ The following guides are set up in roughly the order they should be read in.
 
 ## Mod making tutorials
 
-- [Modding 101](./modding-101.md)
-- [Textures 101](./textures-101.md)
-- [XXMI Tools](./xxmi_tools.md)
-- [Blender tips](./blender-tips.md)
-- [Weapon banana](./weapon-banana.md)
-- [Mona Hat tutorial](./mona-hat.md)
-- [Hunting & Dumping](./hunting.md)
-- [Shaders 101](./shaders-101.md)
-- [ZZZ Textures](./zzz-textures.md)
+- [Modding 101](./basics/modding-101.md)
+- [Textures 101](./basics/textures-101.md)
+- [XXMI Tools](./xxmi/xxmi_tools.md)
+- [Blender tips](./blender/blender-ui.md)
+- [Weapon banana](./tutorials/weapon-banana.md)
+- [Mona Hat tutorial](./tutorials/mona-hat.md)
+- [Hunting & Dumping](./basics/hunting.md)
+- [Shaders 101](./basics/shaders-101.md)

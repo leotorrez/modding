@@ -125,7 +125,7 @@
 
 11. Теперь создадим эти текстуры и добавим их в ту же папку, что и Banner.ini. Обратите внимание, что все 3 текстуры имеют тип `BC7_UNORM`, что соответствует `BC7 Linear`.
 
-    Для баннера я перекрашу его и сохраню как `DendroBannerCard.dds` (подробности о том, как открыть и сохранить файлы dds, смотрите в [уроке по удалению шляпы у Моны](./mona-hat.md)).
+    Для баннера я перекрашу его и сохраню как `DendroBannerCard.dds` (подробности о том, как открыть и сохранить файлы dds, смотрите в [уроке по удалению шляпы у Моны](./tutorials/mona-hat.md)).
 
     <img src="https://user-images.githubusercontent.com/107697535/208989556-0a5b60a1-1396-4b38-94a9-35eec74bdeea.png"  style="display:block;float:none;margin-left:auto;margin-right:auto">
 

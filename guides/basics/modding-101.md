@@ -19,8 +19,8 @@ The channel [Blender Guru](https://www.youtube.com/@blenderguru) on YouTube has 
 
 Here is a non-exhaustive list of easy tutorials to get started that can introduce you to modding concepts
 
-- [Mona Hat](/guides/mona-hat.md) - How to remove parts of a model
-- [Weapon Banana](/guides/weapon-banana.md) - A basic tutorial on weapon modding
+- [Mona Hat](/guides/tutorials/mona-hat.md) - How to remove parts of a model
+- [Weapon Banana](/guides/tutorials/weapon-banana.md) - A basic tutorial on weapon modding
 - How to make GI Mods:
 
 <iframe src="https://drive.google.com/file/d/1FcVwnMdBy21gkMhHpS7JsV5GIxleO53f/preview" width="640" height="300" allow="autoplay"></iframe>
