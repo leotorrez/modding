@@ -75,6 +75,18 @@ Very likely due to vertex group issues. The vertex group number, order and posit
 
 Still vertex group issues - double check the above, as well as ensure that the weight for the new model in that section matches up with that of the original model
 
+### Mod does not appear on character/mesh  is a jumbled mess after installation
+
+This may be due to the mod affecting a diffrent character outfit. make sure that the mod is for the current outfit you are using
+
+If you have tried all outfits and the mod still does not look right, it may be due to a update  that broke hashes. look up [SilentNightSound's](https://gamebanana.com/members/2176153) GameBanana for latest brakage news and  fix scripts. If they do not work, go to the next section
+
+### Mod does not appear on character/mesh is a jumbled mess after a  new update
+
+When updating hashes before a fix script is released or the event there is no fix scripts, follow [Hunting & Dumping Tutorial](/modding/guides/hunting) and use the resulting `hashs.json` file to compare and update the old hashes
+
+
+
 ### Incorrect textures
 
 This can be due to a large variety of reasons. Most common ones are:
@@ -84,6 +96,7 @@ This can be due to a large variety of reasons. Most common ones are:
 - Damaged or incorrect ObjectTexcoord.buf
 - Forgot to replace textures with new ones, so it is still loading up the old ones from the original model
 - Very bright/glowing textures
+- hashes are wrong or outdated. refer to the above section
 
 This is most likely due to the texture map you are using having no alpha channel. Refer to the walkthroughs on this repo for details, but basically make sure you have a transparent layer on top of any texture files (the top layer is used to control emission and makes things bright, the bottom layer is used to draw the model colors and patterns).
 
