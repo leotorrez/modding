@@ -47,7 +47,7 @@ At the top you will see a section that contains counters for the things we can h
 - `CS` - Compute Shader
 
 The numbers after them display `current`/`total count`, that is, the index of the current buffer/shader out of the total number for the scene.
-The bottom of the screen should always display "Stereo disabled".
+The bottom of the screen should display either "Shader Hunting Mode" or "Stereo disabled", depending on your version of `d3d11.dll`.
 
 The next section you will see comes up only after you have moved forward or backward through one of the above options. It displays the hash that is currently selected for each buffer or shader which can be "marked". If the setting "Dump Shaders" is enabled then it will also save the decompiled/disassembled shader to the `ShaderFixes` folder; "marking" a hash by default only copies the hash value to your system clipboard.
 
