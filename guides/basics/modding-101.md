@@ -6,6 +6,9 @@ In order to start making mods you will need the following:
 - An [XXMI Launcher](/guides/getting-started.md) Install with developer mode enabled. This is required to test your mods in the game
 - [XXMI Tools](/guides/xxmi_tools.md#installation) plugin for Blender. Plugin to export models for reinjection
 
+**Please note:**
+For Wuthering Waves modding, the following tool must be installed for blender:
+- [WWMI Tools](https://github.com/SpectrumQT/WWMI-TOOLS) plugin for Blender. Plugin to export models for reinjection
 ## Getting Started with Blender
 
 Blender is quite a powerful and complete tool for 3D modeling, animations, rendering and even video edition. For this reason, it can be a bit overwhelming at first. Before diving into it and start pressing random buttons, it is recommended to go through some basic tutorials to get familiar with the interface and some keybinds.
@@ -16,8 +19,8 @@ The channel [Blender Guru](https://www.youtube.com/@blenderguru) on YouTube has 
 
 Here is a non-exhaustive list of easy tutorials to get started that can introduce you to modding concepts
 
-- [Mona Hat](/guides/mona-hat.md) - How to remove parts of a model
-- [Weapon Banana](/guides/weapon-banana.md) - A basic tutorial on weapon modding
+- [Mona Hat](/guides/tutorials/mona-hat.md) - How to remove parts of a model
+- [Weapon Banana](/guides/tutorials/weapon-banana.md) - A basic tutorial on weapon modding
 - How to make GI Mods:
 
 <iframe src="https://drive.google.com/file/d/1FcVwnMdBy21gkMhHpS7JsV5GIxleO53f/preview" width="640" height="300" allow="autoplay"></iframe>

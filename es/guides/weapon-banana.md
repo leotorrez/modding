@@ -4,7 +4,7 @@
 
 Este es un tutorial para importar modelos de armas personalizadas en Genshin Impact.
 
-Para este tutorial, asumo que estás familiarizado con los conceptos básicos de usar GIMI (cómo configurarlo/importar/exportar/cargar); si no, por favor lee [Eliminación del Sombrero de Mona](./mona-hat). También asumo conocimientos básicos de Blender – para preguntas sobre conceptos básicos de Blender como cambiar modos, seleccionar vértices y abrir ciertos menús, por favor busca el conocimiento que necesitas en Google/Youtube.
+Para este tutorial, asumo que estás familiarizado con los conceptos básicos de usar GIMI (cómo configurarlo/importar/exportar/cargar); si no, por favor lee [Eliminación del Sombrero de Mona](./tutorials/mona-hat). También asumo conocimientos básicos de Blender – para preguntas sobre conceptos básicos de Blender como cambiar modos, seleccionar vértices y abrir ciertos menús, por favor busca el conocimiento que necesitas en Google/Youtube.
 
 Los mods de armas son más complicados que las ediciones básicas de mallas, pero menos complicados que importar personajes personalizados. ~90% de los pasos siguen siendo los mismos para personajes personalizados, pero los personajes implican estructuras de grupos de vértices/huesos mucho más complicadas que las armas.
 

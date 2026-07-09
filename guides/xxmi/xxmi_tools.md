@@ -35,7 +35,7 @@ This guide is currently under construction. Information is lacking but more will
 The plugin is not designed to directly aid on the process of replacing, modifying or creating a mod. Simply on the import export process.
 Check the other guides in the site to see examples of how to create and prepare your models for export.
 
-If you are a beginner, I recommend you starting at [Mona Hat](/guides/mona-hat.md) or [Weapon Banana](/guides/weapon-banana.md) guides.
+If you are a beginner, I recommend you starting at [Mona Hat](/guides/tutorials/mona-hat.md) or [Weapon Banana](/guides/tutorials/weapon-banana.md) guides.
 
 ## Exporting a mod
 

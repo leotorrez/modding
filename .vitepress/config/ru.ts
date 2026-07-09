@@ -36,34 +36,89 @@ function nav(base:string): DefaultTheme.NavItem[] {
 }
 
 function sidebarGuide(): DefaultTheme.SidebarItem[] {
-    return [
+  return [
+    {
+      text: "Как пользоваться?",
+      items: [
+        { text: "С чего начать", link: "getting-started" },
+        { text: "Где достать моды?", link: "getting-mods" },
+        { text: "Лаунчеры", link: "launchers" },
+        { text: "Мод мэнеджеры", link: "mod-managers" },
+        { text: "Исправление ошибок", link: "troubleshooting" },
+        { text: "FAQ (Часто задаваемые вопросы)", link: "faq" },
+      ],
+    },
+    {
+      text: "Руководства по созданию модов",
+      items: [
         {
-            text: 'Как пользоваться?',
-            items: [
-                { text: 'С чего начать', link: 'getting-started' },
-                { text: 'Где достать моды?', link: 'getting-mods' },
-                { text: 'Лаунчеры', link: 'launchers' },
-                { text: 'Мод мэнеджеры', link: 'mod-managers' },
-                { text: 'Исправления ошибок', link: 'troubleshooting' },
-                { text: 'FAQ (Часто Задаваемые Вопросы)', link: 'faq' },
-            ]
+          text: "Основы",
+          items: [
+            { text: "Моддинг 101", link: "basics/modding-101" },
+            { text: "Хантинг и дампинг 101", link: "basics/hunting" },
+            { text: "Текстурирование 101", link: "basics/textures-101" },
+            { text: "Шейдеры 101", link: "basics/shaders-101" },
+          ],
         },
         {
-            text: 'Руководства по созданию модов',
-            items: [
-                { text: 'Моддинг 101', link: 'modding-101' },
-                { text: 'Хантинг и Дампинг', link: 'hunting' },
-                { text: 'Текстурирование 101', link: 'textures-101' },
-                { text: 'Шейдеры 101', link: 'shaders-101' },
-                { text: 'XXMI инструменты', link: 'xxmi_tools' },
-                { text: 'WWMI инструменты', link: 'wwmi' },
-                { text: 'Шляпка Моны', link: 'mona-hat' },
-                { text: 'Банановый меч', link: 'weapon-banana' },
-                { text: 'ZZZ текстуры и параметры', link: 'zzz-textures' },
-                { text: 'Советы по моделированию в Блендер', link: 'blender-tips'}
-            ]
+          text: "Руководства XXMI",
+          items: [
+            { text: "XXMI инструменты", link: "xxmi/xxmi_tools" },
+          ],
         },
-    ]
+        {
+          text: "Руководства WWMI",
+          items: [
+            { text: "WWMI инструменты", link: "wwmi/wwmi_tools" },
+            { text: "WWMI извлечение", link: "wwmi/wwmi_extract" },
+            { text: "WWMI импорт", link: "wwmi/wwmi_import" },
+            { text: "WWMI экспорт", link: "wwmi/wwmi_export" },
+            { text: "WWMI Toolbox", link: "wwmi/wwmi_toolbox" },
+          ],
+        },
+        {
+          text: "Руководства GI",
+          items: [
+            { text: "GI текстуры и параметры", link: "games/gi/gi-textures" },
+          ],
+        },
+        {
+          text: "Руководства HSR",
+          items: [
+            { text: "HSR текстуры и параметры", link: "games/hsr/hsr-textures" },
+          ],
+        },
+        {
+          text: "Руководства WW",
+          items: [
+            { text: "WW текстуры и параметры", link: "games/wuwa/ww-textures" },
+          ],
+        },
+        {
+          text: "Руководства ZZZ",
+          items: [
+            { text: "ZZZ текстуры и параметры", link: "games/zzz/zzz-textures" },
+          ],
+        },
+        {
+          text: "Руководства Blender",
+          items: [
+            { text: "Blender Edit Mode", link: "blender/blender-edit" },
+            { text: "Blender UI", link: "blender/blender-ui" },
+            { text: "Blender Modifiers", link: "blender/blender-modifiers" },
+            { text: "Blender материалы и запекание", link: "blender/blender-baking" },
+          ],
+        },
+        {
+          text: "Туториалы",
+          items: [
+            { text: "Шляпка Моны", link: "tutorials/mona-hat" },
+            { text: "Банановое оружие", link: "tutorials/weapon-banana" },
+          ],
+        },
+      ],
+    },
+  ];
 }
 
 function sidebarReference(): DefaultTheme.SidebarItem[] {

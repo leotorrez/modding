@@ -125,7 +125,7 @@ Y en su lugar usar secciones [ShaderOverride] para especificar lo que estás bus
 
 11. Ahora, vamos a crear esas texturas y agregarlas a la misma carpeta que el Banner.ini. Ten en cuenta que las 3 texturas tienen `BC7_UNORM` como su tipo, lo que corresponde a `BC7 Linear`.
 
-    Para el banner, le daré un recolor y lo guardaré como `DendroBannerCard.dds` (detalles sobre cómo abrir y guardar archivos dds en el tutorial de [Eliminación del Sombrero de Mona](./mona-hat.md)).
+    Para el banner, le daré un recolor y lo guardaré como `DendroBannerCard.dds` (detalles sobre cómo abrir y guardar archivos dds en el tutorial de [Eliminación del Sombrero de Mona](./tutorials/mona-hat.md)).
 
  <img src="https://user-images.githubusercontent.com/107697535/208989556-0a5b60a1-1396-4b38-94a9-35eec74bdeea.png"  style="display:block;float:none;margin-left:auto;margin-right:auto">
 

@@ -36,33 +36,89 @@ function nav(base:string): DefaultTheme.NavItem[] {
 }
 
 function sidebarGuide(): DefaultTheme.SidebarItem[] {
-    return [
+  return [
+    {
+      text: "Uso de mods",
+      items: [
+        { text: "Inicio Rápido", link: "getting-started" },
+        { text: "Donde conseguir mods?", link: "getting-mods" },
+        { text: "Launchers", link: "launchers" },
+        { text: "Mod managers", link: "mod-managers" },
+        { text: "Troubleshooting", link: "troubleshooting" },
+        { text: "Preguntas frecuentes", link: "faq" },
+      ],
+    },
+    {
+      text: "Guías",
+      items: [
         {
-            text: 'Mod usage',
-            items: [
-                { text: 'Inicio Rápido', link: 'getting-started' },
-                { text: 'Donde conseguir mods?', link: 'getting-mods' },
-                { text: 'Launchers', link: 'launchers' },
-                { text: 'Mod managers', link: 'mod-managers' },
-                { text: 'Troubleshooting', link: 'troubleshooting' },
-                { text: 'Preguntas frecuentes', link: 'faq' },
-            ]
+          text: "Básicos",
+          items: [
+            { text: "Modding 101", link: "basics/modding-101" },
+            { text: "Hunting & dumping 101", link: "basics/hunting" },
+            { text: "Texturas 101", link: "basics/textures-101" },
+            { text: "Shaders 101", link: "basics/shaders-101" },
+          ],
         },
         {
-            text: 'Guides',
-            items: [
-                { text: 'Modding 101', link: 'modding-101' },
-                { text: 'Hunting', link: 'hunting' },
-                { text: 'Texturas 101', link: 'textures-101' },
-                { text: 'Shaders 101', link: 'shaders-101' },
-                { text: 'XXMI Tools', link: 'xxmi_tools' },
-                { text: 'WWMI Tools', link: 'wwmi' },
-                { text: 'Sombrero Mona', link: 'mona-hat' },
-                { text: 'Arma Banana', link: 'weapon-banana' },
-                { text: 'ZZZ texturas y propiedades', link: 'zzz-textures' },
-            ]
+          text: "Guías XXMI",
+          items: [
+            { text: "XXMI Tools", link: "xxmi/xxmi_tools" },
+          ],
         },
-    ]
+        {
+          text: "Guías WWMI",
+          items: [
+            { text: "WWMI Tools", link: "wwmi/wwmi_tools" },
+            { text: "WWMI Extracting", link: "wwmi/wwmi_extract" },
+            { text: "WWMI Importing", link: "wwmi/wwmi_import" },
+            { text: "WWMI Exporting", link: "wwmi/wwmi_export" },
+            { text: "WWMI Toolbox", link: "wwmi/wwmi_toolbox" },
+          ],
+        },
+        {
+          text: "Guías GI",
+          items: [
+            { text: "GI Texturas y Propiedades", link: "games/gi/gi-textures" },
+          ],
+        },
+        {
+          text: "Guías HSR",
+          items: [
+            { text: "HSR Texturas y Propiedades", link: "games/hsr/hsr-textures" },
+          ],
+        },
+        {
+          text: "Guías WW",
+          items: [
+            { text: "WW Texturas y Propiedades", link: "games/wuwa/ww-textures" },
+          ],
+        },
+        {
+          text: "Guías ZZZ",
+          items: [
+            { text: "ZZZ texturas y propiedades", link: "games/zzz/zzz-textures" },
+          ],
+        },
+        {
+          text: "Guías Blender",
+          items: [
+            { text: "Blender Edit Mode", link: "blender/blender-edit" },
+            { text: "Blender UI", link: "blender/blender-ui" },
+            { text: "Blender Modifiers", link: "blender/blender-modifiers" },
+            { text: "Blender Materials and Baking", link: "blender/blender-baking" },
+          ],
+        },
+        {
+          text: "Tutoriales",
+          items: [
+            { text: "Sombrero Mona", link: "tutorials/mona-hat" },
+            { text: "Arma Banana", link: "tutorials/weapon-banana" },
+          ],
+        },
+      ],
+    },
+  ];
 }
 
 function sidebarReference(): DefaultTheme.SidebarItem[] {

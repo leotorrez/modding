@@ -8,9 +8,6 @@ import { es } from './es'
 export default defineConfig({
   ...shared,
   locales: {
-    root: { label: 'English', ...en },
-    zh: { label: '简体中文', ...zh },
-    ru: { label: 'Русский', ...ru },
-    es: { label: 'Español', ...es },
+    root: { label: 'English', ...en }
   }
 })

@@ -1,4 +1,4 @@
-# ZZZ Textures and properties
+# ZZZ Textures and Properties
 
 The current tutorial assumes you already know how to mod the game and all the basics of 3D modeling. Concepts such as UV, texturing, modeling, kit-bashing, import and export won't be covered here. Feel free to learn more basic concepts at my modding guide.
 
@@ -112,7 +112,7 @@ All of these will need to be updated as more mods are made and a better understa
 
 ### Vertex paint
 
-- R: Outline Thicc
-- G: God knwos but maybe Z-depth outline
-- B: Contact shadow intensity - MAYBE
-- Alpha: Something about the neck man
+- **R** - Outline Thickness
+- **G** - Unknown, perhaps Z-depth outline
+- **B** - Contact shadow intensity - MAYBE
+- **A** - Affects the neck, mostly unknown
