@@ -1,321 +1,625 @@
+# ShaderOverride
 
-<!-- -------------------------------------------------------------------------------------------------
- On the fly regular expression shader patching engine
-------------------------------------------------------------------------------------------------------
+ShaderOverride sections allow you to intercept and modify the behavior of specific shaders in DirectX 11 games. When a shader with a matching hash is used in a draw call, the ShaderOverride can execute custom commands, replace the shader, or conditionally alter the rendering pipeline.
 
- These sections define regular expressions to match against shaders and apply
- certain classes of fixes on the fly. Only assembly shaders are supported by
- this method for reliability and performance reasons.
+## Overview
 
- Every pattern must have a main section prefixed with ShaderRegex:
+ShaderOverride sections are triggered when a shader (vertex, hull, domain, geometry, or pixel) is bound to the rendering pipeline and used in a draw call. They provide a powerful mechanism to:
 
-[ShaderRegex1]
- shader_model is required and must be set to the types of shaders that this
- pattern will be applied against. Multiple shader models can be specified to
- match the pattern against multiple types. There are some differences in
- instructions between shader model 4 and 5 (such as in resource load
- instructions), so in some cases you may need separate patterns for each.
-shader_model = ps_4_0 ps_5_0
+- **Execute commands** when a specific shader is used
+- **Replace shaders** dynamically based on conditions
+- **Filter shader execution** based on depth buffer state or partner shaders
+- **Control rendering state** (scissor clipping, render targets, etc.)
+- **Inject resources** into the pipeline (textures, buffers, constants)
+- **Skip draw calls** conditionally
 
- temps is used to give names to temporary registers that you will use in the
- pattern. 3DMigoto will identify free register numbers and automatically
- adjust dcl_temps as required.
-temps = stereo tmp1
+ShaderOverride sections work for all shader stages: vertex shaders (VS), hull shaders (HS), domain shaders (DS), geometry shaders (GS), and pixel shaders (PS).
 
- This main section also acts as a command list so that you can define actions
- that will be applied on every matching shader, just as you would on any other
- command list enabled section, such as ShaderOverride, Present, etc.
+```ini
+; Basic shader override
+[ShaderOverrideCharacterOutline]
+hash = abc12345def67890
+; Execute commands when this shader is used
+ps-t0 = ResourceCustomTexture
+run = CustomCommandList
 
+; Advanced filtering
+[ShaderOverrideShadowPS]
+hash = 123456789abcdef0
+filter_index = 0.5
+depth_filter = depth_active
+run = ShadowCorrection
+```
 
- The next section of interest is the regular expression pattern. If this
- section is omitted than every shader of with matching shader_model will be
- matched (and have the command lists and InsertDeclarations processed). The
- first part of the section name must match the main ShaderRegex section you
- defined above, and it ends with ".Pattern". The regular expression grammar
- that we support is PCRE2, which is largely compatible with the powerful Perl
- and Python grammars. You can find the syntax reference here, but generally
- speaking any regular expression tutorial will give you a good primer:
+## Syntax
 
-   http://www.pcre.org/current/doc/html/pcre2syntax.html
+### Section Header
 
- Note that since this is parsed in an ini file that blank lines and ini
- comments are ignored, and preceding and trailing whitespace from each line
- will be stripped, so if you need to match an indented line you will need to
- explicitly match the whitespace at the start of the line with \s*
- You should also use \n to match the newline character at the end of each
- line. This should not be confused with extended mode activated by the (?x)
- switch, which will ignore *all* whitespace to allow complex patterns to be
- broken up for clarity.
+```ini
+[ShaderOverride<UniqueIdentifier>]
+```
 
- Multiline matching is enabled by default, as is case insensitivity (due to
- differences in the capitalisation produced by different versions of the
- disassembler), but PCRE2 provides switches for most of these options if you
- need something else.
+The section name must start with `ShaderOverride` followed by any unique identifier. The identifier is for your reference only and doesn't affect functionality.
 
- This is an example of how you might match a matrix multiply in a shader, and
- uses Python style named capture groups to pull out the registers and swizzles
- of the X and Z coordinates, and another named capture group to verify that
- the register used in the div instruction matches the one used in the multiply:
+**Examples:**
+```ini
+[ShaderOverrideCharacterVS]
+[ShaderOverride_UI_PixelShader]
+[ShaderOverride1]
+```
 
-[ShaderRegex1.Pattern]
-mul r\d+\.xyzw, r\d+\.yyyy, cb0\[28\]\.xyzw\n
-mad r\d+\.xyzw, (?P<pos_x>r\d+)\.(?P<swizzle_x>[xyzw])[xyzw]{3}, cb0\[27\]\.xyzw, r\d+\.xyzw\n
-mad r\d+\.xyzw, (?P<pos_z>r\d+)\.(?P<swizzle_z>[xyzw])[xyzw]{3}, cb0\[29\]\.xyzw, r\d+\.xyzw\n
-add (?P<result>r\d+)\.xyzw, r\d+\.xyzw, cb0\[30\]\.xyzw\n
-div r\d+\.[xyzw]{2}, (?P=result)\.[xyzw]{4}, r\d+\.wwww\n
+## How ShaderOverride Works
 
+ShaderOverride sections are processed during draw calls, after shaders are bound but before the actual rendering happens:
 
- The next section specifies how to modify the matched pattern. Again the name
- must begin with the same name as the main section, and end in
- ".Pattern.Replace" (there is a reason the replacement is associated with the
- pattern, but that's coming soon). You can (and I highly encourage that you
- do) use named capture groups in the above pattern and substitute them in
- here. Temporary registers that you defined in the main ShaderRegex section
- are also available here with the same syntax as named capture groups. Use
- ${0} to indicate where the matched pattern goes, allowing you to insert code
- before and/or after it, or use additonal capture groups to insert code in the
- middle. Extended substitution is enabled in PCRE2, which among other things
- makes \n insert a newline.
+1. **Shader Binding**: Game binds shaders to the pipeline (vertex, pixel, etc.)
+2. **Hash Lookup**: 3DMigoto looks up each shader's hash in the ShaderOverride map
+3. **Filter Evaluation**: If a match is found, depth_filter and filter_index conditions are checked
+4. **Command Execution**: The override's command list runs before the draw call
+5. **Draw Call**: The (possibly modified) draw call executes
+6. **Post Commands**: Post command lists run after the draw call completes
 
-[ShaderRegex1.Pattern.Replace]
-\n
-// UE4 shadow correction:\n
-ld_indexable(texture2d)(float,float,float,float) ${stereo}.xyzw, l(0, 0, 0, 0), t125.xyzw\n
-add ${tmp1}.x, ${pos_z}.${swizzle_z}, -${stereo}.y\n
-mad ${pos_x}.${swizzle_x}, -${tmp1}.x, ${stereo}.x, ${pos_x}.${swizzle_x}\n
-\n
-${0}
+ShaderOverride command lists run for every draw call that uses the matching shader, making them ideal for per-draw-call modifications.
 
+Reference: HackerContext.cpp:820-858
 
- The final section allows you to insert new declarations into the shader, and
- 3DMigoto will check that this declaration has not already been inserted
- first. Typically this is used to get access to StereoParams in t125:
+---
 
-[ShaderRegex1.InsertDeclarations]
-dcl_resource_texture2d (float,float,float,float) t125
+## Properties Reference
 
+### hash
 
-------------------------------------------------------------------------------------------------------
- texture / render target manipulations
-------------------------------------------------------------------------------------------------------
+**Type:** Hexadecimal (64-bit)  
+**Required:** Yes  
+**Default:** None
 
- NOTE: If you are trying to match a texture the same size as the resolution (or
- a /2, x2, x4 or x8 multiple), you should confirm that the same hash is used
- on different resolutions, and adjust get_resolution_from if necessary.
+The 64-bit hash identifying the shader to match. This is the primary matching criterion for ShaderOverride sections.
 
- NOTE: If you find a texture hash seems to change inconsistently, try enabling
- track_texture_updates in the [Rendering] section.
+```ini
+[ShaderOverrideExample]
+hash = abc12345def67890
+```
 
-[TextureOverride1]
-Hash=c3e55ebd
- NVidia stores surface creation mode heuristics in the game profile. setting
- this option overrides the creation mode for a given texture / buffer.
- 0 = NVAPI_STEREO_SURFACECREATEMODE_AUTO - use driver registry profile settings.
- 1 = NVAPI_STEREO_SURFACECREATEMODE_FORCESTEREO - create stereo surface.
- 2 = NVAPI_STEREO_SURFACECREATEMODE_FORCEMONO - create mono surface.
-StereoMode=2
+**How to find shader hashes:**
+1. Enable hunting mode with F10
+2. Use frame analysis (F8) to dump shaders
+3. Check `d3d11_log.txt` for shader hashes
+4. Hunt shaders with numpad keys (see [Debugging](/docs/debugging.md))
 
-[TextureOverride2]
-Hash = e27b9d07
- Prevent the game reading from this texture - will give the game a blank
- buffer instead. Used to prevent CryEngine games falsely culling objects. Use
- the frame analysis log and look for MapType:1 to identify possible hashes.
-deny_cpu_read=1
- Expand the region copied to this texture with CopySubresourceRegion (similar
- issue to rasterizer_disable_scissor). Used to solve issues with transparent
- refraction effects (like glass) in CryEngine games.
-expand_region_copy=1
+The hash is computed from the shader bytecode, so identical shaders across different games will have the same hash.
 
-[TextureOverrideUAVNotRT]
- Example of fuzzy matching based on attributes instead of hash. Provides an
- alternative to driver heuristics that we have more precise control over.
-match_type = Texture2D
-match_width = height * 16 / 9
-match_height = !res_height
-match_msaa = >1
-match_bind_flags = +unordered_access -render_target
-match_priority = -1
-StereoMode = 2
+**Use Case:** Every ShaderOverride section must specify exactly one shader hash.
 
-------------------------------------------------------------------------------------------------------
- Example of settings override by mouse button configuration
- Mapping of from game provided hard coded convergence values to custom values
- Those are values for L.A. Noir
- Example of settings override by mouse button configuration
-------------------------------------------------------------------------------------------------------
-[ConvergenceMap]
+Reference: IniHandler.cpp:2267-2271
 
-Map1=from 3e99999a to 0.3
-Map2=from 3f800000 to 1.0
-Map3=from 3f666666 to 0.9
--------------------------------------------------------------------------------------------------
-On the fly regular expression shader patching engine
-------------------------------------------------------------------------------------------------------
+---
 
-These sections define regular expressions to match against shaders and apply
-certain classes of fixes on the fly. Only assembly shaders are supported by
-this method for reliability and performance reasons.
+### allow_duplicate_hash
 
-Every pattern must have a main section prefixed with ShaderRegex:
+**Type:** Boolean or `overrule`  
+**Default:** `false`  
+**Values:** `true`, `false`, `overrule`
 
-[ShaderRegex1]
-shader_model is required and must be set to the types of shaders that this
-pattern will be applied against. Multiple shader models can be specified to
-match the pattern against multiple types. There are some differences in
-instructions between shader model 4 and 5 (such as in resource load
-instructions), so in some cases you may need separate patterns for each.
-shader_model = ps_4_0 ps_5_0
+Controls whether multiple ShaderOverride sections can use the same shader hash. By default, duplicate hashes generate a warning to help detect mod conflicts.
 
-temps is used to give names to temporary registers that you will use in the
-pattern. 3DMigoto will identify free register numbers and automatically
-adjust dcl_temps as required.
-temps = stereo tmp1
+```ini
+; Example 1: Cooperative duplicates (all sections must opt in)
+[ShaderOverrideFromScript]
+hash = abc12345def67890
+allow_duplicate_hash = true
+run = ScriptCommands
 
-This main section also acts as a command list so that you can define actions
-that will be applied on every matching shader, just as you would on any other
-command list enabled section, such as ShaderOverride, Present, etc.
+[ShaderOverrideUserCustomization]
+hash = abc12345def67890
+allow_duplicate_hash = true
+run = UserCommands
 
+; Example 2: Overrule (force allow even if other sections don't opt in)
+[ShaderOverrideThirdPartyMod]
+hash = abc12345def67890
+allow_duplicate_hash = overrule
+run = ThirdPartyCommands
+```
 
-The next section of interest is the regular expression pattern. If this
-section is omitted than every shader of with matching shader_model will be
-matched (and have the command lists and InsertDeclarations processed). The
-first part of the section name must match the main ShaderRegex section you
-defined above, and it ends with ".Pattern". The regular expression grammar
-that we support is PCRE2, which is largely compatible with the powerful Perl
-and Python grammars. You can find the syntax reference here, but generally
-speaking any regular expression tutorial will give you a good primer:
+**Values:**
+- `false` (default): Warn if duplicate hash found
+- `true`: Allow duplicate if all sections using this hash set `allow_duplicate_hash = true`
+- `overrule`: Allow duplicate regardless of other sections' settings
 
-  http://www.pcre.org/current/doc/html/pcre2syntax.html
+**Use Case:** Use `true` when you intentionally want multiple mods to add commands to the same shader without merging sections. Use `overrule` when you can't modify another mod's configuration but have verified compatibility.
 
-Note that since this is parsed in an ini file that blank lines and ini
-comments are ignored, and preceding and trailing whitespace from each line
-will be stripped, so if you need to match an indented line you will need to
-explicitly match the whitespace at the start of the line with \s*
-You should also use \n to match the newline character at the end of each
-line. This should not be confused with extended mode activated by the (?x)
-switch, which will ignore *all* whitespace to allow complex patterns to be
-broken up for clarity.
+**Warning:** Using `allow_duplicate_hash` doesn't merge command lists - each section's commands run independently. Be cautious of conflicting commands between sections.
 
-Multiline matching is enabled by default, as is case insensitivity (due to
-differences in the capitalisation produced by different versions of the
-disassembler), but PCRE2 provides switches for most of these options if you
-need something else.
+Reference: IniHandler.cpp:2156-2202
 
-This is an example of how you might match a matrix multiply in a shader, and
-uses Python style named capture groups to pull out the registers and swizzles
-of the X and Z coordinates, and another named capture group to verify that
-the register used in the div instruction matches the one used in the multiply:
+---
 
-[ShaderRegex1.Pattern]
-mul r\d+\.xyzw, r\d+\.yyyy, cb0\[28\]\.xyzw\n
-mad r\d+\.xyzw, (?P<pos_x>r\d+)\.(?P<swizzle_x>[xyzw])[xyzw]{3}, cb0\[27\]\.xyzw, r\d+\.xyzw\n
-mad r\d+\.xyzw, (?P<pos_z>r\d+)\.(?P<swizzle_z>[xyzw])[xyzw]{3}, cb0\[29\]\.xyzw, r\d+\.xyzw\n
-add (?P<result>r\d+)\.xyzw, r\d+\.xyzw, cb0\[30\]\.xyzw\n
-div r\d+\.[xyzw]{2}, (?P=result)\.[xyzw]{4}, r\d+\.wwww\n
+### depth_filter
 
+**Type:** Enum  
+**Default:** `none`  
+**Values:** `none`, `depth_active`, `depth_inactive`  
+**Status:** Deprecated
 
-The next section specifies how to modify the matched pattern. Again the name
-must begin with the same name as the main section, and end in
-".Pattern.Replace" (there is a reason the replacement is associated with the
-pattern, but that's coming soon). You can (and I highly encourage that you
-do) use named capture groups in the above pattern and substitute them in
-here. Temporary registers that you defined in the main ShaderRegex section
-are also available here with the same syntax as named capture groups. Use
-${0} to indicate where the matched pattern goes, allowing you to insert code
-before and/or after it, or use additonal capture groups to insert code in the
-middle. Extended substitution is enabled in PCRE2, which among other things
-makes \n insert a newline.
+Filters shader execution based on whether a depth buffer is bound to the output merger stage.
 
-[ShaderRegex1.Pattern.Replace]
-\n
-// UE4 shadow correction:\n
-ld_indexable(texture2d)(float,float,float,float) ${stereo}.xyzw, l(0, 0, 0, 0), t125.xyzw\n
-add ${tmp1}.x, ${pos_z}.${swizzle_z}, -${stereo}.y\n
-mad ${pos_x}.${swizzle_x}, -${tmp1}.x, ${stereo}.x, ${pos_x}.${swizzle_x}\n
-\n
-${0}
+```ini
+[ShaderOverrideDepthEffect]
+hash = abc12345def67890
+depth_filter = depth_active
+run = DepthBasedCommands
+```
 
+**Values:**
+- `none`: No filtering (always execute)
+- `depth_active`: Only execute when a depth buffer is bound
+- `depth_inactive`: Only execute when no depth buffer is bound
 
-The final section allows you to insert new declarations into the shader, and
-3DMigoto will check that this declaration has not already been inserted
-first. Typically this is used to get access to StereoParams in t125:
+::: warning DEPRECATED
+This feature is deprecated. Use texture filtering with the `oD` pseudo-register instead for more flexibility:
 
-[ShaderRegex1.InsertDeclarations]
-dcl_resource_texture2d (float,float,float,float) t125
+```ini
+[ShaderOverrideDepthEffect]
+hash = abc12345def67890
+x = oD
+run = DepthBasedCommands
 
+[DepthBasedCommands]
+; Check if depth buffer is bound
+if x == -0.0
+    ; No depth buffer bound
+else
+    ; Depth buffer bound
+endif
+```
 
-------------------------------------------------------------------------------------------------------
-texture / render target manipulations
-------------------------------------------------------------------------------------------------------
+This approach provides:
+- More flexible conditions (check specific depth buffers)
+- Access to depth buffer properties
+- Better integration with other filtering logic
+:::
 
-NOTE: If you are trying to match a texture the same size as the resolution (or
-a /2, x2, x4 or x8 multiple), you should confirm that the same hash is used
-on different resolutions, and adjust get_resolution_from if necessary.
+Reference: IniHandler.cpp:2204-2230, HackerContext.cpp:458-476
 
-NOTE: If you find a texture hash seems to change inconsistently, try enabling
-track_texture_updates in the [Rendering] section.
+---
 
-[TextureOverride1]
-Hash=c3e55ebd
-NVidia stores surface creation mode heuristics in the game profile. setting
-this option overrides the creation mode for a given texture / buffer.
-0 = NVAPI_STEREO_SURFACECREATEMODE_AUTO - use driver registry profile settings.
-1 = NVAPI_STEREO_SURFACECREATEMODE_FORCESTEREO - create stereo surface.
-2 = NVAPI_STEREO_SURFACECREATEMODE_FORCEMONO - create mono surface.
-StereoMode=2
+### model
 
-[TextureOverride2]
-Hash = e27b9d07
-Prevent the game reading from this texture - will give the game a blank
-buffer instead. Used to prevent CryEngine games falsely culling objects. Use
-the frame analysis log and look for MapType:1 to identify possible hashes.
-deny_cpu_read=1
-Expand the region copied to this texture with CopySubresourceRegion (similar
-issue to rasterizer_disable_scissor). Used to solve issues with transparent
-refraction effects (like glass) in CryEngine games.
-expand_region_copy=1
+**Type:** String  
+**Default:** Empty (no filtering)
 
-[TextureOverrideUAVNotRT]
-Example of fuzzy matching based on attributes instead of hash. Provides an
-alternative to driver heuristics that we have more precise control over.
-match_type = Texture2D
-match_width = height * 16 / 9
-match_height = !res_height
-match_msaa = >1
-match_bind_flags = +unordered_access -render_target
-match_priority = -1
-StereoMode = 2
+Filters shader execution based on the shader model. Only execute commands if the shader uses the specified model(s).
 
-------------------------------------------------------------------------------------------------------
-Example of settings override by mouse button configuration
-Mapping of from game provided hard coded convergence values to custom values
-Those are values for L.A. Noir
-Example of settings override by mouse button configuration
-------------------------------------------------------------------------------------------------------
-[ConvergenceMap]
+```ini
+[ShaderOverrideSM5Only]
+hash = abc12345def67890
+model = ps_5_0
+run = SM5Commands
 
-Map1=from 3e99999a to 0.3
-Map2=from 3f800000 to 1.0
-Map3=from 3f666666 to 0.9
+[ShaderOverrideMultipleModels]
+hash = 1234567890abcdef
+model = vs_4_0 vs_5_0
+run = VertexCommands
+```
 
+**Common shader models:**
+- `vs_4_0`, `vs_5_0`: Vertex shaders
+- `hs_5_0`: Hull shaders (tessellation)
+- `ds_5_0`: Domain shaders (tessellation)
+- `gs_4_0`, `gs_5_0`: Geometry shaders
+- `ps_4_0`, `ps_5_0`: Pixel shaders
+- `cs_4_0`, `cs_5_0`: Compute shaders
 
+**Use Case:** Filter execution when the same hash appears in different shader stages or models (rare but possible).
 
+Reference: IniHandler.cpp:2287-2290
 
+---
 
-------------------------------------------------------------------------------------------------------
-Commands to run from the Present call at the start/end of each frame
+### filter_index
 
-Useful to clear custom resources or ini params at the start of each frame, or
-to run a custom shader to do whatever you can dream up. The post keyword will
-make an action run at the start of a frame instead of the end - as general
-guideline you want overlays drawn at the end of a frame and resources cleared
-at the start of a new frame.
-------------------------------------------------------------------------------------------------------
-[Present]
-Example: Clear an ini param at the start of each frame:
-post x = 0
-Example: Undefine a custom resource until something is copied into it:
-post ResourceDepthBuffer = null
-Example: Clear a custom resource with black/zero at the start of each frame
-(beware that driver bugs may mean only one eye is cleared in some cases):
-post clear = ResourceFoo -->
+**Type:** Float  
+**Default:** `FLT_MAX` (no filtering)
+
+Advanced filtering mechanism for partner shader matching. Enables shader pairs to communicate and conditionally execute based on whether specific shaders are bound together.
+
+```ini
+[ShaderOverrideCharacterVS]
+hash = abc12345def67890
+x = 0.5
+filter_index = 0.5
+run = CharacterVertexCommands
+
+[ShaderOverrideCharacterPS]
+hash = 1234567890abcdef
+y = oVS
+if y == 0.5
+    ; Character vertex shader is active
+    run = CharacterPixelCommands
+endif
+```
+
+**How it works:**
+1. One shader sets a variable to a specific value and sets `filter_index` to that value
+2. Another shader reads `oVS` (vertex shader index), `oHS` (hull), `oDS` (domain), `oGS` (geometry), or `oPS` (pixel shader index)
+3. The value will match the `filter_index` if that shader is currently bound, or `FLT_MAX` if not bound or no filter_index set
+
+**Use Case:** Detect shader combinations (e.g., "only run this pixel shader override when used with specific vertex shader").
+
+**Technical Note:** ShaderRegex sections can modify filter_index dynamically. The `backup_filter_index` stores the original value from INI.
+
+Reference: IniHandler.cpp:2283-2285, globals.h:259
+
+---
+
+### disable_scissor
+
+**Type:** Boolean  
+**Default:** `false`  
+**Status:** Backwards compatibility only
+
+Disables scissor clipping for draw calls using this shader. This was used in the Nier: Automata fix for lighting issues.
+
+```ini
+[ShaderOverrideLightingFix]
+hash = abc12345def67890
+disable_scissor = true
+```
+
+::: tip MODERN ALTERNATIVE
+This property is translated into equivalent command list syntax automatically:
+
+```ini
+; Instead of disable_scissor = true, use:
+run = BuiltInCustomShaderDisableScissorClipping
+
+; Instead of disable_scissor = false, use:
+run = BuiltInCustomShaderEnableScissorClipping
+```
+
+The command list approach is more flexible and can be used conditionally.
+:::
+
+Reference: IniHandler.cpp:2296-2305
+
+---
+
+## Command Lists
+
+ShaderOverride sections support command lists, allowing you to execute any 3DMigoto command when the shader is used. Commands run at two possible times:
+
+### Pre-Commands (Default)
+
+Commands without the `post` modifier run **before** the draw call executes.
+
+```ini
+[ShaderOverrideSetup]
+hash = abc12345def67890
+; These run before the draw call
+ps-t0 = ResourceCustomTexture
+x = 1.0
+y = 2.0
+run = CustomLogic
+```
+
+### Post-Commands
+
+Commands with the `post` modifier run **after** the draw call completes.
+
+```ini
+[ShaderOverrideCleanup]
+hash = abc12345def67890
+; This runs after the draw call
+post run = Cleanup
+post ps-t0 = null
+```
+
+### Available Commands
+
+All standard 3DMigoto commands work in ShaderOverride sections:
+
+**Resource Bindings:**
+```ini
+ps-t0 = ResourceName          ; Bind texture to pixel shader slot 0
+vs-cb0 = ResourceName         ; Bind constant buffer to vertex shader slot 0
+```
+
+**Variable Operations:**
+```ini
+x = 1.0                       ; Set variable
+y = x + 2.0                   ; Expression evaluation
+```
+
+**Control Flow:**
+```ini
+if x == 1.0
+    run = CommandList1
+else
+    run = CommandList2
+endif
+```
+
+**Draw Calls:**
+```ini
+draw = auto                   ; Re-issue the current draw call
+draw = 100, 0                 ; Draw with different parameters
+```
+
+**Shader Replacement:**
+```ini
+vs = ResourceShader           ; Replace vertex shader
+ps = ResourceShader           ; Replace pixel shader
+```
+
+**Render State:**
+```ini
+handling = skip               ; Skip this draw call
+run = CommandListName         ; Execute another command list
+```
+
+See [Command List](/docs/command-list.md) for complete command reference.
+
+---
+
+## Common Use Cases
+
+### 1. Character Model Modifications
+
+Replace textures or adjust shaders for specific character parts:
+
+```ini
+[ShaderOverrideCharacterSkin]
+hash = abc12345def67890
+ps-t0 = ResourceCustomSkinTexture
+ps-t1 = ResourceCustomNormalMap
+```
+
+### 2. Shadow Correction
+
+Fix shadow rendering issues in stereo 3D:
+
+```ini
+[ShaderOverrideShadowPS]
+hash = 1234567890abcdef
+ps-t125 = ResourceStereoParams
+run = ShadowStereoCorrection
+```
+
+### 3. UI Depth Adjustment
+
+Move UI elements to a specific depth:
+
+```ini
+[ShaderOverrideUI]
+hash = fedcba9876543210
+ps-cb0 = ResourceUIDepthBuffer
+```
+
+### 4. Conditional Rendering
+
+Skip rendering based on custom conditions:
+
+```ini
+[ShaderOverrideOptionalEffect]
+hash = abc12345def67890
+if $toggle_effect == 0
+    handling = skip
+endif
+```
+
+### 5. Shader Pair Detection
+
+Execute commands only when specific shader combinations are active:
+
+```ini
+[ShaderOverrideWaterVS]
+hash = abc12345def67890
+filter_index = 0.75
+run = WaterVertexSetup
+
+[ShaderOverrideWaterPS]
+hash = fedcba9876543210
+x = oVS
+if x == 0.75
+    ; Water vertex shader is active
+    run = WaterPixelEffects
+endif
+```
+
+### 6. Object Hiding/Showing
+
+Hide objects by skipping their draw calls:
+
+```ini
+[ShaderOverrideHideObject]
+hash = 1234567890abcdef
+handling = skip
+
+[Key1]
+key = VK_F1
+$show_object = 1
+type = toggle
+
+[ShaderOverrideToggleObject]
+hash = 1234567890abcdef
+if $show_object == 0
+    handling = skip
+endif
+```
+
+### 7. Resource Injection
+
+Inject custom resources into shaders:
+
+```ini
+[ShaderOverrideCustomData]
+hash = abc12345def67890
+ps-t100 = ResourceCustomData
+vs-cb13 = ResourceTransformBuffer
+```
+
+---
+
+## Best Practices
+
+### Finding Shader Hashes
+
+1. **Enable hunting mode** (F10) to start hunting shaders
+2. **Use frame analysis** (F8) to dump all shaders and their hashes to ShaderFixes/
+3. **Check logs** - `d3d11_log.txt` contains shader hashes when loaded
+4. **Hunt during gameplay** - Use numpad 1/2 to cycle through pixel shaders, 3/4 for vertex shaders
+
+See [Debugging](/docs/debugging.md) for detailed hunting instructions.
+
+### Performance Considerations
+
+- **ShaderOverride runs per draw call** - Commands execute every time the shader is used
+- **Use conditionals to minimize work** - Skip unnecessary operations with `if` statements
+- **Be careful with heavy operations** - Avoid complex calculations in frequently-used shaders
+- **Consider filtering** - Use `filter_index` or `depth_filter` to limit execution
+
+### Organization
+
+```ini
+; Group related overrides together
+; Character model overrides
+[ShaderOverrideCharacterHead]
+hash = abc12345def67890
+; ...
+
+[ShaderOverrideCharacterBody]
+hash = 1234567890abcdef
+; ...
+
+; UI overrides
+[ShaderOverrideUIBackground]
+hash = fedcba9876543210
+; ...
+```
+
+### Duplicate Hash Management
+
+When multiple mods need to override the same shader:
+
+1. **Check for conflicts** - Look for duplicate hash warnings in logs
+2. **Use allow_duplicate_hash** if sections don't conflict:
+   ```ini
+   [ShaderOverrideMod1]
+   hash = abc12345def67890
+   allow_duplicate_hash = true
+   ps-t0 = ResourceMod1
+   
+   [ShaderOverrideMod2]
+   hash = abc12345def67890
+   allow_duplicate_hash = true
+   vs-cb0 = ResourceMod2
+   ```
+3. **Merge sections** if commands conflict or order matters
+4. **Use overrule sparingly** - Only when you can't modify the other mod
+
+### Testing
+
+Always test ShaderOverride sections:
+
+```ini
+[ShaderOverrideTest]
+hash = abc12345def67890
+; Add a visual indicator to verify override is working
+ps-t0 = ResourceTestPattern
+```
+
+Enable log output to verify execution:
+
+```ini
+[Logging]
+calls = 1
+```
+
+Then check `d3d11_log.txt` for "override found for shader" messages.
+
+---
+
+## Troubleshooting
+
+### Override Not Executing
+
+**Problem:** ShaderOverride section defined but commands not running.
+
+**Solutions:**
+1. **Verify hash is correct** - Check `d3d11_log.txt` or use frame analysis to confirm shader hash
+2. **Check for typos** - Ensure section name starts with `ShaderOverride`
+3. **Look for duplicate warnings** - If another mod uses the same hash, add `allow_duplicate_hash`
+4. **Enable logging** - Set `calls = 1` in `[Logging]` to see if override is found
+5. **Check conditions** - If using `if` statements, verify conditions are true
+
+### Hash Changes Between Sessions
+
+**Problem:** Shader hash works one day but not the next.
+
+**Solutions:**
+1. **Game patched** - Game updates may change shader code and thus hashes
+2. **Different shader variations** - Some games compile shaders differently based on settings
+3. **Use ShaderRegex** - For more robust matching, consider [Shader Regex](/docs/shader-regex.md) instead
+
+### Commands Not Taking Effect
+
+**Problem:** Commands execute but don't seem to work.
+
+**Solutions:**
+1. **Check resource exists** - Verify referenced resources are defined
+2. **Verify slot numbers** - Ensure you're binding to the correct shader slots (check assembly)
+3. **Check timing** - Some operations need `post` modifier to run after draw call
+4. **Test in isolation** - Comment out other commands to find conflicts
+
+### Performance Issues
+
+**Problem:** Game slows down after adding ShaderOverride.
+
+**Solutions:**
+1. **Check execution frequency** - Shader might be used more than you think
+2. **Add conditions** - Use `if` to skip unnecessary work
+3. **Optimize command lists** - Reduce number of commands or combine operations
+4. **Consider alternatives** - Some effects might work better as TextureOverride or Custom Shader
+
+### Depth Filter Not Working
+
+**Problem:** `depth_filter` doesn't filter as expected.
+
+**Solutions:**
+1. **Verify depth buffer state** - Use frame analysis to see if depth buffer is actually bound
+2. **Consider migration** - `depth_filter` is deprecated; use `oD` register instead:
+   ```ini
+   x = oD
+   if x == -0.0
+       ; No depth buffer
+   else
+       ; Depth buffer active
+   endif
+   ```
+
+### Filter Index Not Matching
+
+**Problem:** `filter_index` partner detection not working.
+
+**Solutions:**
+1. **Check both shaders** - Verify both VS and PS overrides are being executed
+2. **Verify value matches** - Ensure the filter_index value exactly matches what you're checking
+3. **Use correct register** - Use `oVS` for vertex shader index, `oPS` for pixel shader, etc.
+4. **Debug with logging** - Print the value to verify:
+   ```ini
+   x = oVS
+   run = LogValue  ; Create a command list that visualizes x
+   ```
+
+---
+
+## Related Documentation
+
+- [TextureOverride](/docs/texture-override.md) - Override textures and buffers
+- [Command List](/docs/command-list.md) - Complete command reference
+- [Custom Shader](/docs/custom-shader.md) - Write custom shader code
+- [Shader Regex](/docs/shader-regex.md) - Pattern-based shader matching and patching
+- [Debugging](/docs/debugging.md) - Hunting and frame analysis
+- [Resource](/docs/resource.md) - Define custom resources
+- [Constants](/docs/constants.md) - IniParams and variables
+- [Override](/docs/override.md) - Override section syntax

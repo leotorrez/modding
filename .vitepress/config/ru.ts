@@ -86,7 +86,7 @@ function sidebarReference(): DefaultTheme.SidebarItem[] {
             {
                 text: "Логика",
                 items: [
-                    { text: 'Операторы', link: 'operators' }, //move pre and post here
+                    { text: 'Выражения и операторы', link: 'expressions' },
                     { text: 'Константы', link: 'constants' },
                     { text: 'Оператор Present', link: 'present' },
                     { text: 'Ключи | Key', link: 'key' },
