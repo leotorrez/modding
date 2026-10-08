@@ -16,7 +16,7 @@ This guide is currently under construction. Information is lacking but more will
 - Download the latest `.zip` file
 - Open `blender settings > Add-ons > Install from Disk`
 - Locate the `zip file` and proceed with the installation
-- Ensure you removed old versions of this plugin, 3dmigoto, GIMI, SRMI, LeoTools or similar (If you never made mods you won't have any of these. You can skip this step.)
+- Ensure you removed old versions of this plugin, 3dmigoto, LeoTools or similar (If you never made mods you won't have any of these. You can skip this step.)
 - Restart `Blender`
 
 ## Importing a Mesh
@@ -34,31 +34,31 @@ This guide is currently under construction. Information is lacking but more will
 
 Options to fix how the model sits in Blender:
 
-| Option | What it does | When to use it |
-| --- | --- | --- |
-| Flip Mesh | Mirrors the mesh over the X axis and inverts winding. | Most games: characters import facing the wrong way. |
-| Flip Winding Order | Reverses face orientation without flipping normals. | Model looks RED with the **Face Orientation** overlay. |
-| Flip Normal | Flips the normals only. | Model looks BLUE with the **Face Orientation** overlay. |
-| Flip TEXCOORD V | Flips the UVs vertically. | Textures appear upside down. |
+| Option             | What it does                                          | When to use it                                          |
+| ------------------ | ----------------------------------------------------- | ------------------------------------------------------- |
+| Flip Mesh          | Mirrors the mesh over the X axis and inverts winding. | Most games: characters import facing the wrong way.     |
+| Flip Winding Order | Reverses face orientation without flipping normals.   | Model looks RED with the **Face Orientation** overlay.  |
+| Flip Normal        | Flips the normals only.                               | Model looks BLUE with the **Face Orientation** overlay. |
+| Flip TEXCOORD V    | Flips the UVs vertically.                             | Textures appear upside down.                            |
 
 ### Related files, buffers & bones
 
-| Option | What it does |
-| --- | --- |
-| Auto-load related meshes | Imports other geometry from the capture that belongs with this mesh. |
-| Load pre-SO buffers (experimental) | Loads the pre-skinning (neutral pose) buffers. Nice for Unity titles to bring models in unposed. |
-| Load .buf files instead | Reads binary dumps as one whole-buffer object instead of one object per draw call. |
-| Limit to draw range | Only loads the vertices/indices used in that draw call (same as the .txt import). |
-| Merge meshes | Joins the related meshes into a single object. |
-| Bone CB | Reads a skeleton pose from the capture's bone constant buffer, so you can import the mesh posed as it was in game. `Bone CB range` and `Vertex group step` fine-tune how the matrices are read. |
+| Option                             | What it does                                                                                                                                                                                    |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Auto-load related meshes           | Imports other geometry from the capture that belongs with this mesh.                                                                                                                            |
+| Load pre-SO buffers (experimental) | Loads the pre-skinning (neutral pose) buffers. Nice for Unity titles to bring models in unposed.                                                                                                |
+| Load .buf files instead            | Reads binary dumps as one whole-buffer object instead of one object per draw call.                                                                                                              |
+| Limit to draw range                | Only loads the vertices/indices used in that draw call (same as the .txt import).                                                                                                               |
+| Merge meshes                       | Joins the related meshes into a single object.                                                                                                                                                  |
+| Bone CB                            | Reads a skeleton pose from the capture's bone constant buffer, so you can import the mesh posed as it was in game. `Bone CB range` and `Vertex group step` fine-tune how the matrices are read. |
 
 ### Clean up after import
 
-| Option | What it does |
-| --- | --- |
+| Option         | What it does                                  |
+| -------------- | --------------------------------------------- |
 | Merge Vertices | Welds duplicate vertices (merge by distance). |
-| Tris to Quads | Converts triangles to quads where possible. |
-| Clean Loose | Removes loose geometry. |
+| Tris to Quads  | Converts triangles to quads where possible.   |
+| Clean Loose    | Removes loose geometry.                       |
 
 ### Semantic remap (advanced)
 
@@ -93,19 +93,19 @@ If you are a beginner, I recommend you starting at [Mona Hat](/guides/mona-hat.m
 
 ### Export options
 
-| Option | What it does |
-| --- | --- |
-| Ignore hidden objects | Leaves out objects hidden in the Blender viewport. |
-| Only export selected | Only exports from the objects you selected. |
-| Apply modifiers and shapekeys | Evaluates modifiers and shape keys before writing the buffers. Keep this on unless a modifier causes problems. |
-| Normalize weights | Clamps and re-normalizes vertex weights to the game's format. |
-| Copy textures | Copies the mod's texture files into the output. Enable when your mod changes textures. |
-| - Ignore shadow ramps / metal maps / diffuse guide | Skips those helper textures. |
-| - Ignore duplicated textures | Doesn't re-copy textures that already have the same hash in the output. |
-| Outline optimization | Recomputes the game's outline data. Slow, so use it for the final export. The rounding precision below it controls how close outline vertices merge. |
-| Export shape keys | Enables shape key export for this mod (see the [Shape keys](#shape-keys) section). |
-| Batch pattern | e.g. `name_###` - export to numbered folders. Pairs with the **Start Batch export** button. |
-| Write buffers / Write ini | Uncheck either to skip writing buffer or ini files (handy when you only changed the other half, or are testing). |
+| Option                                             | What it does                                                                                                                                         |
+| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ignore hidden objects                              | Leaves out objects hidden in the Blender viewport.                                                                                                   |
+| Only export selected                               | Only exports from the objects you selected.                                                                                                          |
+| Apply modifiers and shapekeys                      | Evaluates modifiers and shape keys before writing the buffers. Keep this on unless a modifier causes problems.                                       |
+| Normalize weights                                  | Clamps and re-normalizes vertex weights to the game's format.                                                                                        |
+| Copy textures                                      | Copies the mod's texture files into the output. Enable when your mod changes textures.                                                               |
+| - Ignore shadow ramps / metal maps / diffuse guide | Skips those helper textures.                                                                                                                         |
+| - Ignore duplicated textures                       | Doesn't re-copy textures that already have the same hash in the output.                                                                              |
+| Outline optimization                               | Recomputes the game's outline data. Slow, so use it for the final export. The rounding precision below it controls how close outline vertices merge. |
+| Export shape keys                                  | Enables shape key export for this mod (see the [Shape keys](#shape-keys) section).                                                                   |
+| Batch pattern                                      | e.g. `name_###` - export to numbered folders. Pairs with the **Start Batch export** button.                                                          |
+| Write buffers / Write ini                          | Uncheck either to skip writing buffer or ini files (handy when you only changed the other half, or are testing).                                     |
 
 ### INI & credit
 
@@ -132,11 +132,11 @@ DEFORM<n>   or   CUSTOM<n>
 - A separator is optional, so `DEFORM1`, `DEFORM 1`, `DEFORM_1`, `DEFORM-1` and `DEFORM.1` all work (same for `CUSTOM`)
 - Names are case insensitive
 
-| Key name | Meaning |
-| --- | --- |
-| `Basis` | The base mesh. Ignored. |
+| Key name                    | Meaning                                                                               |
+| --------------------------- | ------------------------------------------------------------------------------------- |
+| `Basis`                     | The base mesh. Ignored.                                                               |
 | `Deform 1`, `Deform 2`, ... | Vanilla keys - the game's original deformations. Keep the number the import gave you. |
-| `CUSTOM 1`, `CUSTOM 2`, ... | New deformations you create. |
+| `CUSTOM 1`, `CUSTOM 2`, ... | New deformations you create.                                                          |
 
 Any key with a different name is skipped at export (a warning is printed, nothing breaks). The number is what ties a vanilla key to the game: `Deform 7` maps back to the game's 7th shape key slot. Never renumber the vanilla keys; edit their shape or leave them alone. New keys are appended after all the vanilla ones, in numeric order.
 
@@ -183,12 +183,12 @@ The value slider you leave on it becomes the key's exported default intensity.
 
 Export exactly like any other mod. Make sure **Export shape keys** is enabled (it is by default). The plugin generates, per mesh:
 
-| File / section | What it is |
-| --- | --- |
-| `<mesh>SKDeltas.buf` | The vertex movements (only moved vertices are stored). |
-| `<mesh>SKIdentity.buf` | Maps every key (vanilla + custom) to its export slot. |
-| `<mesh>SKMultipliers` | Runtime buffer, generated in the `.ini`, no file. |
-| `<mesh>SKOverrides` | The key values you left in Blender, written into the `.ini` as numbers you can edit by hand. |
+| File / section         | What it is                                                                                   |
+| ---------------------- | -------------------------------------------------------------------------------------------- |
+| `<mesh>SKDeltas.buf`   | The vertex movements (only moved vertices are stored).                                       |
+| `<mesh>SKIdentity.buf` | Maps every key (vanilla + custom) to its export slot.                                        |
+| `<mesh>SKMultipliers`  | Runtime buffer, generated in the `.ini`, no file.                                            |
+| `<mesh>SKOverrides`    | The key values you left in Blender, written into the `.ini` as numbers you can edit by hand. |
 
 Install the mod folder as usual.
 
@@ -210,7 +210,7 @@ In the 3D viewport, open the right-hand **N** panel and switch to the **XXMI Too
 
 - **Apply modifiers to Objects with Shapekeys** - applies only the modifiers you pick onto the objects that carry shape keys, without ruining the keys.
 - **Remove unused Vertex Groups** - cleans up vertex groups that are no longer needed.
-- **Merge shared name Vertex Groups** - combines vertex groups that share a name. The *active Vertex Group* variant merges them into the one you selected. Useful to consolidate bones.
+- **Merge shared name Vertex Groups** - combines vertex groups that share a name. The _active Vertex Group_ variant merges them into the one you selected. Useful to consolidate bones.
 - **Fill gaps in Vertex Groups** - creates the missing vertex groups in between your existing ones (e.g. fills 1,2 when only 0 and 3 exist).
 - **Clean UV Names** - renames UV layers to the expected format.
 - **Reset Vertex Colors** - sets the mesh's vertex colors to a single solid color.
